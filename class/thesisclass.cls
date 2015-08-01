@@ -46,6 +46,10 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{footnote}
+\usepackage{array}
+\usepackage{sidecap}
+\usepackage{hepnames}
+\usepackage{units}
 \usepackage[fixlanguage]{babelbib}	% sets german style for literature entries
 
 

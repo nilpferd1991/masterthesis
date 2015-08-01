@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.5.10)  12 JUL 2015 16:38
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.5.10)  1 AUG 2015 10:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -842,9 +842,60 @@ Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \fn@notes=\box44
 \fn@width=\dimen198
 )
+(/usr/share/texlive/texmf-dist/tex/latex/sidecap/sidecap.sty
+Package: sidecap 2003/06/06 v1.6f SideCap Package (RN/HjG)
+\SC@BOXWD=\dimen199
+\SC@CAPWD=\dimen200
+\SC@tempdima=\dimen201
+\SC@tempdimb=\dimen202
+\c@SC@C=\count144
+\SC@BOX=\box45
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hepnames/hepnames.sty
+Package: hepnames 2013/10/05 Pre-defined HEP particle symbols (version 1.7)
+
+(/usr/share/texlive/texmf-dist/tex/latex/hepnames/hepnicenames.sty
+Package: hepnicenames 2013/10/05 Friendly alternatives to the PEN particle code
+s (version 1.7)
+
+(/usr/share/texlive/texmf-dist/tex/latex/hepnames/heppennames.sty
+Package: heppennames 2013/10/05 Elementary Particle Naming Scheme (version 1.7)
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/hepparticles/hepparticles.sty
+Package: hepparticles 2005/02/22 HEP particle typesetting (v1.4)
+
+(/usr/share/texlive/texmf-dist/tex/latex/maybemath/maybemath.sty
+Package: maybemath 2005/2/22
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup5
+\symboldletters=\mathgroup6
+\symboldsymbols=\mathgroup7
+\symboldugrf@m=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 138.
+LaTeX Info: Redefining \bm on input line 204.
+)))
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
+)
+LaTeX Info: Redefining \PgD on input line 419.
+))
+LaTeX Info: Redefining \hepnames on input line 43.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/units/units.sty
+Package: units 1998/08/04 v0.9b Typesetting units
+
+(/usr/share/texlive/texmf-dist/tex/latex/units/nicefrac.sty
+Package: nicefrac 1998/08/04 v0.9b Nice fractions
+\L@UnitsRaiseDisplaystyle=\skip60
+\L@UnitsRaiseTextstyle=\skip61
+\L@UnitsRaiseScriptstyle=\skip62
+))
 (/usr/share/texlive/texmf-dist/tex/latex/babelbib/babelbib.sty
 Package: babelbib 2012/01/03 v1.31 babelbib: multilingual bibliographies (HH)
-\c@btxromaniannumeral=\count144
+\c@btxromaniannumeral=\count145
 )
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -903,16 +954,16 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen199
-\Hy@linkcounter=\count145
-\Hy@pagecounter=\count146
+\@linkdim=\dimen203
+\Hy@linkcounter=\count146
+\Hy@pagecounter=\count147
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count147
+\Hy@SavedSpaceFactor=\count148
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -934,12 +985,12 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count148
+\c@Hy@tempcnt=\count149
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen200
-\Fld@menulength=\count149
-\Field@Width=\dimen201
-\Fld@charsize=\dimen202
+\XeTeXLinkMargin=\dimen204
+\Fld@menulength=\count150
+\Field@Width=\dimen205
+\Fld@charsize=\dimen206
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -949,37 +1000,37 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count150
-\c@Item=\count151
-\c@Hfootnote=\count152
+\Hy@abspage=\count151
+\c@Item=\count152
+\c@Hfootnote=\count153
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count153
-\c@bookmark@seq@number=\count154
+\Fld@listcount=\count154
+\c@bookmark@seq@number=\count155
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip60
+\Hy@SectionHShift=\skip63
 )
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/hypcap.sty
 Package: hypcap 2011/02/16 v1.11 Adjusting the anchors of captions (HO)
 )
-\chapnolen=\skip61
-\chapparlen=\skip62
-\chapno=\box45
+\chapnolen=\skip64
+\chapparlen=\skip65
+\chapno=\box46
 )
 (./class/prefix.tex
-\c@RRR=\count155
-\c@rrr=\count156
-\c@zzz=\count157
-\c@abc=\count158
+\c@RRR=\count156
+\c@rrr=\count157
+\c@zzz=\count158
+\c@abc=\count159
 ) (./thesis.aux)
 \openout1 = `thesis.aux'.
 
@@ -1000,16 +1051,16 @@ LaTeX Font Info:    ... okay on input line 6.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count159
-\scratchdimen=\dimen203
-\scratchbox=\box46
-\nofMPsegments=\count160
-\nofMParguments=\count161
+\scratchcounter=\count160
+\scratchdimen=\dimen207
+\scratchbox=\box47
+\nofMPsegments=\count161
+\nofMParguments=\count162
 \everyMPshowfont=\toks37
-\MPscratchCnt=\count162
-\MPscratchDim=\dimen204
-\MPnumerator=\count163
-\makeMPintoPDFobject=\count164
+\MPscratchCnt=\count163
+\MPscratchDim=\dimen208
+\MPnumerator=\count164
+\makeMPintoPDFobject=\count165
 \everyMPtoPDFconversion=\toks38
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -1033,9 +1084,34 @@ Package caption Info: longtable package is loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
 )
+Package caption Info: sidecap package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
 ABD: EveryShipout initializing macros
+(/usr/share/texlive/texmf-dist/tex/latex/ms/ragged2e.sty
+Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
+
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everysel.sty
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+
+ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 126.
+)
+\CenteringLeftskip=\skip66
+\RaggedLeftLeftskip=\skip67
+\RaggedRightLeftskip=\skip68
+\CenteringRightskip=\skip69
+\RaggedLeftRightskip=\skip70
+\RaggedRightRightskip=\skip71
+\CenteringParfillskip=\skip72
+\RaggedLeftParfillskip=\skip73
+\RaggedRightParfillskip=\skip74
+\JustifyingParfillskip=\skip75
+\CenteringParindent=\skip76
+\RaggedLeftParindent=\skip77
+\RaggedRightParindent=\skip78
+\JustifyingParindent=\skip79
+)
 babelbib: Set bibliography fall-back language to english
 (/usr/share/texlive/texmf-dist/tex/latex/babelbib/english.bdf
 File: english.bdf 2012/01/03 v1.31 babelbib: multilingual bibliographies (HH)
@@ -1044,7 +1120,7 @@ babelbib extension \btxifchangecaseon added to \extrasenglish
 )
 babelbib: Load BibTeX extensions \bibsenglish for english
 babelbib: Set language for keywords in the bibliography fixed to english
-\AtBeginShipoutBox=\box47
+\AtBeginShipoutBox=\box48
 Package hyperref Info: Link coloring ON on input line 6.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1052,7 +1128,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count165
+\c@section@level=\count166
 )
 LaTeX Info: Redefining \ref on input line 6.
 LaTeX Info: Redefining \pageref on input line 6.
@@ -1105,13 +1181,13 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 2.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 13.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 19.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 17.
 )
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
@@ -1127,71 +1203,189 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
 ]
 (./tex/introduction.tex
 Chapter 1.
+<figures/general/luminosity.pdf, id=196, 211.36897pt x 203.27293pt>
+File: figures/general/luminosity.pdf Graphic file (type pdf)
+
+<use figures/general/luminosity.pdf>
+Package pdftex.def Info: figures/general/luminosity.pdf used on input line 12.
+(pdftex.def)             Requested size: 256.46152pt x 246.66508pt.
 ) (./tex/experimental_setup.tex [1
 
 
-] [2
+]
+[2 <./figures/general/luminosity.pdf>]
+Chapter 2.
+[3
 
 
 ]
-Chapter 2.
-) (./tex/track_finding.tex [3] [4
+
+LaTeX Warning: Reference `fig-event-display' on page 4 undefined on input line 
+40.
+
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 42.
+[4]
+<figures/experimental_setup/electronsInCDC.pdf, id=257, 253.1542pt x 222.83255p
+t>
+File: figures/experimental_setup/electronsInCDC.pdf Graphic file (type pdf)
+ <use figures/experimental_setup/electronsInCDC.pdf>
+Package pdftex.def Info: figures/experimental_setup/electronsInCDC.pdf used on 
+input line 48.
+(pdftex.def)             Requested size: 213.71576pt x 188.1267pt.
+
+<figures/experimental_setup/axialLayers.pdf, id=260, 352.79715pt x 70.92789pt>
+File: figures/experimental_setup/axialLayers.pdf Graphic file (type pdf)
+
+<use figures/experimental_setup/axialLayers.pdf>
+Package pdftex.def Info: figures/experimental_setup/axialLayers.pdf used on inp
+ut line 55.
+(pdftex.def)             Requested size: 352.79628pt x 70.9277pt.
+
+<figures/experimental_setup/stereoLayers.pdf, id=261, 337.39362pt x 87.51123pt>
+File: figures/experimental_setup/stereoLayers.pdf Graphic file (type pdf)
+<use figures/experimental_setup/stereoLayers.pdf>
+Package pdftex.def Info: figures/experimental_setup/stereoLayers.pdf used on in
+put line 59.
+(pdftex.def)             Requested size: 337.39278pt x 87.511pt.
+) (./tex/track_finding.tex
+[5 <./figures/experimental_setup/electronsInCDC.pdf> <./figures/experimental_se
+tup/axialLayers.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./figures/experimental_setup/axialLayer
+s.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+> <./figures/experimental_setup/stereoLayers.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./figures/experimental_setup/stereoLaye
+rs.pdf): PDF inclusion: multiple pdfs with page group included in a single page
+
+>] [6
 
 
 ]
 Chapter 3.
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 3.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 5.
 
-LaTeX Warning: Reference `lis-steering-file' on page 5 undefined on input line 
+LaTeX Warning: Citation `cpp' on page 7 undefined on input line 7.
+
+
+LaTeX Warning: Reference `lis-steering-file' on page 7 undefined on input line 
 13.
 
-[5]
+[7]
 
-LaTeX Warning: Reference `lis-steering-file' on page 6 undefined on input line 
+LaTeX Warning: Reference `lis-steering-file' on page 8 undefined on input line 
 15.
 
 
-LaTeX Warning: Reference `fig-viz-datastore' on page 6 undefined on input line 
+LaTeX Warning: Reference `fig-viz-datastore' on page 8 undefined on input line 
 15.
 
-) (./tex/workflow.tex [6]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 30.
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 30.
+ [8]
+<figures/theory/fom_found.pdf, id=307, 354.12837pt x 202.55989pt>
+File: figures/theory/fom_found.pdf Graphic file (type pdf)
+
+<use figures/theory/fom_found.pdf>
+Package pdftex.def Info: figures/theory/fom_found.pdf used on input line 41.
+(pdftex.def)             Requested size: 136.77652pt x 78.2346pt.
+
+<figures/theory/fom_clone.pdf, id=308, 354.12837pt x 321.98776pt>
+File: figures/theory/fom_clone.pdf Graphic file (type pdf)
+
+<use figures/theory/fom_clone.pdf>
+Package pdftex.def Info: figures/theory/fom_clone.pdf used on input line 42.
+(pdftex.def)             Requested size: 136.77652pt x 124.36116pt.
+
+<figures/theory/fom_fake.pdf, id=309, 354.12837pt x 321.98773pt>
+File: figures/theory/fom_fake.pdf Graphic file (type pdf)
+
+<use figures/theory/fom_fake.pdf>
+Package pdftex.def Info: figures/theory/fom_fake.pdf used on input line 43.
+(pdftex.def)             Requested size: 136.77652pt x 124.36116pt.
+
+<figures/theory/fom_background.pdf, id=310, 354.12837pt x 202.55989pt>
+File: figures/theory/fom_background.pdf Graphic file (type pdf)
+
+<use figures/theory/fom_background.pdf>
+Package pdftex.def Info: figures/theory/fom_background.pdf used on input line 4
+4.
+(pdftex.def)             Requested size: 136.77652pt x 78.2346pt.
+
+Overfull \hbox (2.6271pt too wide) in paragraph at lines 40--46
+[][] 
+ []
+
+) (./tex/workflow.tex [9] [10 <./figures/theory/fom_found.pdf> <./figures/theor
+y/fom_clone.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./figures/theory/fom_clone.pdf): PDF in
+clusion: multiple pdfs with page group included in a single page
+> <./figures/theory/fom_fake.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./figures/theory/fom_fake.pdf): PDF inc
+lusion: multiple pdfs with page group included in a single page
+> <./figures/theory/fom_background.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./figures/theory/fom_background.pdf): P
+DF inclusion: multiple pdfs with page group included in a single page
+>]
 Chapter 4.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 1.
+
+LaTeX Warning: Reference `fig-clusters' on page 11 undefined on input line 17.
+
+
+LaTeX Warning: Reference `fig-cluster-hit-purity' on page 11 undefined on input
+ line 17.
+
+[11
+
+
+]
+
+LaTeX Warning: Reference `tab-varset-cluster' on page 12 undefined on input lin
+e 32.
+
+
+LaTeX Warning: Reference `fig-result-background-hit-finder' on page 12 undefine
+d on input line 34.
+
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 17.
-) (./tex/results.tex [7
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 39.
+[12]) (./tex/results.tex [13] [14
 
 
-] [8]
+]
 Chapter 5.
-) (./tex/vxd.tex [9
-
-
-] [10
+) (./tex/vxd.tex [15] [16
 
 
 ]
 Chapter 6.
-) (./tex/summary.tex [11] [12
+) (./tex/summary.tex [17] [18
 
 
 ]
 Chapter 7.
-) (./tex/thanks.tex [13] [14
+) (./tex/thanks.tex [19] [20
 
 
 ]
 Chapter 8.
-) (./class/appendix.tex [15] [16
+) (./class/appendix.tex [21] [22
 
 
 ]
 Appendix A.
-) [17] [18
+) [23] [24
 
 
 ]
@@ -1200,7 +1394,7 @@ Appendix B.
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
- [19] [20
+ [25] [26
 
 
 ]
@@ -1209,19 +1403,23 @@ Appendix C.
 \tf@lot=\write7
 \openout7 = `thesis.lot'.
 
- [21] [22
+ [27] [28
 
 
 ]
 Appendix D.
+(./thesis.bbl [29] [30
+
+
+])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 40.
-[23]
+ [31]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 40.
  (./thesis.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 40.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 40.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 5EF61FF96A87356515851CE540644807;2178.
+(rerunfilecheck)             Checksum: 8B20CCC4AE09FAEAB79332CF756C4145;2196.
 
 
 LaTeX Warning: There were undefined references.
@@ -1229,30 +1427,36 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 40.
  ) 
 Here is how much of TeX's memory you used:
- 19498 strings out of 494976
- 337023 string characters out of 6179137
- 456818 words of memory out of 5000000
- 22192 multiletter control sequences out of 15000+600000
- 39850 words of font info for 67 fonts, out of 8000000 for 9000
+ 21305 strings out of 494976
+ 354984 string characters out of 6179137
+ 472251 words of memory out of 5000000
+ 23901 multiletter control sequences out of 15000+600000
+ 47049 words of font info for 91 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,10n,80p,1100b,581s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecst1095.600pk> </home/ni
-ls/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> </home/nils/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ectt2074.600pk> </home/nils/.texmf-var/fonts/pk/l
-jfour/jknappen/ec/ecsl1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknapp
+ 72i,15n,84p,1842b,591s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> </home/ni
+ls/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1095.600pk> </home/nils/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecst1095.600pk> </home/nils/.texmf-var/fonts/pk/l
+jfour/jknappen/ec/ectt2074.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknapp
 en/ec/ecti1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt14
 40.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </
-home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/nils/.t
-exmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> </home/nils/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/nils/.texmf-var/fonts/pk/ljfour
-/jknappen/ec/ecbx1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec
-/ecrm1095.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</us
-r/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on thesis.pdf (31 pages, 170800 bytes).
+home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsl1095.600pk> </home/nils/.t
+exmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/nils/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ectt1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour
+/jknappen/ec/ecbx2074.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec
+/ecbx1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.60
+0pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/
+uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on thesis.pdf (39 pages, 492525 bytes).
 PDF statistics:
- 802 PDF objects out of 1000 (max. 8388607)
- 364 compressed objects within 4 object streams
- 91 named destinations out of 1000 (max. 500000)
- 250 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1066 PDF objects out of 1200 (max. 8388607)
+ 507 compressed objects within 6 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 290 words of extra memory for PDF output out of 10000 (max. 10000000)
 

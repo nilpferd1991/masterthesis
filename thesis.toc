@@ -3,48 +3,46 @@
 \contentsline {section}{\numberline {1.1}Belle II and the High Luminosity Frontier}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Track Finder for Particle Physics Experiments}{1}{section.1.2}
 \contentsline {chapter}{\numberline {2}Experimental Setup}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Belle II Detector}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Overview of the detector parts}{3}{subsection.2.1.1}
+\contentsline {section}{\numberline {2.1}SuperKEKB and the Belle II Detector}{3}{section.2.1}
 \contentsline {section}{\numberline {2.2}The Tracking Detectors}{3}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Overview}{3}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}CDC}{3}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}VXD}{3}{subsection.2.2.3}
-\contentsline {chapter}{\numberline {3}Track Finder Theory and Multivariate Classification}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}The Belle II Analysis Framework (\texttt {basf2})}{5}{section.3.1}
-\contentsline {section}{\numberline {3.2}The used Figures Of Merit}{6}{section.3.2}
-\contentsline {section}{\numberline {3.3}Working Principle of the implemented Track Finder in \texttt {basf2}}{6}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}The Legendre Track Finder}{6}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}The Local Track Finder}{6}{subsection.3.3.2}
-\contentsline {section}{\numberline {3.4}Multivariate Classification}{6}{section.3.4}
-\contentsline {chapter}{\numberline {4}Track Finding in \texttt {basf2}}{7}{chapter.4}
-\contentsline {section}{\numberline {4.1}The \texttt {TrackFindingCDC} Package}{7}{section.4.1}
-\contentsline {section}{\numberline {4.2}The Background Hit Finder}{7}{section.4.2}
-\contentsline {section}{\numberline {4.3}Improvements on the Legendre Track Finder}{7}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}The class \texttt {QuadTreeProcessorTemplate}}{7}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Postprocessing after the track finding}{7}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Results}{7}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Improvements on the Stereo Hit Finder}{7}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Principle of the StereoQuadTree}{7}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Results}{7}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}The \texttt {SegmentTrackCombinerModule}}{7}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Principle of the Segment Track Combiner}{7}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Used Filters}{8}{subsection.4.5.2}
-\contentsline {subsection}{\numberline {4.5.3}Results}{8}{subsection.4.5.3}
-\contentsline {section}{\numberline {4.6}Further Approaches}{8}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}A quad tree for segments}{8}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}Filter for tracks}{8}{subsection.4.6.2}
-\contentsline {subsection}{\numberline {4.6.3}VXD-Merger??}{8}{subsection.4.6.3}
-\contentsline {section}{\numberline {4.7}Additional software changes}{8}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}The class \texttt {RecoTrack}}{8}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}The \texttt {ipython\_handler}}{8}{subsection.4.7.2}
-\contentsline {chapter}{\numberline {5}Analysis of the implemented Track Finder}{9}{chapter.5}
-\contentsline {section}{\numberline {5.1}Comparison of the two track finder}{9}{section.5.1}
-\contentsline {section}{\numberline {5.2}Tracking efficiency with different input parameters}{9}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Tracking efficiency with different particle and background types}{9}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}The TMVA filters}{9}{subsection.5.2.2}
-\contentsline {chapter}{\numberline {6}Momentum estimation of slow particles with the ADC in the VXD}{11}{chapter.6}
-\contentsline {section}{\numberline {6.1}Prestudies}{11}{section.6.1}
-\contentsline {section}{\numberline {6.2}Incooperation in the helix fit}{11}{section.6.2}
-\contentsline {chapter}{\numberline {7}Summary}{13}{chapter.7}
-\contentsline {chapter}{\numberline {8}Acknowledgement}{15}{chapter.8}
-\contentsline {chapter}{\numberline {A}Listings}{17}{appendix.A}
+\contentsline {subsection}{\numberline {2.2.1}CDC}{4}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}VXD}{5}{subsection.2.2.2}
+\contentsline {chapter}{\numberline {3}Track Finder Theory and Multivariate Classification}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}The Belle II Analysis Framework (\texttt {basf2})}{7}{section.3.1}
+\contentsline {section}{\numberline {3.2}Working Principle of the implemented Track Finder in \texttt {basf2}}{8}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}The Legendre Track Finder}{8}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}The Local Track Finder}{8}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}The used Figures Of Merit}{8}{section.3.3}
+\contentsline {section}{\numberline {3.4}Multivariate Classification}{9}{section.3.4}
+\contentsline {chapter}{\numberline {4}Track Finding in \texttt {basf2}}{11}{chapter.4}
+\contentsline {section}{\numberline {4.1}The \texttt {TrackFindingCDC} Package}{11}{section.4.1}
+\contentsline {section}{\numberline {4.2}The Background Hit Finder}{11}{section.4.2}
+\contentsline {section}{\numberline {4.3}Improvements on the Legendre Track Finder}{12}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}The class \texttt {QuadTreeProcessorTemplate}}{12}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Postprocessing after the track finding}{12}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Results}{12}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Improvements on the Stereo Hit Finder}{13}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Principle of the StereoQuadTree}{13}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Results}{13}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}The \texttt {SegmentTrackCombinerModule}}{13}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Principle of the Segment Track Combiner}{13}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Used Filters}{13}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}Results}{13}{subsection.4.5.3}
+\contentsline {section}{\numberline {4.6}Further Approaches}{13}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}A quad tree for segments}{13}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}Filter for tracks}{13}{subsection.4.6.2}
+\contentsline {subsection}{\numberline {4.6.3}VXD-Merger??}{13}{subsection.4.6.3}
+\contentsline {section}{\numberline {4.7}Additional software changes}{13}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}The class \texttt {RecoTrack}}{13}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}The \texttt {ipython\_handler}}{13}{subsection.4.7.2}
+\contentsline {chapter}{\numberline {5}Analysis of the implemented Track Finder}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}Comparison of the two track finder}{15}{section.5.1}
+\contentsline {section}{\numberline {5.2}Tracking efficiency with different input parameters}{15}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Tracking efficiency with different particle and background types}{15}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}The TMVA filters}{15}{subsection.5.2.2}
+\contentsline {chapter}{\numberline {6}Momentum estimation of slow particles with the ADC in the VXD}{17}{chapter.6}
+\contentsline {section}{\numberline {6.1}Prestudies}{17}{section.6.1}
+\contentsline {section}{\numberline {6.2}Incooperation in the helix fit}{17}{section.6.2}
+\contentsline {chapter}{\numberline {7}Summary}{19}{chapter.7}
+\contentsline {chapter}{\numberline {8}Acknowledgement}{21}{chapter.8}
+\contentsline {chapter}{\numberline {A}Listings}{23}{appendix.A}

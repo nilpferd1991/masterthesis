@@ -3,7 +3,7 @@
 After having described the principle of the track finders implemented in \basf in the previous chapters we can now go on to show the actual implementation. The two track finders were already written and one of the tasks of this thesis was to put them together and improve them. Because we want to make use of the benefits of both track finders we use the workflow shown in figure \ref{fig-workflow}. The shown steps are all described in more detail further down.
 
 \begin{figure}
- \caption{The proposed workflow and combination of the two track finders in basf2. The green boxes refer more or less to one module. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
+ \caption[Proposed workflow in the CDC tracking]{The proposed workflow and combination of the two track CDC finders in basf2. The green boxes refer more or less to one module. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
  \label{fig-workflow}
 \end{figure}
 
@@ -12,6 +12,28 @@ After having described the principle of the track finders implemented in \basf i
 Common code basis
 
 \section{The Background Hit Finder}
+The beforementioned track finders are tuned to not pick up background hits into a found track candidate or even form a candidate from background hits only. Nevertheless even a single background hit per track can lead to a reduced momentum resolution or can even cause the fit to fail completely. Together with the reduced combinatorics and therefore reduced computing time when throwing away unusable hits there is the need to distinguish between signal and background hits even before the tracking starts. This is the purpose of the BackgroundHitFinder module described in this section.
+
+For deciding if a hit is to be used in the track finder, the module uses implemented filters. As these filters are used widely in the whole CDC tracking framework, they will be described here in more detail. To filter out bad hits, not only the information of one hit but the infromation of so called clusters of hits is used. These clusters are formed by one of the presteps in the local track finder - but can also be used standalone. They are created by clusterizing all CDCHits in such a way as one cluster includes the maximum number of connected hits. Two hits are called connected if there is no non-fired geometrically wire between them. Figure \ref{fig-clusters} shows an event display in the $r$-$\phi$-plane with the clusters drawn in different colors. Figure \ref{fig-cluster-hit-purity} shows the hit purity of ANZAHL of the clusters from typical events. The hit purity is computed as the ratio between the number of hits in a clusterwhich belong to a signal track divided by the number of all hits (including the ones coming from background only). As can be seen clearly in this histogramm a cluster is either full of background or full of signal hits - for that throwing away a background cluster does not involve deleting hits than are needed for signal tracks.
+
+In every event, each formed cluster is passed to the chosen filter with the chosen filter parameters. This filter can return every number as a result including the C++ std::nan, which is chosen as the value for indicating that the cluster should not be used further for track finding as it is marked as background by the filter. Actually, the non NaN numbers returned by the filter are not used further in the following algorithms and are just described here for later reference. 
+
+This filter algorithm is a very general one and leaves the possibility open to compare many different filters. For this as well as for anyl other used filter in the CDC tracking, more or less 5 filters are implemented by default which can be switched by using module parameters. These filters are:
+
+\begin{description}
+  \item[BaseFilter] is a filter that neglects every item - it is just for basing every other filter on a common ground class and not for usage.
+  \item[AllFilter] is the counterpart of the BaseFilter and accepts all items. It can be used for testing purposes to make a filter fully transparent.
+  \item[SimpleFilter] is a filter based on self-implemented cuts. The variables to cut depend on the planned usage of the filter and need to be implemented by the programmer.
+  \item[TMVAFilter] is based on a trained boosted decision tree. It passed the variables defined in a so called VarSet to the BDT and returns the result to result between 0 and 1. If the result is lower than a certain cut definable on runtime, the TMVAFilter returns std::nan. The variables and their calculation can be freely defined by the programmer. In most of the cases the performance of a well-trained TMVAFilter exceeds the one of a simple filter.
+  \item[RecordingFilter] returns a constant defineable on runtime and can therefore not directly be called a filter. Instead its purpose is to write the same variables as the TMVAFilter uses together with a truth information of every incming item into a ROOT TNTuple. The output file with this TNTuple can later be used to train the BDT to categorize according to the truth information. This filter can of course only be used on simulated data.
+  \item[MCFilter] filters the items according to the truth information compiled with the MC information that also the recording filter uses. 
+\end{description}
+
+As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table \ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. The trained BDT has PARAMETERS... EVENTS were used for training. 
+
+After the training procedure the corresponding TMVAFilter can be used. The results are summerized in \ref{fig-result-background-hit-finder}. 
+
+\todo{Results for Clusters/Hits, Results for Legendre Finder}
 
 \section{Improvements on the Legendre Track Finder}
 \subsection{The class \texttt{QuadTreeProcessorTemplate}}
