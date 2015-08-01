@@ -1,16 +1,5 @@
 \select@language {english}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces \cite {tdr}\relax }}{2}{figure.caption.2}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Scheme showing the planned Belle II detector in top view. The single measuring devices are shown with their names. Some more information on the tracking devices can be found in the text. Taken from \cite {christian}.\relax }}{3}{figure.caption.3}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Simulation of the electron field in an extract of the wires in the central drift chamber. The violet circles depict the field wires whereas the red small points are the sense wires. The yellow paths are examples for the drift paths of ionized electrons. This simulation includes the distortion by the magnetic field. Taken from \cite {cdc_design}.\relax }}{5}{figure.2.2}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Drawing sketching the axial (top) and stereo wires in the CDC. The skewing against the beamline of the stereo (bottom) wires is exaggerated. Taken from \cite {oliver}.\relax }}{5}{figure.caption.5}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Proposed workflow in the CDC tracking}}{11}{figure.caption.10}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

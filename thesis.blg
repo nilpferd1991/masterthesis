@@ -4,48 +4,45 @@ The top-level auxiliary file: thesis.aux
 The style file: class/utphys.bst
 Database file #1: class/bibliography.bib
 Warning--I didn't find a database entry for "cpp"
-Warning--empty institution in tdr
-Warning--empty pages in bethe
-Warning--empty author in cdc_design
-You've used 8 entries,
+You've used 7 entries,
             2326 wiz_defined-function locations,
-            612 strings with 5162 characters,
-and the built_in function-call counts, 1633 in all, are:
-= -- 178
-> -- 38
+            603 strings with 5056 characters,
+and the built_in function-call counts, 1674 in all, are:
+= -- 188
+> -- 36
 < -- 0
-+ -- 17
++ -- 16
 - -- 9
-* -- 133
-:= -- 222
-add.period$ -- 14
-call.type$ -- 8
-change.case$ -- 9
+* -- 117
+:= -- 212
+add.period$ -- 13
+call.type$ -- 7
+change.case$ -- 6
 chr.to.int$ -- 0
-cite$ -- 11
-duplicate$ -- 84
-empty$ -- 180
+cite$ -- 7
+duplicate$ -- 85
+empty$ -- 185
 format.name$ -- 9
-if$ -- 413
+if$ -- 437
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 15
+int.to.str$ -- 7
+missing$ -- 12
 newline$ -- 33
-num.names$ -- 6
-pop$ -- 35
+num.names$ -- 5
+pop$ -- 36
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 39
+skip$ -- 56
 stack$ -- 0
-substring$ -- 56
-swap$ -- 18
+substring$ -- 84
+swap$ -- 28
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 3
-while$ -- 12
-width$ -- 9
-write$ -- 73
-(There were 4 warnings)
+warning$ -- 0
+while$ -- 13
+width$ -- 8
+write$ -- 64
+(There was 1 warning)
