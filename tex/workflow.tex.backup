@@ -1,0 +1,5 @@
+\chapter{Track Finding in basf2}
+\section{The \texttt{TrackFindingCDC} Package}
+\section{Improvements on the Legendre Track Finder}
+\section{Improvements on the Stereo Hit Finder}
+\section{The \texttt{SegmentTrackCombinerModule}}

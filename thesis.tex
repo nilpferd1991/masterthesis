@@ -1,0 +1,40 @@
+\documentclass{class/thesisclass}
+% Based on thesisclass.cls of Timo Rohrberg, 2009
+
+\input{class/prefix}
+
+\begin{document}
+
+  %Titelseite und Inhaltsverzeichnis
+  \pagenumbering{alph}
+  \frontmatter
+  \pagenumbering{Roman}
+  \input{class/titlepage}
+  \input{class/declaration}
+
+  \tableofcontents
+
+  % Hauptteil
+  \mainmatter
+
+  \input{tex/introduction}
+  \input{tex/experimental_setup}
+  \input{tex/track_finding}
+  \input{tex/workflow}
+  \input{tex/results}
+  \input{tex/vxd}
+  \input{tex/summary}
+
+  % Anhang
+  \input{tex/thanks}
+  \appendix
+  \input{class/appendix}
+
+  \bgroup\let\addcontentsline=\nocontentsline\listoffigures\egroup  
+  \bgroup\let\addcontentsline=\nocontentsline\listoftables\egroup
+
+  \bibliographystyle{gerabbrv}
+  \bgroup\let\addcontentsline=\nocontentsline\chapter{Bibliography}\egroup
+  %\bibliography{class/bibliography,class/add_bibliography}
+
+\end{document}

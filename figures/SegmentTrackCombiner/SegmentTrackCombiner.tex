@@ -1,0 +1,52 @@
+\documentclass{standalone}
+
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\input{../tikz.tex}
+\usepackage{../beamercolorthemekit}
+
+\begin{document}
+  \pagestyle{empty}
+  \begin{tikzpicture}
+    \tikzstyle{module} = [rectangle, draw, fill=kit-green50, 
+      text width=10em, text centered, rounded corners]
+  
+  
+    \node[cloud = kit-blue50] (segments) {Segments};
+    \node[cloud = kit-red50, right =6 of segments] (tracks) {Tracks};
+    \node[right =3 of segments] (dummy) {};
+    \begin{scope}[on background layer]
+      \node[module, below =1.5 of dummy, header = match] (match) {Segment Track Filter First Step};
+      \node[module, below =3 of segments, header = filterSegments] (filterSegments) {Background Segment Filter};
+      \node[module, below =1 of filterSegments, header = filterNew] (filterNew) {New Segment Filter};
+      \node[module, below =5 of match, header = combine] (combine) {Segment Track Filter Second Step};
+      \node[header node, below =5 of filterSegments] (clearAndRecover) {clearAndRecover};
+      \node[module, below =11 of tracks, header = filterTracks] (filterTracks) {Track Filter};
+    \end{scope}
+    
+    
+    
+    
+%     \node[module] (simulation) {Simulation};
+%     \node[module, below=.75 of simulation] (background) {Background Hit Finder Module};
+%     \node[module, below left=.25 of background] (legendre) {Legendre Quad Tree};
+%     \node[module, below=.1 of legendre] (stereo) {Stereo Quad Tree};
+%     \node[module, below right=.25 of background] (local) {Segment Finder};
+%     \node[module, below=2.5 of background] (combiner) {Combiner and Matcher};
+%     \node[module, below=.75 of combiner] (genfit) {Genfit};
+%     \draw[vecArrow] (simulation) -- (background) node [midway, auto=false, anchor=west] {All CDCHits};
+    \draw[vecArrow, kit-blue50] (segments) -- (match.north west);
+    \draw[vecArrow, kit-red50] (tracks) -- (match.north east);
+    \draw[thick, kit-blue50] (match) -- (filterSegments) -- (header-filterNew);
+    \draw[vecArrow, kit-blue50] (filterNew) -- (combine.north west);
+    \draw[vecArrow, kit-red50] (tracks) -- (combine.north east);
+    \draw[vecArrow, kit-blue50] (combine) -- (clearAndRecover);
+    \draw[vecArrow, kit-red50] (combine) -- (header-filterTracks);
+%     \draw[vecArrow] (background) -- (local);
+%     \draw[vecArrow] (stereo) -- (combiner);
+%     \draw[vecArrow] (local) -- (combiner);
+%     \draw[vecArrow] (combiner) -- (genfit);
+
+    
+    \end{tikzpicture}
+\end{document}

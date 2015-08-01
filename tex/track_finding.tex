@@ -1,0 +1,28 @@
+\chapter{Track Finder Theory and Multivariate Classification}
+
+Before explaining the implemented changes to the track finder for the Belle II experiment in more detail, the principles of the Belle II software framework are explained briefly. More information can be found elsewere \todo{quote}. Afterwards common figures of merit for all track finders are explained and discussed and the working principles of the already implemented track finders are illustrated. 
+
+\section{The Belle II Analysis Framework (\texttt{basf2})}
+
+For simulation, data aquisition, data processing and analysis of the Belle II experiment the Belle Analysis Software Framework 2 (\texttt{basf2}) is used. Although - guided by its name - it seems to be build on top of the old software framework used for the Belle experiment it is a complete rewrite of the software using modern programming principles in the coding languages C++ and Python 2.7. Together with external programming libraries like ROOT or EvtGen thare are already on the market this frameworkbuilds the base for every software written for the experiment. \todo{quotes}
+
+The software is devided into several packages - each serving a single purpose or summerizing code for a single detector. Examples for the packages are cdc, svd or the tracking packaged which is described in more detail in later chapters.
+
+Each usage of the Belle Analysis Software Framework - if it is either a simulation, a reconstruction or an analysis does not matter - consists of processing one or more so called \emph{paths} build with \emph{modules}. These modules perform a dedicated small task like simulating the hard scattering event (the so called \texttt{EvtGen} module), writing out data to a root file (the module is called \texttt{RootOutput}) or performing a track reconstruction (for example with the module \texttt{TrackFinderCDCAutomaton}). The presence, the order and the paramters of the modules are determined in \emph{steering} files written with python. The modules itself can be written in C++ or python. 
+
+In these steering files a path is created, filled and passed to the framework which handles loading the corresponding C++ libraries and calling the modules for every event that should be processed. An example of a small steering file for track fidning can be found in listing \ref{lis-steering-file}. \todo{listing} Caused by this extremly modular structure not only parallel processing but also debugging of intermediate steps can be performaed much easier.
+
+Because many modules need the data produces by other modules before there is a need for intermodular communication. This communication is performed within the framework with the help of the data store. This class as a wrapper around a collection of named \texttt{TClonesArrays} from the ROOT library \todo{quote} which can store lists of instances of nearly arbitrary C++ classes. It is used widely in the framework to store all sorts of things like the hit information produced by the particles in the simulation or the found tracks after the track finding modules. The modules have read and write access to every so called store array in the data store. A vizualisation of the data flow between the modules created with the steering file in \ref{lis-steering-file} can be found in figure \ref{fig-viz-datastore}. The data store can be written to or read from disk using ROOTs own serialisation mechanism together with data member dictionaries for the C++ classes created by the C++ interpreter of ROOT called CINT.
+
+\section{The used Figures Of Merit}
+
+
+
+\section{Working Principle of the implemented Track Finder in \texttt{basf2}}
+Global vs Local
+\subsection{The Legendre Track Finder}
+Legendre Principle, QuadTree, Stereo
+\subsection{The Local Track Finder}
+Clusterizer, Automaton-Principle
+\section{Multivariate Classification}
+Classification, BDTs

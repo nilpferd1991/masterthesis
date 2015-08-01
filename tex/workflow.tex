@@ -1,0 +1,40 @@
+\chapter{Track Finding in \texttt{basf2}}
+
+After having described the principle of the track finders implemented in \basf in the previous chapters we can now go on to show the actual implementation. The two track finders were already written and one of the tasks of this thesis was to put them together and improve them. Because we want to make use of the benefits of both track finders we use the workflow shown in figure \ref{fig-workflow}. The shown steps are all described in more detail further down.
+
+\begin{figure}
+ \caption{The proposed workflow and combination of the two track finders in basf2. The green boxes refer more or less to one module. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
+ \label{fig-workflow}
+\end{figure}
+
+
+\section{The \texttt{TrackFindingCDC} Package}
+Common code basis
+
+\section{The Background Hit Finder}
+
+\section{Improvements on the Legendre Track Finder}
+\subsection{The class \texttt{QuadTreeProcessorTemplate}}
+\subsection{Postprocessing after the track finding}
+\subsection{Results}
+Timing
+
+\section{Improvements on the Stereo Hit Finder}
+\subsection{Principle of the StereoQuadTree}
+\subsection{Results}
+Timing
+
+\section{The \texttt{SegmentTrackCombinerModule}}
+\subsection{Principle of the Segment Track Combiner}
++ Task
+\subsection{Used Filters}
+\subsection{Results}
+
+\section{Further Approaches}
+\subsection{A quad tree for segments}
+\subsection{Filter for tracks}
+\subsection{VXD-Merger??}
+
+\section{Additional software changes}
+\subsection{The class \texttt{RecoTrack}}
+\subsection{The \texttt{ipython\_handler}}

@@ -1,0 +1,127 @@
+%% ---------------------------------
+%% | Information about the thesis  |
+%% ---------------------------------
+
+\newcommand{\myname}{Nils Braun}
+\newcommand{\mytitle}{Title \\[0.75cm]
+		\huge{Title}}
+\newcommand{\myinstitute}{Institut für experimentelle Kernphysik (IEKP)}
+\newcommand{\myinstituteen}{Institut of Experimental Nuclear Physics (IEKP)}
+
+\newcommand{\reviewerone}{Prof. Dr. Michael Feindt}
+\newcommand{\reviewertwo}{Prof. Dr. Ulrich Husemann}
+
+\newcommand{\timestart}{November 2014}
+\newcommand{\timeend}{November 2015}
+\newcommand{\submissiontime}{DATUM}
+
+%% -------------------------------
+%% |  Information for PDF file   |
+%% -------------------------------
+\hypersetup{
+	pdfauthor={Nils Braun},
+	pdftitle={},
+	pdfsubject={},
+	pdfkeywords={}
+}
+
+
+%% --------------------------------
+%% | Settings for word separation |
+%% --------------------------------
+% Help for separation:
+% In german package the following hints are additionally available:
+% "- = Additional separation
+% "| = Suppress ligation and possible separation (e.g. Schaf"|fell)
+% "~ = Hyphenation without separation (e.g. bergauf und "~ab)
+% "= = Hyphenation with separation before and after
+% "" = Separation without a hyphenation (e.g. und/""oder)
+
+% Describe separation hints here:
+\hyphenation{
+} 
+
+
+\LetLtxMacro{\oldtodo}{\todo}
+\renewcommand{\todo}[2][]{\oldtodo[inline, #1]{#2}}
+
+% Listen
+\newcounter{RRR}
+\newenvironment{Rlist}{
+  \begin{list}{(\Roman{RRR})}{
+      \usecounter{RRR}\setlength{\leftmargin}{8mm}\setlength{\labelsep}{2mm}
+    }
+}{\end{list}}
+
+\newcounter{rrr}
+\newenvironment{rlist}{
+  \begin{list}{(\roman{rrr})}{
+      \usecounter{rrr}\setlength{\leftmargin}{8mm}\setlength{\labelsep}{2mm}
+    }
+}{\end{list}}
+
+\newcounter{zzz}
+\newenvironment{zlist}{
+  \begin{list}{(\arabic{zzz})}{
+      \usecounter{zzz}\setlength{\leftmargin}{8mm}\setlength{\labelsep}{2mm}
+    }
+}{\end{list}}
+
+\newcounter{abc}
+\newenvironment{alist}{
+  \begin{list}{(\alph{abc})}{
+      \usecounter{abc}\setlength{\leftmargin}{8mm}\setlength{\labelsep}{2mm}
+    }
+}{\end{list}}
+
+% Mathematische Symbole
+\newcommand{\nM}{\mathbb}
+\newcommand{\nR}{\mathbb{R}}
+\newcommand{\nN}{\mathbb{N}}
+\newcommand{\nZ}{\mathbb{Z}}
+\newcommand{\nQ}{\mathbb{Q}}
+\newcommand{\nC}{\mathbb{C}}
+\newcommand{\nK}{\mathbb{K}}
+\newcommand{\nF}{\mathbb{F}}
+\newcommand{\nullel}{\mathcal{O}}
+\newcommand{\einsel}{\mathds{1}}
+
+\newcommand{\summe}[2]{\sum\limits_{#1}^{#2}}
+
+\newcommand{\coss}[1]{\cos\left( #1 \right)}
+\newcommand{\sinn}[1]{\sin\left( #1 \right)}
+\newcommand{\psumme}{\sum\limits_{n=0}^{\infty}}
+
+
+\newcommand{\limesn}{\lim\limits_{n\to\infty}}
+\newcommand{\limesx}{\lim\limits_{x\to\infty}}
+\newcommand{\limesp}[1]{\lim\limits_{#1\to\infty}}
+\newcommand{\limespfeil}[1]{\xrightarrow[#1\to\infty]{}}
+\newcommand{\limesto}[2]{\lim\limits_{#1 \to #2}}
+\newcommand{\limes}[1]{\lim\limits_{#1}}
+\newcommand{\limespfeilto}[1]{\xrightarrow[#1]{}}
+\newcommand{\limesw}[1]{\xrightarrow[#1]{W}}
+
+
+
+
+
+\newcommand{\dd}[2]{\frac{\mathrm d#1}{\mathrm d#2}}
+\newcommand{\pp}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\ddx}{\frac{\mathrm d}{\mathrm dx}}
+\newcommand{\ddt}[1]{\frac{\mathrm d #1}{\mathrm dt}}
+\newcommand{\ddn}[2]{\frac{\mathrm{d}^{#2}}{\mathrm{d}#1^{#2}}}
+\newcommand{\ddxn}[1]{\frac{\mathrm{d}^{#1}}{\mathrm{d} x^{#1}}}
+\newcommand{\bint}[2]{\int\limits_{#1}^{#2}}
+\newcommand{\aint}[1]{\int\limits_{#1}^{}}
+\newcommand{\intd}{\ \mathrm d}
+\renewcommand{\div}{\text{div }}
+\newcommand{\rot}{\text{rot }}
+
+\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
+
+\newcommand{\LL}{\mathcal{L}}
+
+\newcommand{\grad}{\text{grad} \ }
+
+\newcommand{\basf}{\texttt{basf2}}
