@@ -1,4 +1,40 @@
-\providecommand{\href}[2]{#2}\begingroup\raggedright\begin{thebibliography}{1}
+\providecommand{\href}[2]{#2}\begingroup\raggedright\begin{thebibliography}{10}
+
+\bibitem{tdr}
+{\bfseries Belle II Collaboration}, T.~{Abe} {\em et~al.}, ``{Belle II
+  Technical Design Report},'' tech. rep., 2010.
+\newblock \href{http://arxiv.org/abs/1011.0352}{{\ttfamily arXiv:1011.0352
+  [physics.ins-det]}}.
+
+\bibitem{christian}
+C.~Pulvermacher, ``{dE/dx particle identification and pixel detector data
+  reduction for the Belle II experiment},'' Master's thesis, KIT, 2012.
+\newblock \url{https://ekp-invenio.physik.uni-karlsruhe.de/record/48263}.
+
+\bibitem{grupen}
+C.~Grupen, A.~B{\"o}hrer, and L.~Smol{\'i}k, {\em Particle Detectors}.
+\newblock Cambridge monographs on particle physics, nuclear physics, and
+  cosmology. Cambridge University Press, 1996.
+
+\bibitem{bethe}
+H.~Bethe and J.~Ashkin, ``{Passage of radiation throgh matter},'' {\em
+  Experimental Nuclear Physics} {\bfseries 1} no.~II, (1953) .
+
+\bibitem{cdc_design}
+{\bfseries {KEK High energy accelorator research organisation}}, ``{New
+  electronics tested for Belle II central drift chamber},''.
+  \url{http://www2.kek.jp/proffice/archives/feature/2010/pdf/BelleIICDCDesign.pdf}.
+
+\bibitem{oliver}
+O.~Frost, ``{A Local Tracking Algorithm for the Central Drift Chamber of Belle
+  II},'' Master's thesis, KIT, 2013.
+\newblock \url{http://ekp-invenio.physik.uni-karlsruhe.de/record/48172}.
+
+\bibitem{cpp}
+{\bfseries {International Organization for Standardization (ISO)}}, ``{ISO
+  International Standard ISO/IEC 14882:2014(E) – Programming Language C++},''
+  2014.
+\newblock \url{https://isocpp.org/std/the-standard}.
 
 \bibitem{python}
 {\bfseries {Python Software Foundation}}, ``{Python 2.7 pogramming language},''
@@ -20,16 +56,15 @@ D.~Lange, ``{The EvtGen particle decay simulation package},''
 ``{ROOT} documentation for {TClonesArray}.''
 \newblock \url{https://root.cern.ch/root/html/TClonesArray.html}.
 
+\bibitem{cint}
+``{ROOT} documentation for {CINT}.''
+\newblock \url{https://root.cern.ch/drupal/content/cint}.
+
 \bibitem{kronenbitter}
 B.~Kronenbitter, {\em Measurement of the branching fraction of $B^+ \to \tau^+
   \nu_\tau$ decays at the Belle experiment}.
 \newblock PhD thesis, KIT, 2014.
 \newblock \url{https://ekp-invenio.physik.uni-karlsruhe.de/record/48604}.
-
-\bibitem{oliver}
-O.~Frost, ``{A Local Tracking Algorithm for the Central Drift Chamber of Belle
-  II},'' Master's thesis, KIT, 2013.
-\newblock \url{http://ekp-invenio.physik.uni-karlsruhe.de/record/48172}.
 
 \bibitem{legendre}
 T.~Alexopoulos, M.~Bachtis, E.~Gazis, and G.~Tsipolitis, ``{Implementation of
@@ -38,5 +73,9 @@ T.~Alexopoulos, M.~Bachtis, E.~Gazis, and G.~Tsipolitis, ``{Implementation of
 \href{http://dx.doi.org/10.1016/j.nima.2008.04.038}{{\em Nucl. Instrum. Meth.}
   {\bfseries A592} (2008) 456--462}.
 %%CITATION = NUIMA,A592,456;%%.
+
+\bibitem{viktor_dpg}
+V.~Trusov, ``{Applying Legendre transformation method for Belle II tracking},''
+  {\em {DPG spring meeting}} (2014) .
 
 \end{thebibliography}\endgroup

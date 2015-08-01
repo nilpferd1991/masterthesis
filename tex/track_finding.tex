@@ -1,6 +1,6 @@
 \chapter{Track Finder Theory and Multivariate Classification}
 
-Before explaining the implemented changes to the track finder for the Belle II experiment in more detail, the principles of the Belle II software framework are explained briefly. More information can be found elsewere \todo{quote}. Afterwards common figures of merit for all track finders are explained and discussed and the working principles of the already implemented track finders are illustrated. 
+Before explaining the implemented changes to the track finder for the Belle II experiment in more detail, the principles of the Belle II software framework are explained briefly. More information can be found elsewere \cite{tdr}. Afterwards common figures of merit for all track finders are explained and discussed and the working principles of the already implemented track finders are illustrated. 
 
 \section{The Belle II Analysis Framework (\texttt{basf2})}
 
@@ -10,9 +10,24 @@ The software is divided into several packages - each serving a single purpose or
 
 Each usage of the Belle Analysis Software Framework - if it is either a simulation, a reconstruction or an analysis does not matter - consists of processing one or more so called \emph{paths} build with \emph{modules}. These modules perform a dedicated small task like simulating the hard scattering event (the so called \texttt{EvtGen} module), writing out data to a root file (the module is called \texttt{RootOutput}) or performing a track reconstruction (for example with the module \texttt{TrackFinderCDCAutomaton}). The presence, the order and the parameters of the modules are determined in \emph{steering} files written with python. The modules itself can be written in C++ or python. 
 
-In these steering files a path is created, filled and passed to the framework which handles loading the corresponding C++ libraries and calling the modules for every event that should be processed. An example of a small steering file for track finding can be found in listing \ref{lis-steering-file}. \todo{listing} Caused by this extremely modular structure not only parallel processing but also debugging of intermediate steps can be performed much easier.
+In these steering files a path is created, filled and passed to the framework which handles loading the corresponding C++ libraries and calling the modules for every event that should be processed. An example of a small steering file for track finding can be found in listing \ref{lis-steering-file}. Caused by this extremely modular structure not only parallel processing but also debugging of intermediate steps can be performed much easier.
 
-Because many modules need the data produces by other modules before there is a need for intermodular communication. This communication is performed within the framework with the help of the data store. This class as a wrapper around a collection of named \texttt{TClonesArrays} from the ROOT library \cite{tclonesarray} which can store lists of instances of nearly arbitrary C++ classes. It is used widely in the framework to store all sorts of things like the hit information produced by the particles in the simulation or the found tracks after the track finding modules. The modules have read and write access to every so called store array in the data store. A visualization of the data flow between the modules created with the steering file in \ref{lis-steering-file} can be found in figure \ref{fig-viz-datastore}. The data store can be written to or read from disk using ROOTs own serialization mechanism together with data member dictionaries for the C++ classes created by the C++ interpreter of ROOT called CINT.
+Because many modules need the data produces by other modules before there is a need for intermodular communication. This communication is performed within the framework with the help of the data store. This class as a wrapper around a collection of named \texttt{TClonesArrays} from the ROOT library \cite{tclonesarray} which can store lists of instances of nearly arbitrary C++ classes. It is used widely in the framework to store all sorts of things like the hit information produced by the particles in the simulation or the found tracks after the track finding modules. The modules have read and write access to every so called store array in the data store. A visualization of the data flow between the modules created with the steering file in \ref{lis-steering-file} can be found in figure \ref{fig-viz-datastore}. The data store can be written to or read from disk using ROOTs own serialization mechanism together with data member dictionaries for the C++ classes created by the C++ interpreter of ROOT called CINT \cite{cint}.
+
+\begin{listing}
+ \todo{missing}
+ \caption{Python steering file to create a typical basf2 path. After loading the needed python libraries the path is created and filled with the modules. In the end this path is processed and for each event the modules are executed in the given order and with their given parameters. For more information on the used modules see their documentations.}
+ \label{lis-steering-file}
+\end{listing}
+
+
+\begin{figure}
+ \todo{missing}
+ \caption{The visualization of the intermodular communication while processing the path implemented with the steering file described in listing \ref{lis-steering-file}.}
+ \todo{More text}
+ \label{fig-viz-datastore}
+\end{figure}
+
 
 \section{Working Principle of the implemented CDC Track Finder in \texttt{basf2}}
 
@@ -28,11 +43,28 @@ The principle of using the legendre transformation for tracking algorithms in hi
 The idea is now to transform the $x$ and $y$ coordinate pair of every axial wire hit together with the drift length $R$ with the function
 \begin{align*} x' = \frac{2x}{x^2 + y^2 - R^2} \qquad y' = \frac{2y}{x^2 + y^2 - R^2}  \qquad R' = \frac{2R}{x^2 + y^2 - R^2} \end{align*}
 $$r = x' \cos(\theta) + y' \sin(\theta) \pm R'$$
-into the legendre space as it can be seen in figure \ref{fig-legendre-explained}. In the first step, the wire hits are transformed to the inverted plane. With this transformation each circular trajectory through the interaction point is mapped onto a line going through the origin. After that each drift circle is transformed into a pair of sinusoidal functions. This function is constructed in that way to use the fact that each trajectory of a charged particle responsible for a wire hit must touch the drift circle tangentially. Each point on the constructed sinusoidal functions correspond to one possible trajectory of a particle which could have created such a hit. The coordinates in the legendre space are the two parameters describing the trajectory as mentioned before. There are two sinusoidal functions because the osculation point can be on the far or the near side of the drift circle - the trajectory circle can contain the drift circle or not.
+into the legendre space as it can be seen in figure \ref{fig-legendre-explained}. In the first step, the wire hits are transformed to the inverted plane. With this transformation each circular trajectory through the interaction point is mapped onto a line going through the origin. After that each drift circle is transformed into a pair of sinusoidal functions. This function is constructed in that way to use the fact that each trajectory of a charged particle responsible for a wire hit must touch the drift circle tangentially. Each point on the constructed sinusoidal functions correspond to one possible trajectory of a particle which could have created such a hit. The coordinates in the legendre space are related to the two parameters describing the trajectory as mentioned before. There are two sinusoidal functions because the osculation point can be on the far or the near side of the drift circle - the trajectory circle can contain the drift circle or not.
 
-With using the information of a single hit one ends up with an infinite number of trajectory hypothesis. But as a charged particle passed many drift cells until it leaves the CDC detector - in some cases up to 100 hits - several wire hits are created with the same trajectory parameters. As these same parameters correspond to the same point in the legendre space, the sinusoidal functions of the wire hits intersect in this point as it can be seen in figure \ref{fig-legendre-many}. The task of the legendre algorithm is now to do the transformation of the hit coordinates and find those intersections.
+\begin{figure}
+ \centering
+ \includegraphics[scale=0.2]{figures/theory/legendre_1.png}
+ \includegraphics[scale=0.2]{figures/theory/legendre_2.png}
+ \includegraphics[scale=0.2]{figures/theory/legendre_3.png}
+ \caption{Transformation of some wire hits belonging to the same charge particle (left side) to the inverted plane (middle) and to the legendre space with the sinusoidal functions (right). As described in the text, the circular trajectory is first transformed into lines and then into intersecting sinograms. The intersection corresponds to the parameters of the trajectory and are marked with a red circle.}
+ \label{fig-legendre-explained}
+\end{figure}
 
-Imperfections due to energy loss and material effects make the sinusoidal function not interact in one single point but rather in smeared area. To copy with this problem but still find the intersections with a good performance a peak search in the legendre space is applied. The legendre space is divided into small bins. For each bin the number of sinusoidal functions passing this area is counted. The bin with the highest weight is assumed to be the bin with the highest number of sinusoidal intersections. From the wire hits contributing to this bin a new track is created and the search is repeated until a threshold in the bin entry is undercut. As the legendre space is mostly empty this procedure can be further improved in performance by refining the bin devision from very coarse bin sizes to finer ones only for those bins which have a certain amount of sinusoidal functions in them. Because these bins are divided into 4 subbins the concept is also called a quad tree search. The whole search is depicted in figure \ref{fig-quad-tree-seach}.
+With using the information of a single hit one ends up with an infinite number of trajectory hypothesis. But as a charged particle passed many drift cells until it leaves the CDC detector - in some cases up to 100 hits - several wire hits are created with the same trajectory parameters. As these same parameters correspond to the same point in the legendre space, the sinusoidal functions of the wire hits intersect in this point as it can also be seen in figure \ref{fig-legendre-explained}. The task of the legendre algorithm is now to do the transformation of the hit coordinates and find those intersections.
+
+Imperfections due to energy loss and material effects make the sinusoidal function not interact in one single point but rather in smeared area. To copy with this problem but still find the intersections with a good performance a peak search in the legendre space is applied. The legendre space is divided into small bins. For each bin the number of sinusoidal functions passing this area is counted. The bin with the highest weight is assumed to be the bin with the highest number of sinusoidal intersections. From the wire hits contributing to this bin a new track is created and the search is repeated until a threshold in the bin entry is undercut. As the legendre space is mostly empty this procedure can be further improved in performance by refining the bin devision from very coarse bin sizes to finer ones only for those bins which have a certain amount of sinusoidal functions in them. Because these bins are divided into 4 subbins the concept is also called a quad tree search. The whole search is depicted in figure \ref{fig-quad-tree-search}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/theory/quad_tree.png}
+  \caption{Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite{viktor_dpg}.}
+  \label{fig-quad-tree-search}
+\end{figure}
+
 
 \subsubsection{Stereo Hit Finding}
 
@@ -55,7 +87,8 @@ The last class should be quite clear and is measured by the basf2-own measuring 
 The other two classes can best be described with the algorithm how they get computed. It starts with a full Monte Carlo simulation of generic BB events with the full detector simulation afterwards. The created hits can then be parted into distinct sets - each describing a simulated tracks, called MCTrackCand (they are called track candidates to fit the naming convention of the track finder). Only those tracks are kept as a MCTrackCand, that have at least 3 hits in the CDC - otherwise they can not be fitted and even if there were a chance to find them via track finding, they could not be used for physics. After that, the simulated hits with the stripped MC information are used for track finding with the method to be evaluated. This can be done easily as the simulated hits are transformed in a format that is similar to the format that will be used later for the data coming from the experiment. After the track finder has produced a list of track candidates also, we can use the saved MC information to match tracks from the track finder to tracks from the mc algorithm (also called MC track finder) by counting the number of hits they share. The different cases are depicted and described in table \ref{tab-mc-track-finder}.
 
 \begin{table}
-  \begin{tabular}{m{0.4\linewidth}m{0.55\linewidth}} \toprule
+  \centering
+  \begin{tabular}{m{0.4\linewidth}m{0.5\linewidth}} \toprule
     \centering \includegraphics[width=0.8\linewidth]{figures/theory/fom_found.pdf} & There is a one to one connection between a MCTrackCand and a track from the track finder. The MCTrackCand is labeled found and the other track is labeled matched. \\ \midrule
     \centering \includegraphics[width=0.8\linewidth]{figures/theory/fom_clone.pdf} & The MCTrackCand is found twice. The track from the track finder with the higher percentage (the green one in this example) is labeled matched, the other one cloned. The MCTrackCand is nevertheless labeled found. \\  \midrule
     \centering \includegraphics[width=0.8\linewidth]{figures/theory/fom_fake.pdf} & The track from the track finder is created with hits from many different MCTrackCands. As none of the corresponding hit ratios exceeds 66 \%, the track is called fake. There is no precise reason why the number 66\% was chosen. The hit ratios of the MCTrackCands itself do not play any role here. TODO: Is found for MC possible? \\  \midrule

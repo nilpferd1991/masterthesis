@@ -1,5 +1,20 @@
 \select@language {english}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces \cite {tdr}\relax }}{2}{figure.caption.2}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Scheme showing the planned Belle II detector in top view. The single measuring devices are shown with their names. Some more information on the tracking devices can be found in the text. Taken from \cite {christian}.\relax }}{4}{figure.caption.3}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Simulation of the electron field in an extract of the wires in the central drift chamber. The violet circles depict the field wires whereas the red small points are the sense wires. The yellow paths are examples for the drift paths of ionized electrons. This simulation includes the distortion by the magnetic field. Taken from \cite {cdc_design}.\relax }}{5}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Drawing sketching the axial (top) and stereo wires in the CDC. The skewing against the beamline of the stereo (bottom) wires is exaggerated. Taken from \cite {oliver}.\relax }}{6}{figure.caption.4}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Simulated event of the passage of 10 $\Ppi ^\pm $ with approximately $\unit [10]{GeV}$ through the CDC shown in a plane perpendicular to the beam axis. The interaction point is drawn as a black cirlce in the center. Each particle is colored differently to distinguish between them. Only the CDC detector is shown for better visuability. The wires are shown as gray (stereo) or black (axial) points. The hitten wires are depicted with their drift circles. The appearing disruption in the circular paths of the particle araise due to the stereo and axial wires.\relax }}{6}{figure.caption.5}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces The visualization of the intermodular communication while processing the path implemented with the steering file described in listing \ref {lis-steering-file}.\relax }}{8}{figure.caption.7}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Transformation of some wire hits belonging to the same charge particle (left side) to the inverted plane (middle) and to the legendre space with the sinusoidal functions (right). As described in the text, the circular trajectory is first transformed into lines and then into intersecting sinograms. The intersection corresponds to the parameters of the trajectory and are marked with a red circle.\relax }}{9}{figure.caption.10}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite {viktor_dpg}.\relax }}{10}{figure.caption.11}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Proposed workflow in the CDC tracking}}{13}{figure.caption.13}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
