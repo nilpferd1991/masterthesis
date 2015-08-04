@@ -3,50 +3,49 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis.aux
 The style file: class/utphys.bst
 Database file #1: class/bibliography.bib
-Warning--I didn't find a database entry for "victor_dpg"
 Warning--empty institution in tdr
 Warning--empty pages in bethe
 Warning--empty author in cdc_design
 Warning--empty pages in viktor_dpg
-You've used 15 entries,
+You've used 20 entries,
             2326 wiz_defined-function locations,
-            645 strings with 6223 characters,
-and the built_in function-call counts, 3009 in all, are:
-= -- 331
-> -- 74
+            676 strings with 6919 characters,
+and the built_in function-call counts, 4162 in all, are:
+= -- 461
+> -- 108
 < -- 0
-+ -- 33
-- -- 18
-* -- 214
-:= -- 388
-add.period$ -- 27
-call.type$ -- 15
-change.case$ -- 14
++ -- 47
+- -- 27
+* -- 288
+:= -- 538
+add.period$ -- 39
+call.type$ -- 20
+change.case$ -- 19
 chr.to.int$ -- 0
-cite$ -- 19
-duplicate$ -- 157
-empty$ -- 355
-format.name$ -- 18
-if$ -- 789
+cite$ -- 24
+duplicate$ -- 220
+empty$ -- 490
+format.name$ -- 27
+if$ -- 1092
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 25
-newline$ -- 62
-num.names$ -- 10
-pop$ -- 80
+int.to.str$ -- 20
+missing$ -- 33
+newline$ -- 83
+num.names$ -- 15
+pop$ -- 114
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 77
+skip$ -- 103
 stack$ -- 0
-substring$ -- 84
-swap$ -- 31
+substring$ -- 116
+swap$ -- 43
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 4
-while$ -- 18
-width$ -- 17
-write$ -- 133
-(There were 5 warnings)
+while$ -- 26
+width$ -- 22
+write$ -- 182
+(There were 4 warnings)

@@ -61,8 +61,8 @@ D.~Lange, ``{The EvtGen particle decay simulation package},''
 \newblock \url{https://root.cern.ch/drupal/content/cint}.
 
 \bibitem{kronenbitter}
-B.~Kronenbitter, {\em Measurement of the branching fraction of $B^+ \to \tau^+
-  \nu_\tau$ decays at the Belle experiment}.
+B.~Kronenbitter, {\em {Measurement of the branching fraction of $B^+ \to \tau^+
+  \nu_\tau$ decays at the Belle experiment}}.
 \newblock PhD thesis, KIT, 2014.
 \newblock \url{https://ekp-invenio.physik.uni-karlsruhe.de/record/48604}.
 
@@ -74,8 +74,34 @@ T.~Alexopoulos, M.~Bachtis, E.~Gazis, and G.~Tsipolitis, ``{Implementation of
   {\bfseries A592} (2008) 456--462}.
 %%CITATION = NUIMA,A592,456;%%.
 
+\bibitem{hough}
+H.~C, ``Method and means for recognizing complex patterns,'' Dec.~18, 1962.
+\newblock \url{https://www.google.com/patents/US3069654}. US Patent 3,069,654.
+
 \bibitem{viktor_dpg}
 V.~Trusov, ``{Applying Legendre transformation method for Belle II tracking},''
   {\em {DPG spring meeting}} (2014) .
+
+\bibitem{genfit}
+C.~Höppner, S.~Neubert, B.~Ketzer, and S.~Paul, ``{A Novel Generic Framework
+  for Track Fitting in Complex Detector Systems},''
+  \href{http://dx.doi.org/10.1016/j.nima.2010.03.136}{{\em Nucl. Instrum.
+  Meth.} {\bfseries A620} (2010) 518--525},
+\href{http://arxiv.org/abs/0911.1008}{{\ttfamily arXiv:0911.1008 [hep-ex]}}.
+%%CITATION = ARXIV:0911.1008;%%.
+
+\bibitem{cowan}
+G.~Cowan, {\em Statistical Data Analysis}.
+\newblock Oxford Science Publications. Clarendon Press, 1998.
+
+\bibitem{blobel}
+V.~Blobel and E.~Lohrmann, {\em Statistische und numerische Methoden der
+  Datenanalyse}.
+\newblock Teubner, 1998.
+
+\bibitem{keck}
+T.~Keck, ``{The Full Event Interpretation for Belle II},'' Master's thesis,
+  {Karlsruher Institut für Technologie (KIT)}, 2014.
+\newblock \url{https://ekp-invenio.physik.uni-karlsruhe.de/record/48602}.
 
 \end{thebibliography}\endgroup

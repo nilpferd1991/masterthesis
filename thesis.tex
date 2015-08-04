@@ -10,31 +10,31 @@
   \frontmatter
   \pagenumbering{Roman}
   \input{class/titlepage}
-  \input{class/declaration}
+%   \input{class/declaration}
 
   \tableofcontents
 
   % Hauptteil
   \mainmatter
 
-  \input{tex/introduction}
-   \input{tex/experimental_setup}
+%   \input{tex/introduction}
+  \input{tex/experimental_setup}
   \input{tex/track_finding}
-  \input{tex/workflow}
-  \input{tex/results}
-  \input{tex/vxd}
-  \input{tex/summary}
+%   \input{tex/workflow}
+%   \input{tex/results}
+%   \input{tex/vxd}
+%   \input{tex/summary}
 
   % Anhang
-  \input{tex/thanks}
-  \appendix
-  \input{class/appendix}
+%   \input{tex/thanks}
+%   \appendix
+%   \input{class/appendix}
 
-  \bgroup\let\addcontentsline=\nocontentsline\listoffigures\egroup  
-  \bgroup\let\addcontentsline=\nocontentsline\listoftables\egroup
+%   \bgroup\let\addcontentsline=\nocontentsline\listoffigures\egroup  
+%   \bgroup\let\addcontentsline=\nocontentsline\listoftables\egroup
 
   \bibliographystyle{class/utphys}
-  \bgroup\let\addcontentsline=\nocontentsline\chapter{Bibliography}\egroup
-  \bibliography{class/bibliography}
+  \bgroup\let\addcontentsline=\nocontentsline\bibliography{class/bibliography}\egroup
+  
 
 \end{document}
