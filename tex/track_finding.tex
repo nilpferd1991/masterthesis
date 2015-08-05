@@ -128,9 +128,18 @@ The fake and clone rates are just the number of track candidates labeled as fake
 
 The track finding algorithms have the task to partition the measured hits into sets with each set forming a single track candidate. After that the purpose of a track fitting algorithm is to fit a model for the trajectory to the measured information of the hits to gain the particles properties like the momentum or the vertex position. The model used for the fit can be very easy without taken into account material effects or energy loss. The track fitting algorithms implemented in \texttt{basf2} however try take care of the interaction of the particles with material correctly by using the same algorithms in fitting that were used for simulating the detector geometry. As the simulation itself depends strongly on the track parameters this implies resimulating the particle with every fitting step. This procedure of stepping through the measurements iteratively fits perfectly well to the Kalman fitter algorithm used as the main procedure. 
 
-\todo{Kalman beschreiben, DAF beschreiben}
+The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively adding measurements (in this case the hits) to the current state of the trajectory. Therefore the parameters change with every newly added hit and should in principle converge to the correct trajectory parameters. This is done by extrapolating a mode of the trajectory with the current parameters to the position of the next hit measurement and comparing this extrapolated position with the real hit position. The deviation together with the errors of the measurement can be used to calculate new parameters for the trajectory. By transversing back and forth several times through the whole hit set the final parameter estimation is found. One step in this procedure is depicted in figure \ref{fig-kalman}.
 
-The fitting procedures are implemented into \texttt{basf2} with the external library \texttt{genfit} \cite{genfit} - a library for generic and experiment independent track fitting. Only a small interface for accessing the \texttt{genfit} procedures from the \texttt{basf2} code is implemented. See the chapter on the vxd momentum estimation for more information on this topic.
+\begin{figure}
+ \todo{missing, more text}
+ \caption{Sketch with one step in the kalman fitter procedure.}
+ \label{fig-kalman}
+\end{figure}
+
+When taking into account fake or background hits in a track, the kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a bias on these parameters. Therefore a weighting scheme is applied to all hits after each kalman passage and this weight defines how strong a hit effects the final parameters. There are many different ways to do so including elastic tracking and nonlinear filters. The one currently used for the tracking in the Belle 2 software framework is the \emp{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie \cite{daf}. \todo{describe DAF}.
+
+
+The fitting procedures are implemented into \texttt{basf2} with the external library \texttt{genfit} \cite{genfit} - a library for generic and experiment independent track fitting. Only a small interface for accessing the \texttt{genfit} procedures from the \texttt{basf2} code is implemented. See the chapter on the VXD momentum estimation for more information on this topic.
 
 \section{Multivariate Classification}
 

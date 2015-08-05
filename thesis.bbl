@@ -82,6 +82,11 @@ H.~C, ``Method and means for recognizing complex patterns,'' Dec.~18, 1962.
 V.~Trusov, ``{Applying Legendre transformation method for Belle II tracking},''
   {\em {DPG spring meeting}} (2014) .
 
+\bibitem{kalman}
+R.~E. Kalman, ``{A New Approach to Linear Filtering and Prediction Problems},''
+  {\em {Transactions of the ASME--Journal of Basic Engineering}} {\bfseries 82}
+  no.~Series D, (1960) 35--45.
+
 \bibitem{genfit}
 C.~Höppner, S.~Neubert, B.~Ketzer, and S.~Paul, ``{A Novel Generic Framework
   for Track Fitting in Complex Detector Systems},''
