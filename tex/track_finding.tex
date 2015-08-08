@@ -55,7 +55,6 @@ After that each drift circle is transformed into a pair of sinusoidal functions 
  \includegraphics[scale=0.2]{figures/theory/legendre_2.png}
  \includegraphics[scale=0.2]{figures/theory/legendre_3.png}
  \caption{Transformation of some wire hits belonging to the same charge particle (left side) to the inverted plane (middle) and to the legendre space with the sinusoidal functions (right). As described in the text, the circular trajectory is first transformed into lines and then into intersecting sinograms. Each sinogram includes all possible trajectory parameters which would have touched the hit from which the function was created. The intersection corresponds to the parameters of the trajectory and are marked with a red circle. For better visibility only the wrong half of the sinograms is colored gray.}
- \todo{gray}
  \label{fig-legendre-explained}
 \end{figure}
 
@@ -85,8 +84,11 @@ As the energy loss has more or less no influence on the $z$ motion because of th
 
 
 \begin{figure}
- \todo{missing}
- \caption{Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi$ plane leads to only two possible $z$ positions for each stereo hit (left side). In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in color in the center. They all correspond to a single point in the $\tan \lambda$-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a black dot.}
+ \centering
+ \includegraphics[scale=0.2]{figures/theory/stereo_1.png}
+ \includegraphics[scale=0.2]{figures/theory/stereo_2.png}
+ \includegraphics[scale=0.2]{figures/theory/stereo_3.png}
+ \caption{Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi$ plane leads to only two possible $z$ positions for each stereo hit. On the left side the trajectory together with the stereo wires projected to the $r$-$\phi$ plane is show. In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in color in the center picture. The dark blue track is the correct hypothesis. Each line correspond to a single point in the $\tan \lambda$-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a red diamond. The blue diamonds on the right side correspond to the blue lines in the center.}
  \label{fig-stereo-explained}
 \end{figure}
 
@@ -128,7 +130,7 @@ The fake and clone rates are just the number of track candidates labeled as fake
 
 The track finding algorithms have the task to partition the measured hits into sets with each set forming a single track candidate. After that the purpose of a track fitting algorithm is to fit a model for the trajectory to the measured information of the hits to gain the particles properties like the momentum or the vertex position. The model used for the fit can be very easy without taken into account material effects or energy loss. The track fitting algorithms implemented in \texttt{basf2} however try take care of the interaction of the particles with material correctly by using the same algorithms in fitting that were used for simulating the detector geometry. As the simulation itself depends strongly on the track parameters this implies resimulating the particle with every fitting step. This procedure of stepping through the measurements iteratively fits perfectly well to the Kalman fitter algorithm used as the main procedure. 
 
-The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively adding measurements (in this case the hits) to the current state of the trajectory. Therefore the parameters change with every newly added hit and should in principle converge to the correct trajectory parameters. This is done by extrapolating a mode of the trajectory with the current parameters to the position of the next hit measurement and comparing this extrapolated position with the real hit position. The deviation together with the errors of the measurement can be used to calculate new parameters for the trajectory. By transversing back and forth several times through the whole hit set the final parameter estimation is found. One step in this procedure is depicted in figure \ref{fig-kalman}.
+The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively adding measurements (in this case the positions of the hits associated with this track) to the current state of the trajectory. Therefore the parameters change with every newly added hit and should in principle converge to the correct trajectory parameters. This is done by extrapolating a model of the trajectory with the current parameters to the position of the next hit measurement and comparing this extrapolated position with the real hit position. The deviation together with the errors of the measurement can be used to calculate new parameters for the trajectory. By transversing back and forth several times through the whole hit set the final parameter estimation is found. One step in this procedure with only a small hits set is depicted in figure \ref{fig-kalman}.
 
 \begin{figure}
  \todo{missing, more text}
@@ -136,13 +138,13 @@ The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively ad
  \label{fig-kalman}
 \end{figure}
 
-When taking into account fake or background hits in a track, the kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a bias on these parameters. Therefore a weighting scheme is applied to all hits after each kalman passage and this weight defines how strong a hit effects the final parameters. There are many different ways to do so including elastic tracking and nonlinear filters. The one currently used for the tracking in the Belle 2 software framework is the \emp{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie \cite{daf}. \todo{describe DAF}.
-
+When taking into account fake or background hits in a track, the kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a wrong bias on these parameters. Therefore a weighting scheme is applied to all hits after each kalman passage and this weight defines how strong a hit effects the final parameters. There are many different ways to do so including elastic tracking and nonlinear filters. The one currently used for the tracking in the Belle 2 software framework is the \emph{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie in \cite{daf_fruh}. \todo{describe DAF}.
 
 The fitting procedures are implemented into \texttt{basf2} with the external library \texttt{genfit} \cite{genfit} - a library for generic and experiment independent track fitting. Only a small interface for accessing the \texttt{genfit} procedures from the \texttt{basf2} code is implemented. See the chapter on the VXD momentum estimation for more information on this topic.
 
 \section{Multivariate Classification}
 
-When doing track finding - especially in post processing procedures - many decisions must me made: whether a hit belongs to a track, two tracks should be merged or a track should be dismissed as fake etc. In the context of inefficiencies and fakes due to background hits these decisions can depend on many input variables. Additionally there is the need to have a smooth transition between the two corner cases dismiss all and accept all to allow for subsequent optimization. This problem of deciding between two different possibilities is called classification in statistics and there are many ways to deal with such problems (see for example \cite{cowan} or \cite{blobel}). For most of the classification tasks in the track finding package for the CDC detector a classification algorithm known as \emph{boosted decision trees} (BDT) is used. In the following the mean features are described. See \cite{keck} for more information on the implementation.
+When doing track finding - especially in post processing procedures - many decisions must me made: whether a hit belongs to a track, whether two tracks should be merged, whether a track should be dismissed as fake etc. In the context of inefficiencies and fakes due to background hits these decisions may depend on many input variables. Additionally there is the need to have a smooth transition between the two corner cases dismiss all and accept all to allow for subsequent optimization. This problem of deciding between two different possibilities is called a classification problem in statistics and there are many ways to deal with such problems (see for example \cite{cowan} or \cite{blobel}). For most of the classification tasks in the track finding package for the CDC detector a classification algorithm known as \emph{boosted decision trees} (BDT) is used. In the following the main features are described. See \cite{keck} for more information on the implementation.
 
+The task of a classification algorithm is to decide whether an input element described by a feature vector $\vec x$ belongs to one class of elements or the other - often these classes are the signal and the background class. The classifier maps the multidimensional feature vector $\vec x$ to a one dimensional output variable - often between 0 and 1. 
 \todo{BDTs}

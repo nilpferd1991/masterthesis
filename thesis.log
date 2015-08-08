@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.1)  5 AUG 2015 10:31
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.5.10)  8 AUG 2015 12:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **thesis.tex
 (./thesis.tex
 LaTeX2e <2011/06/27>
-Babel <3.9h> and hyphenation patterns for 78 languages loaded.
+Babel <3.9h> and hyphenation patterns for 7 languages loaded.
 (./class/thesisclass.cls
 Document Class: class/thesisclass 
 (/usr/share/texlive/texmf-dist/tex/latex/koma-script/scrbook.cls
@@ -662,6 +662,8 @@ File: babel.def 2013/12/03 3.9h Babel common definitions
 \babel@savecnt=\count115
 \U@D=\dimen165
 )
+\l@british = a dialect from \language\l@english 
+\l@UKenglish = a dialect from \language\l@english 
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
@@ -1029,11 +1031,7 @@ Package: hypcap 2011/02/16 v1.11 Adjusting the anchors of captions (HO)
 \c@rrr=\count157
 \c@zzz=\count158
 \c@abc=\count159
-) (./thesis.aux
-
-LaTeX Warning: Label `fig-axial-stereo' multiply defined.
-
-)
+) (./thesis.aux)
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -1050,7 +1048,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
- (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count160
 \scratchdimen=\dimen207
@@ -1210,13 +1209,8 @@ Package pdftex.def Info: figures/experimental_setup/detector_crossection_labels
  [1
 
 
-]
-
-LaTeX Warning: Reference `fig-event-display' on page 2 undefined on input line 
-40.
-
-[2 <./figures/experimental_setup/detector_crossection_labels.pdf>]
-<figures/experimental_setup/electronsInCDC.pdf, id=153, 253.1542pt x 222.83255p
+] [2 <./figures/experimental_setup/detector_crossection_labels.pdf>]
+<figures/experimental_setup/electronsInCDC.pdf, id=154, 253.1542pt x 222.83255p
 t>
 File: figures/experimental_setup/electronsInCDC.pdf Graphic file (type pdf)
  <use figures/experimental_setup/electronsInCDC.pdf>
@@ -1224,7 +1218,7 @@ Package pdftex.def Info: figures/experimental_setup/electronsInCDC.pdf used on
 input line 46.
 (pdftex.def)             Requested size: 213.71576pt x 188.1267pt.
 
-<figures/experimental_setup/axialLayers.pdf, id=156, 352.79715pt x 70.92789pt>
+<figures/experimental_setup/axialLayers.pdf, id=157, 352.79715pt x 70.92789pt>
 File: figures/experimental_setup/axialLayers.pdf Graphic file (type pdf)
 
 <use figures/experimental_setup/axialLayers.pdf>
@@ -1232,20 +1226,22 @@ Package pdftex.def Info: figures/experimental_setup/axialLayers.pdf used on inp
 ut line 53.
 (pdftex.def)             Requested size: 352.79628pt x 70.9277pt.
 
-<figures/experimental_setup/stereoLayers.pdf, id=157, 337.39362pt x 87.51123pt>
+<figures/experimental_setup/stereoLayers.pdf, id=158, 337.39362pt x 87.51123pt>
 File: figures/experimental_setup/stereoLayers.pdf Graphic file (type pdf)
 <use figures/experimental_setup/stereoLayers.pdf>
 Package pdftex.def Info: figures/experimental_setup/stereoLayers.pdf used on in
 put line 57.
 (pdftex.def)             Requested size: 337.39278pt x 87.511pt.
 
-<figures/experimental_setup/eventDisplayPionGun.png, id=160, 803.0pt x 803.0pt>
+<figures/experimental_setup/eventDisplayPionGun.png, id=161, 803.0pt x 803.0pt>
 File: figures/experimental_setup/eventDisplayPionGun.png Graphic file (type png
 )
 <use figures/experimental_setup/eventDisplayPionGun.png>
 Package pdftex.def Info: figures/experimental_setup/eventDisplayPionGun.png use
 d on input line 64.
 (pdftex.def)             Requested size: 341.94652pt x 341.95052pt.
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 72.
 )
 (./tex/track_finding.tex [3 <./figures/experimental_setup/electronsInCDC.pdf>]
 [4 <./figures/experimental_setup/axialLayers.pdf> <./figures/experimental_setup
@@ -1261,83 +1257,99 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
 [5
 
 
-]
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 18.
- [6] <figures/theory/legendre_1.png, id=231, 621.32124pt x 617.30624pt>
+] [6] <figures/theory/legendre_1.png, id=233, 621.32124pt x 617.30624pt>
 File: figures/theory/legendre_1.png Graphic file (type png)
 
 <use figures/theory/legendre_1.png>
 Package pdftex.def Info: figures/theory/legendre_1.png used on input line 54.
 (pdftex.def)             Requested size: 124.26204pt x 123.45906pt.
 
-<figures/theory/legendre_2.png, id=232, 589.20125pt x 617.30624pt>
+<figures/theory/legendre_2.png, id=234, 589.20125pt x 617.30624pt>
 File: figures/theory/legendre_2.png Graphic file (type png)
 
 <use figures/theory/legendre_2.png>
 Package pdftex.def Info: figures/theory/legendre_2.png used on input line 55.
 (pdftex.def)             Requested size: 117.83815pt x 123.45906pt.
 
-<figures/theory/legendre_3.png, id=233, 831.105pt x 621.32124pt>
+<figures/theory/legendre_3.png, id=235, 831.105pt x 621.32124pt>
 File: figures/theory/legendre_3.png Graphic file (type png)
 
 <use figures/theory/legendre_3.png>
 Package pdftex.def Info: figures/theory/legendre_3.png used on input line 56.
 (pdftex.def)             Requested size: 166.21805pt x 124.26204pt.
  [7]
-<figures/theory/quad_tree.png, id=249, 1494.58376pt x 1562.83875pt>
+<figures/theory/quad_tree.png, id=251, 1494.58376pt x 1562.83875pt>
 File: figures/theory/quad_tree.png Graphic file (type png)
 
 <use figures/theory/quad_tree.png>
-Package pdftex.def Info: figures/theory/quad_tree.png used on input line 70.
+Package pdftex.def Info: figures/theory/quad_tree.png used on input line 69.
 (pdftex.def)             Requested size: 256.46152pt x 268.15915pt.
  [8 <./figures/theory/legendre_1.png> <./figures/theory/legendre_2.png> <./figu
 res/theory/legendre_3.png>]
-Underfull \vbox (badness 1789) has occurred while \output is active []
+<figures/theory/stereo_1.png, id=267, 621.32124pt x 617.30624pt>
+File: figures/theory/stereo_1.png Graphic file (type png)
 
- [9 <./figures/theory/quad_tree.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 102.
+<use figures/theory/stereo_1.png>
+Package pdftex.def Info: figures/theory/stereo_1.png used on input line 88.
+(pdftex.def)             Requested size: 124.26204pt x 123.45906pt.
+
+<figures/theory/stereo_2.png, id=268, 606.265pt x 617.30624pt>
+File: figures/theory/stereo_2.png Graphic file (type png)
+
+<use figures/theory/stereo_2.png>
+Package pdftex.def Info: figures/theory/stereo_2.png used on input line 89.
+(pdftex.def)             Requested size: 121.25084pt x 123.45906pt.
+
+<figures/theory/stereo_3.png, id=269, 838.13126pt x 604.2575pt>
+File: figures/theory/stereo_3.png Graphic file (type png)
+
+<use figures/theory/stereo_3.png>
+Package pdftex.def Info: figures/theory/stereo_3.png used on input line 90.
+(pdftex.def)             Requested size: 167.62328pt x 120.84935pt.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 104.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 102.
-
-<figures/theory/fom_found.pdf, id=275, 354.12837pt x 202.55989pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 104.
+ [9 <./figures/theory/quad_tree.png>]
+<figures/theory/fom_found.pdf, id=279, 354.12837pt x 202.55989pt>
 File: figures/theory/fom_found.pdf Graphic file (type pdf)
 
 <use figures/theory/fom_found.pdf>
-Package pdftex.def Info: figures/theory/fom_found.pdf used on input line 114.
+Package pdftex.def Info: figures/theory/fom_found.pdf used on input line 116.
 (pdftex.def)             Requested size: 136.77652pt x 78.2346pt.
 
-<figures/theory/fom_clone.pdf, id=276, 354.12837pt x 321.98776pt>
+<figures/theory/fom_clone.pdf, id=280, 354.12837pt x 321.98776pt>
 File: figures/theory/fom_clone.pdf Graphic file (type pdf)
 
 <use figures/theory/fom_clone.pdf>
-Package pdftex.def Info: figures/theory/fom_clone.pdf used on input line 115.
+Package pdftex.def Info: figures/theory/fom_clone.pdf used on input line 117.
 (pdftex.def)             Requested size: 136.77652pt x 124.36116pt.
 
-<figures/theory/fom_fake.pdf, id=277, 354.12837pt x 321.98773pt>
+<figures/theory/fom_fake.pdf, id=281, 354.12837pt x 321.98773pt>
 File: figures/theory/fom_fake.pdf Graphic file (type pdf)
 
 <use figures/theory/fom_fake.pdf>
-Package pdftex.def Info: figures/theory/fom_fake.pdf used on input line 116.
+Package pdftex.def Info: figures/theory/fom_fake.pdf used on input line 118.
 (pdftex.def)             Requested size: 136.77652pt x 124.36116pt.
 
-Underfull \hbox (badness 1237) in paragraph at lines 116--116
+Underfull \hbox (badness 1237) in paragraph at lines 118--118
 \T1/cmr/m/n/10.95 with hits from many dif-fer-ent MC-Track-
  []
 
-<figures/theory/fom_background.pdf, id=278, 354.12837pt x 202.55989pt>
+<figures/theory/fom_background.pdf, id=282, 354.12837pt x 202.55989pt>
 File: figures/theory/fom_background.pdf Graphic file (type pdf)
 
 <use figures/theory/fom_background.pdf>
 Package pdftex.def Info: figures/theory/fom_background.pdf used on input line 1
-17.
+19.
 (pdftex.def)             Requested size: 136.77652pt x 78.2346pt.
- [10] [11 <./figures/theory/fom_found.pdf> <./figures/theory/fom_clone.pdf
+ [10 <./figures/theory/stereo_1.png> <./figures/theory/stereo_2.png> <./figures
+/theory/stereo_3.png>] [11 <./figures/theory/fom_found.pdf> <./figures/theory/f
+om_clone.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./figures/theory/fom_clone.pdf): PDF in
 clusion: multiple pdfs with page group included in a single page
@@ -1349,77 +1361,60 @@ lusion: multiple pdfs with page group included in a single page
 
 pdfTeX warning: /usr/bin/pdflatex (file ./figures/theory/fom_background.pdf): P
 DF inclusion: multiple pdfs with page group included in a single page
->]
-
-LaTeX Warning: Reference `fig-kalman' on page 12 undefined on input line 131.
-
-! Undefined control sequence.
-l.139 ...he Belle 2 software framework is the \emp
-                                                  {deterministic annealing f...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+>] [12]) (./thesis.bbl [13] [14
 
 
-LaTeX Warning: Citation `daf' on page 12 undefined on input line 139.
+] [15]) [16] (./thesis.tdo)
+\tf@tdo=\write6
+\openout6 = `thesis.tdo'.
 
-) (./thesis.bbl [12] [13] [14
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
+ [17
 
 
-] [15])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 40.
- [16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 40.
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
  (./thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 40.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 40.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
 (rerunfilecheck)             Checksum: BEE34198CC58EB753EE0718CD1A6264C;760.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 40.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 21257 strings out of 493304
- 354663 string characters out of 6139872
- 482036 words of memory out of 5000000
- 24126 multiletter control sequences out of 15000+600000
+ 21280 strings out of 494976
+ 355162 string characters out of 6179137
+ 477561 words of memory out of 5000000
+ 23907 multiletter control sequences out of 15000+600000
  53039 words of font info for 107 fonts, out of 8000000 for 9000
- 957 hyphenation exceptions out of 8191
- 72i,16n,84p,1849b,854s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
-e/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fon
-ts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-s
-uper/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></
-usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/font
-s/type1/public/cm-super/sfrm0600.pfb></usr/share/texmf/fonts/type1/public/cm-su
-per/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></u
-sr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts
-/type1/public/cm-super/sfsl1095.pfb></usr/share/texmf/fonts/type1/public/cm-sup
-er/sfst1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb></us
-r/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sftt1440.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
-rw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/
-uhvr8a.pfb>
-Output written on thesis.pdf (22 pages, 1541761 bytes).
+ 14 hyphenation exceptions out of 8191
+ 72i,16n,84p,1849b,850s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/ni
+ls/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </home/nils/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/nils/.texmf-var/fonts/pk/l
+jfour/jknappen/ec/ecst1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecti1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt14
+40.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </
+home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsl1095.600pk> </home/nils/.t
+exmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/nils/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ectt1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour
+/jknappen/ec/ecrm1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec
+/ecbx1095.600pk> </home/nils/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.60
+0pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on thesis.pdf (23 pages, 1558668 bytes).
 PDF statistics:
- 472 PDF objects out of 1000 (max. 8388607)
- 377 compressed objects within 4 object streams
- 86 named destinations out of 1000 (max. 500000)
- 163 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 910 PDF objects out of 1000 (max. 8388607)
+ 407 compressed objects within 5 object streams
+ 89 named destinations out of 1000 (max. 500000)
+ 178 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -7,45 +7,45 @@ Warning--empty institution in tdr
 Warning--empty pages in bethe
 Warning--empty author in cdc_design
 Warning--empty pages in viktor_dpg
-You've used 21 entries,
+You've used 22 entries,
             2326 wiz_defined-function locations,
-            684 strings with 7081 characters,
-and the built_in function-call counts, 4456 in all, are:
-= -- 493
-> -- 112
+            694 strings with 7310 characters,
+and the built_in function-call counts, 4821 in all, are:
+= -- 533
+> -- 120
 < -- 0
-+ -- 49
-- -- 28
-* -- 311
-:= -- 572
-add.period$ -- 40
-call.type$ -- 21
-change.case$ -- 20
++ -- 52
+- -- 30
+* -- 342
+:= -- 613
+add.period$ -- 42
+call.type$ -- 22
+change.case$ -- 21
 chr.to.int$ -- 0
-cite$ -- 25
-duplicate$ -- 236
-empty$ -- 522
-format.name$ -- 28
-if$ -- 1169
+cite$ -- 26
+duplicate$ -- 255
+empty$ -- 558
+format.name$ -- 30
+if$ -- 1266
 int.to.chr$ -- 0
-int.to.str$ -- 21
-missing$ -- 37
-newline$ -- 86
-num.names$ -- 16
-pop$ -- 119
+int.to.str$ -- 22
+missing$ -- 41
+newline$ -- 91
+num.names$ -- 17
+pop$ -- 124
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 114
+skip$ -- 129
 stack$ -- 0
-substring$ -- 140
-swap$ -- 50
+substring$ -- 168
+swap$ -- 60
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 4
-while$ -- 30
-width$ -- 23
-write$ -- 189
+while$ -- 33
+width$ -- 24
+write$ -- 197
 (There were 4 warnings)

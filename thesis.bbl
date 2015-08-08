@@ -87,6 +87,13 @@ R.~E. Kalman, ``{A New Approach to Linear Filtering and Prediction Problems},''
   {\em {Transactions of the ASME--Journal of Basic Engineering}} {\bfseries 82}
   no.~Series D, (1960) 35--45.
 
+\bibitem{daf_fruh}
+R.~Frühwirth and A.~Strandlie, ``{Track fitting with ambiguities and noise: A
+  study of elastic tracking and nonlinear filters},''
+\href{http://dx.doi.org/10.1016/S0010-4655(99)00231-3}{{\em Comput. Phys.
+  Commun.} {\bfseries 120} no.~2-3, (1999) 197--214}.
+%%CITATION = CPHCB,120,197;%%.
+
 \bibitem{genfit}
 C.~Höppner, S.~Neubert, B.~Ketzer, and S.~Paul, ``{A Novel Generic Framework
   for Track Fitting in Complex Detector Systems},''
