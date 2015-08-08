@@ -1,15 +1,10 @@
 \select@language {english}
-\contentsline {chapter}{\numberline {1}Experimental Setup}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}SuperKEKB and the Belle II Detector}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}The Tracking Detectors}{1}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}CDC}{2}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}VXD}{3}{subsection.1.2.2}
-\contentsline {chapter}{\numberline {2}Track Finder Theory and Multivariate Classification}{5}{chapter.2}
-\contentsline {section}{\numberline {2.1}The Belle II Analysis Framework (\texttt {basf2})}{5}{section.2.1}
-\contentsline {section}{\numberline {2.2}Working Principle of the implemented CDC Track Finder in \texttt {basf2}}{6}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}The Legendre Track Finder}{6}{subsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.1.1}Stereo Hit Finding}{8}{subsubsection.2.2.1.1}
-\contentsline {subsection}{\numberline {2.2.2}The Automaton Track Finder}{9}{subsection.2.2.2}
-\contentsline {section}{\numberline {2.3}The used Figures Of Merit}{9}{section.2.3}
-\contentsline {section}{\numberline {2.4}Track Fitting}{12}{section.2.4}
-\contentsline {section}{\numberline {2.5}Multivariate Classification}{12}{section.2.5}
+\contentsline {chapter}{\numberline {1}Track Finder Theory and Multivariate Classification}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}The Belle II Analysis Framework (\texttt {basf2})}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Working Principle of the implemented CDC Track Finder in \texttt {basf2}}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}The Legendre Track Finder}{2}{subsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.1.1}Stereo Hit Finding}{4}{subsubsection.1.2.1.1}
+\contentsline {subsection}{\numberline {1.2.2}The Automaton Track Finder}{5}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}The used Figures Of Merit}{5}{section.1.3}
+\contentsline {section}{\numberline {1.4}Track Fitting}{8}{section.1.4}
+\contentsline {section}{\numberline {1.5}Multivariate Classification}{9}{section.1.5}

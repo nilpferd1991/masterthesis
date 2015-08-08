@@ -15,14 +15,14 @@ In these steering files a path is created, filled and passed to the framework wh
 Because many modules need the data produces by other modules before there is a need for intermodular communication. This communication is performed within the framework with the help of the data store. This class as a wrapper around a collection of named \texttt{TClonesArrays} from the ROOT library \cite{tclonesarray} which can store lists of instances of nearly arbitrary C++ classes. It is used widely in the framework to store all sorts of things like the hit information produced by the particles in the simulation or the found tracks after the track finding modules. The modules have read and write access to every so called store array in the data store. A visualization of the data flow between the modules created with the steering file in \ref{lis-steering-file} can be found in figure \ref{fig-viz-datastore}. The data store can be written to or read from disk using ROOTs own serialization mechanism together with data member dictionaries for the C++ classes created by the C++ interpreter of ROOT called CINT \cite{cint}.
 
 \begin{listing}
- \todo{missing}
+ \todo{missing listing}
  \caption{Python steering file to create a typical basf2 path. After loading the needed python libraries the path is created and filled with the modules. In the end this path is processed and for each event the modules are executed in the given order and with their given parameters. For more information on the used modules see their documentations.}
  \label{lis-steering-file}
 \end{listing}
 
 
 \begin{figure}
- \todo{missing}
+ \todo{missing picture}
  \caption{The visualization of the intermodular communication while processing the path implemented with the steering file described in listing \ref{lis-steering-file}.}
  \todo{More text}
  \label{fig-viz-datastore}
@@ -35,7 +35,7 @@ One part of this work was the improvement and further development of the track f
 
 The general purpose of a track finder algorithm is to partition all measured wire hits into exclusive sets of hits that may come from the same charged particle passing through the detector. It does so by using several assumptions on the charged particle producing the wire hits like the form of their trajectory and therefore the possible patterns of the hits. After fitting a mathematical model of a trajectory to these hits one can gain information on the momentum or the vertex position of this particle. There are several different approaches to find the correct sets of hits which are in the following called tracks.
 
-The reason to have two track finders for the CDC is their different ansatz. The legendre track finder is a so called global track finder whereas the automaton track finder is a local one. A global algorithm uses the information of all wire hits simultaneously. The legendre track finder does this by applying a mathematical projection to the wire positions which should in principle project all hits belonging to the same track onto the same coordinates. A local algorithm however tries to use neighboring wire hits to construct clusters of hits. These clusters are then enlarged by using neighborhood relations until a full track can be found. In the following these two principles are described in more detail.
+The reason to have two track finders for the CDC is their different ansatz. The legendre track finder is a so called global track finder whereas the automaton track finder is a local one. A global algorithm uses the information of all wire hits simultaneously. The legendre track finder does this by applying a mathematical transformation to the wire positions which should in principle project all hits belonging to the same track onto the same coordinates. A local algorithm however tries to use neighboring wire hits to construct clusters of hits. These clusters are then enlarged by using neighborhood relations until a full track can be found. In the following these two principles are described in more detail.
 
 \subsection{The Legendre Track Finder}
 The principle of using the legendre transformation for tracking algorithms in high energy particle experiments was first described by Alexopoulos \cite{legendre}. It uses an extended version of the hough transformation introduced by Paul V.C. Hough in 1962 \cite{hough}. The algorithm uses the fact that each trajectory in the $r$-$\phi$-plane of the detector can be described by a circle - assuming no energy loss - because of the applied magnetic field. In a first approximation one can also assume that each particles comes from the interaction point which is valid for the bigger part of the decay products. Therefore the trajectory in the $r$-$\phi$ direction can be described by two parameters: the radius $R$ of the circle and the angle $\theta$ between an arbitrary but fixed axis and the tangent to the circle at the interaction point.\footnote{When dropping the last assumption of tracks coming from the origin one has to introduce another parameter - often called $d_0$ - which describes the minimal distance from the circle to the origin in the $r$-$\phi$ plane. It is easy to generalize the described algorithm to three dimensions. It has to be analyzed further if this third dimension can lead to an efficiency gain.}
@@ -94,6 +94,8 @@ As the energy loss has more or less no influence on the $z$ motion because of th
 
 
 \subsection{The Automaton Track Finder}
+Before doing the quad tree search the legendre algorithm transforms each hit to the legendre space in the same manner making it a global hit finder. The automaton track finder is however a local track finder algorithm 
+
 \todo{Clusterizer, Automaton-Principle}
 
 
@@ -133,12 +135,21 @@ The track finding algorithms have the task to partition the measured hits into s
 The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively adding measurements (in this case the positions of the hits associated with this track) to the current state of the trajectory. Therefore the parameters change with every newly added hit and should in principle converge to the correct trajectory parameters. This is done by extrapolating a model of the trajectory with the current parameters to the position of the next hit measurement and comparing this extrapolated position with the real hit position. The deviation together with the errors of the measurement can be used to calculate new parameters for the trajectory. By transversing back and forth several times through the whole hit set the final parameter estimation is found. One step in this procedure with only a small hits set is depicted in figure \ref{fig-kalman}.
 
 \begin{figure}
- \todo{missing, more text}
+ \todo{missing picture from Markus, more text}
  \caption{Sketch with one step in the kalman fitter procedure.}
  \label{fig-kalman}
 \end{figure}
 
-When taking into account fake or background hits in a track, the kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a wrong bias on these parameters. Therefore a weighting scheme is applied to all hits after each kalman passage and this weight defines how strong a hit effects the final parameters. There are many different ways to do so including elastic tracking and nonlinear filters. The one currently used for the tracking in the Belle 2 software framework is the \emph{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie in \cite{daf_fruh}. \todo{describe DAF}.
+When taking into account fake or background hits in a track, the kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a wrong bias on these parameters. Therefore a weighting scheme is applied to all hits after each kalman passage and this weight defines how strong a hit effects the final parameters. There are many different ways to do so including elastic tracking and nonlinear filters. The one currently used for the tracking in the Belle 2 software framework is the \emph{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie in \cite{daf_fruh}. The procedure is as follows:
+\begin{zlist}
+  \item Set the weights of all hits to 1.
+  \item Fit the track with a Kalman fitter taking into account the weights of each hit. \label{daf-loop-start}
+  \item Recalculate the weight of each hit with the distance of the hit to the current trajectory hypothesis.
+  \item Dismiss hits with a weight below a certain threshold.
+  \item Repeat with (\ref{daf-loop-start}) until a defined number of iterations is reached or the fit is converged.
+\end{zlist}
+
+To overcome the difficulties of badly chosen starting parameters of the fit that would lead to dismissing a large number of hits in the first iteration an annealing schema is applied: each weight is transformed with a Maxwell-Boltzmann distribution depending on a ``temperature'' `$T$ which is decreased with every iteration. In the first few iterations with a big temperature also hits with a small weight are kept while on later iterations these hits are dismissed.
 
 The fitting procedures are implemented into \texttt{basf2} with the external library \texttt{genfit} \cite{genfit} - a library for generic and experiment independent track fitting. Only a small interface for accessing the \texttt{genfit} procedures from the \texttt{basf2} code is implemented. See the chapter on the VXD momentum estimation for more information on this topic.
 
@@ -146,5 +157,44 @@ The fitting procedures are implemented into \texttt{basf2} with the external lib
 
 When doing track finding - especially in post processing procedures - many decisions must me made: whether a hit belongs to a track, whether two tracks should be merged, whether a track should be dismissed as fake etc. In the context of inefficiencies and fakes due to background hits these decisions may depend on many input variables. Additionally there is the need to have a smooth transition between the two corner cases dismiss all and accept all to allow for subsequent optimization. This problem of deciding between two different possibilities is called a classification problem in statistics and there are many ways to deal with such problems (see for example \cite{cowan} or \cite{blobel}). For most of the classification tasks in the track finding package for the CDC detector a classification algorithm known as \emph{boosted decision trees} (BDT) is used. In the following the main features are described. See \cite{keck} for more information on the implementation.
 
-The task of a classification algorithm is to decide whether an input element described by a feature vector $\vec x$ belongs to one class of elements or the other - often these classes are the signal and the background class. The classifier maps the multidimensional feature vector $\vec x$ to a one dimensional output variable - often between 0 and 1. 
-\todo{BDTs}
+The task of a classification algorithm is to decide whether an input element described by a feature vector $\vec x$ belongs to one class of elements or the other - often these classes are the signal and the background class. The classifier maps the multidimensional feature vector $\vec x$ to a one dimensional output variable - often between 0 and 1 - which is designed in a way to separate signal and background by mapping signal like data to values near 1 and background like signals to values near 0. The output can therefore interpreted as the probability for the input data to look like a signal sample and a cut on the output can be used to distinguish between the two classes with a configurable purity.
+
+A decision tree is one possible implementation of such a classifier. A decision tree is created by dividing the parameter space of the feature vectors $\vec x$ into small hypercubes. As this is done by applying a division in one variable at the time a tree structure like in figure \ref{fig-decision-tree} is formed. Each input data sample can then by mapped to the signal-fraction of the hypercube it belongs to. This signal-fraction is determined with a training sample of monte carlo generated events with a known classification information. The cut values and variables are chosen in a way to maximize a separate measure like the gini impurity that models the gain by this separation. It can also be calculated using the training sample. 
+
+Because the chosen cuts depend strongly on the training sample a single decision tree can easily be overtrained. A classifier is called overtrained when its separation power on the testing is much better than on an independent testing sample. To avoid overtraining an algorithm known as boosting is applied to the decision trees. This algorithm creates a whole set of boosted decision trees iteratively. Each decision tree is trained to separate the items the one before had classified wrongly. It does so by applying weights to the items. The final output of the classifier is a weighted sum of all single trees. By limiting the depth of a single decision tree a boosted decision avoids overtraining but because of the huge number of decision trees it still has a great separation power.
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[thick]
+    \node[module] (alldata) {Decision Tree};
+    \def\h{1}
+    \def\x{0.8}
+    \node[module, text width=6em, fill=kit-orange50, below=0.25 of alldata] (cut1) {$x_3 > a$?};
+    \node[below=\h of cut1] (dummy1) {};
+    \node[below=\h of dummy1] (dummy2) {};
+    \node[below=\h of dummy2] (dummy3) {};
+    \node[module, text width=6em, fill=kit-orange50, left=3*\x of dummy1] (cut2a) {$x_1 > b$?};
+    \node[module, text width=6em,fill=kit-orange50, left=\x of dummy2] (cut3a) {$x_7 > d$?};
+    \node[module, text width=6em,fill=kit-orange50, left=5*\x of dummy2] (cut3b) {$x_5 > e$?};
+    \node[module, text width=6em,fill=kit-orange50, right=3*\x of dummy1] (cut2b) {$x_2 > f$?};
+    \node[module, text width=6em,fill=kit-orange50, right=\x of dummy2] (cut3c) {$x_4 > g$?};
+    \node[module, text width=6em,fill=kit-orange50, right=5*\x of dummy2] (cut3d) {$x_6 > h$?};
+    
+    \node[module, text width=6em, left=\x of dummy3] (result3a) {10 signal events};
+    \node[module, text width=6em, left=5*\x of dummy3] (result3b) {328 signal events};
+    \node[module, text width=6em, right=\x of dummy3] (result3c) {4136 signal events};
+    \node[module, text width=6em, right=5*\x of dummy3] (result3d) {4 signal events};
+    
+    
+   \draw[vecArrow] (cut1) -- (cut2a.north);
+   \draw[vecArrow] (cut1) -- (cut2b.north);
+   \draw[vecArrow] (cut2a) -- (cut3a.north);
+   \draw[vecArrow] (cut2a) -- (cut3b.north);
+   \draw[vecArrow] (cut2b) -- (cut3c.north);
+   \draw[vecArrow] (cut2b) -- (cut3d.north);
+\end{tikzpicture}
+\caption{A fictitious decision tree dividing a 7-dimensional parameter space in 4 hypercubes with three layers of seven cuts. The last layer is used to generate the output of the decision tree by counting the number of signal events in this hypercube in the training sample.}
+\label{fig-decision-tree}
+\end{figure}
+
+

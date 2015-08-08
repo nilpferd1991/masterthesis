@@ -35,6 +35,7 @@
 \usepackage{url}
 \usepackage[absolute,overlay]{textpos}
 \usepackage{tikz}
+\usetikzlibrary{arrows, decorations.markings, shapes, positioning, backgrounds, calc, fit}
 \usepackage[english]{babel}
 \usepackage{listing}
 \usepackage{amsmath}
@@ -48,7 +49,7 @@
 \usepackage{footnote}
 \usepackage{array}
 \usepackage{sidecap}
-\usepackage{hepnames}
+\usepackage[maybess]{hepnames}
 \usepackage{units}
 \usepackage[fixlanguage]{babelbib}	% sets german style for literature entries
 
@@ -69,6 +70,7 @@
 	pdfborder={0 0 0.5}]{hyperref}
 	
 \usepackage[all]{hypcap}
+\input{class/colors.tex}
 %% --- End of Packages ---
 
 

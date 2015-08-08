@@ -6,30 +6,6 @@
 \newblock \href{http://arxiv.org/abs/1011.0352}{{\ttfamily arXiv:1011.0352
   [physics.ins-det]}}.
 
-\bibitem{christian}
-C.~Pulvermacher, ``{dE/dx particle identification and pixel detector data
-  reduction for the Belle II experiment},'' Master's thesis, KIT, 2012.
-\newblock \url{https://ekp-invenio.physik.uni-karlsruhe.de/record/48263}.
-
-\bibitem{grupen}
-C.~Grupen, A.~B{\"o}hrer, and L.~Smol{\'i}k, {\em Particle Detectors}.
-\newblock Cambridge monographs on particle physics, nuclear physics, and
-  cosmology. Cambridge University Press, 1996.
-
-\bibitem{bethe}
-H.~Bethe and J.~Ashkin, ``{Passage of radiation throgh matter},'' {\em
-  Experimental Nuclear Physics} {\bfseries 1} no.~II, (1953) .
-
-\bibitem{cdc_design}
-{\bfseries {KEK High energy accelorator research organisation}}, ``{New
-  electronics tested for Belle II central drift chamber},''.
-  \url{http://www2.kek.jp/proffice/archives/feature/2010/pdf/BelleIICDCDesign.pdf}.
-
-\bibitem{oliver}
-O.~Frost, ``{A Local Tracking Algorithm for the Central Drift Chamber of Belle
-  II},'' Master's thesis, KIT, 2013.
-\newblock \url{http://ekp-invenio.physik.uni-karlsruhe.de/record/48172}.
-
 \bibitem{cpp}
 {\bfseries {International Organization for Standardization (ISO)}}, ``{ISO
   International Standard ISO/IEC 14882:2014(E) – Programming Language C++},''
@@ -65,6 +41,11 @@ B.~Kronenbitter, {\em {Measurement of the branching fraction of $B^+ \to \tau^+
   \nu_\tau$ decays at the Belle experiment}}.
 \newblock PhD thesis, KIT, 2014.
 \newblock \url{https://ekp-invenio.physik.uni-karlsruhe.de/record/48604}.
+
+\bibitem{oliver}
+O.~Frost, ``{A Local Tracking Algorithm for the Central Drift Chamber of Belle
+  II},'' Master's thesis, KIT, 2013.
+\newblock \url{http://ekp-invenio.physik.uni-karlsruhe.de/record/48172}.
 
 \bibitem{legendre}
 T.~Alexopoulos, M.~Bachtis, E.~Gazis, and G.~Tsipolitis, ``{Implementation of
