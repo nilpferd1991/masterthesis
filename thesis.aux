@@ -43,11 +43,13 @@
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig-viz-datastore}{{1.1}{2}{The visualization of the intermodular communication while processing the path implemented with the steering file described in listing \ref {lis-steering-file}.\relax }{section*.5}{}}
 \@writefile{tdo}{\contentsline {todo}{missing listing}{2}{section*.2}}
-\pgfsyspdfmark {pgfid3}{19583731}{37844105}
+\pgfsyspdfmark {pgfid3}{19583731}{35747252}
 \@writefile{lol}{\contentsline {listing}{\numberline {1.1}{\ignorespaces Python steering file to create a typical basf2 path. After loading the needed python libraries the path is created and filled with the modules. In the end this path is processed and for each event the modules are executed in the given order and with their given parameters. For more information on the used modules see their documentations.\relax }}{2}{listing.1.1}}
 \newlabel{lis-steering-file}{{1.1}{2}{Python steering file to create a typical basf2 path. After loading the needed python libraries the path is created and filled with the modules. In the end this path is processed and for each event the modules are executed in the given order and with their given parameters. For more information on the used modules see their documentations.\relax }{listing.1.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.2}Working Principle of the implemented CDC Track Finder in \texttt  {basf2}}{2}{section.1.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}The Legendre Track Finder}{2}{subsection.1.2.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}The Legendre Track Finder}{3}{subsection.1.2.1}}
+\@writefile{tdo}{\contentsline {todo}{picture?}{3}{section*.7}}
+\pgfsyspdfmark {pgfid6}{19583731}{18652657}
 \citation{viktor_dpg}
 \citation{viktor_dpg}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Transformation of some wire hits belonging to the same charge particle (left side) to the inverted plane (middle) and to the legendre space with the sinusoidal functions (right). As described in the text, the circular trajectory is first transformed into lines and then into intersecting sinograms. Each sinogram includes all possible trajectory parameters which would have touched the hit from which the function was created. The intersection corresponds to the parameters of the trajectory and are marked with a red circle. For better visibility only the wrong half of the sinograms is colored gray.\relax }}{4}{figure.caption.6}}
@@ -55,28 +57,27 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.2.1.1}Stereo Hit Finding}{4}{subsubsection.1.2.1.1}}
 \citation{cats}
 \citation{kisel}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.3}{\ignorespaces Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite  {viktor_dpg}.\relax }}{5}{figure.caption.7}}
-\newlabel{fig-quad-tree-search}{{1.3}{5}{Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite {viktor_dpg}.\relax }{figure.caption.7}{}}
+\citation{oliver}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.3}{\ignorespaces Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search without multicandidate search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite  {viktor_dpg}.\relax }}{5}{figure.caption.8}}
+\newlabel{fig-quad-tree-search}{{1.3}{5}{Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search without multicandidate search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite {viktor_dpg}.\relax }{figure.caption.8}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2.2}The Automaton Track Finder}{5}{subsection.1.2.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.4}{\ignorespaces Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi $ plane leads to only two possible $z$ positions for each stereo hit. On the left side the trajectory together with the stereo wires projected to the $r$-$\phi $ plane is show. In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in color in the center picture. The dark blue track is the correct hypothesis. Each line correspond to a single point in the $\qopname  \relax o{tan}\lambda $-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a red diamond. The blue diamonds on the right side correspond to the blue lines in the center.\relax }}{6}{figure.caption.8}}
-\newlabel{fig-stereo-explained}{{1.4}{6}{Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi $ plane leads to only two possible $z$ positions for each stereo hit. On the left side the trajectory together with the stereo wires projected to the $r$-$\phi $ plane is show. In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in color in the center picture. The dark blue track is the correct hypothesis. Each line correspond to a single point in the $\tan \lambda $-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a red diamond. The blue diamonds on the right side correspond to the blue lines in the center.\relax }{figure.caption.8}{}}
-\@writefile{tdo}{\contentsline {todo}{fertig}{7}{section*.9}}
-\pgfsyspdfmark {pgfid6}{19583731}{37961188}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.4}{\ignorespaces Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi $ plane leads to only two possible $z$ positions for each stereo hit. On the left side the trajectory together with the stereo wires projected to the $r$-$\phi $ plane is show. In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in color in the center picture. The dark blue track is the correct hypothesis. Each line correspond to a single point in the $\qopname  \relax o{tan}\lambda $-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a red diamond. The blue diamonds on the right side correspond to the blue lines in the center.\relax }}{6}{figure.caption.9}}
+\newlabel{fig-stereo-explained}{{1.4}{6}{Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi $ plane leads to only two possible $z$ positions for each stereo hit. On the left side the trajectory together with the stereo wires projected to the $r$-$\phi $ plane is show. In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in color in the center picture. The dark blue track is the correct hypothesis. Each line correspond to a single point in the $\tan \lambda $-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a red diamond. The blue diamonds on the right side correspond to the blue lines in the center.\relax }{figure.caption.9}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}The used Figures Of Merit}{7}{section.1.3}}
-\@writefile{lot}{\contentsline {table}{\numberline {1.1}{\ignorespaces Matching routine for compiling the FOM.}}{8}{table.caption.10}}
-\newlabel{tab-mc-track-finder}{{1.1}{8}{Matching routine for compiling the FOM}{table.caption.10}{}}
 \citation{kalman}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Track Fitting}{8}{section.1.4}}
+\@writefile{lot}{\contentsline {table}{\numberline {1.1}{\ignorespaces Matching routine for compiling the FOM.}}{9}{table.caption.10}}
+\newlabel{tab-mc-track-finder}{{1.1}{9}{Matching routine for compiling the FOM}{table.caption.10}{}}
 \citation{daf_fruh}
-\@writefile{tdo}{\contentsline {todo}{missing picture from Markus, more text}{9}{section*.12}}
-\pgfsyspdfmark {pgfid7}{19583731}{50567796}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Sketch with one step in the kalman fitter procedure.\relax }}{9}{figure.caption.11}}
-\newlabel{fig-kalman}{{1.5}{9}{Sketch with one step in the kalman fitter procedure.\relax }{figure.caption.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Track Fitting}{9}{section.1.4}}
-\newlabel{daf-loop-start}{{2}{9}{Track Fitting}{Item.4}{}}
 \citation{genfit}
 \citation{cowan}
 \citation{blobel}
 \citation{keck}
+\@writefile{tdo}{\contentsline {todo}{missing picture from Markus, more text}{10}{section*.12}}
+\pgfsyspdfmark {pgfid7}{19583731}{50567796}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Sketch with one step in the kalman fitter procedure.\relax }}{10}{figure.caption.11}}
+\newlabel{fig-kalman}{{1.5}{10}{Sketch with one step in the kalman fitter procedure.\relax }{figure.caption.11}{}}
+\newlabel{daf-loop-start}{{2}{10}{Track Fitting}{Item.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.5}Multivariate Classification}{10}{section.1.5}}
 \bibstyle{class/utphys}
 \bibdata{class/bibliography}
