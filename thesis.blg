@@ -5,45 +5,45 @@ The style file: class/utphys.bst
 Database file #1: class/bibliography.bib
 Warning--empty institution in tdr
 Warning--empty pages in viktor_dpg
-You've used 18 entries,
+You've used 20 entries,
             2326 wiz_defined-function locations,
-            672 strings with 6649 characters,
-and the built_in function-call counts, 4130 in all, are:
-= -- 457
-> -- 96
+            689 strings with 7299 characters,
+and the built_in function-call counts, 4966 in all, are:
+= -- 547
+> -- 121
 < -- 0
-+ -- 42
-- -- 24
-* -- 293
-:= -- 516
-add.period$ -- 34
-call.type$ -- 18
-change.case$ -- 18
++ -- 51
+- -- 31
+* -- 370
+:= -- 613
+add.period$ -- 38
+call.type$ -- 20
+change.case$ -- 20
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 215
-empty$ -- 479
-format.name$ -- 24
-if$ -- 1087
+cite$ -- 22
+duplicate$ -- 255
+empty$ -- 555
+format.name$ -- 31
+if$ -- 1305
 int.to.chr$ -- 0
-int.to.str$ -- 18
-missing$ -- 32
-newline$ -- 77
-num.names$ -- 14
-pop$ -- 104
+int.to.str$ -- 20
+missing$ -- 40
+newline$ -- 83
+num.names$ -- 16
+pop$ -- 112
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 121
+skip$ -- 155
 stack$ -- 0
-substring$ -- 168
-swap$ -- 58
+substring$ -- 240
+swap$ -- 82
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 30
-width$ -- 20
-write$ -- 162
+while$ -- 36
+width$ -- 22
+write$ -- 178
 (There were 2 warnings)

@@ -63,6 +63,24 @@ H.~C, ``Method and means for recognizing complex patterns,'' Dec.~18, 1962.
 V.~Trusov, ``{Applying Legendre transformation method for Belle II tracking},''
   {\em {DPG spring meeting}} (2014) .
 
+\bibitem{cats}
+I.~Abt, D.~Emeliyanov, I.~Kisel, and S.~Masciocchi, ``Cats: a cellular
+  automaton for tracking in silicon for the hera-b vertex detector,''
+  \href{http://dx.doi.org/http://dx.doi.org/10.1016/S0168-9002(02)00790-8}{{\em
+  Nuclear Instruments and Methods in Physics Research Section A: Accelerators,
+  Spectrometers, Detectors and Associated Equipment} {\bfseries 489} no.~1–3,
+  (2002) 389 -- 405}.
+  \url{http://www.sciencedirect.com/science/article/pii/S0168900202007908}.
+
+\bibitem{kisel}
+I.~Kisel, V.~Kovalenko, {\em et~al.}, ``Cellular automaton and elastic net for
+  event reconstruction in the nemo-2 experiment,''
+  \href{http://dx.doi.org/http://dx.doi.org/10.1016/S0168-9002(97)00097-1}{{\em
+  Nuclear Instruments and Methods in Physics Research Section A: Accelerators,
+  Spectrometers, Detectors and Associated Equipment} {\bfseries 387} no.~3,
+  (1997) 433 -- 442}.
+  \url{http://www.sciencedirect.com/science/article/pii/S0168900297000971}.
+
 \bibitem{kalman}
 R.~E. Kalman, ``{A New Approach to Linear Filtering and Prediction Problems},''
   {\em {Transactions of the ASME--Journal of Basic Engineering}} {\bfseries 82}
