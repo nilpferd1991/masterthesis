@@ -1,22 +1,45 @@
 \chapter{Momentum estimation of slow pions with the ADC in the VXD}
 
-\section{Prestudies}
+Distribution of momentum + particle
+Why is helix fit not good enough
+Quote Robert
+Why does dEdX have information in it?
 
-Hit Positions
-Path Length calculation (different possibilities: mc seed, tracking seed, mc particle at hit position)
-dEdX with calibration
-dEdX with p + fit on data + correction + q/p residdum etc.
+dEdX over p picture
+
+Idea: Use hit positions + momentum estimation from dEdX for fit.
+For dEdX we need: dE = ADC count, dX = path length
+Transform dEdX -> p with predetermined function
+
+\section{Prestudies on the distribution of dE/dX in the VXD}
+
+
+
+Prestudies to show that the information from the calculation is correct
+Which sample is used
+
 
 Pictures:
 - Event-Display with pions
 - Finding-Efficiency of VXDTF
-- path length drawing
+
+Cluster positions
+
+\subsection{Calculation of the path length in the clusters}
+How to calculate the path length?
+Thickness, Seed at origin (TF + MC), MC Hit Information = state while fitting
 
 - Path Lengths with different infromation
+
+\subsection{Transformation function from dE/dX to momentum}
+
+dEdX with calibration
+Calculation of the function + calibration?
+dEdX with p + fit on data + correction + q/p residdum etc.
+
 - dedx with different pathlengths + delta
 - fit result for landau (both plots),
 - residuum, median + iqr function
-
 
 \section{Incooperation in the helix fit}
 

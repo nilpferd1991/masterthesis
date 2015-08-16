@@ -1,0 +1,49 @@
+digraph allModules {
+  rankdir=LR;
+  compound=true;
+  "RootOutput";
+  "RootOutput" -> "FileMetaData" [color="#A22223"];
+  "StereoHitFinderCDCLegendreHistogramming";
+  "CDCHits" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
+  "CDCTrackVector" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
+  "EventMetaData" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
+  "StereoHitFinderCDCLegendreHistogramming" -> "TrackCands" [color="#A22223"];
+  "CDCLegendreTracking";
+  "CDCHits" -> "CDCLegendreTracking" [color="#4664AA"];
+  "EventMetaData" -> "CDCLegendreTracking" [color="#4664AA"];
+  "CDCLegendreTracking" -> "CDCTrackVector" [color="#A22223"];
+  "Gearbox";
+  "EventMetaData" -> "Gearbox" [color="#4664AA"];
+  "RootInput";
+  "RootInput" -> "CDCHits" [color="#A22223"];
+  "RootInput" -> "CDCSimHits" [color="#A22223"];
+  "RootInput" -> "EventMetaData" [color="#A22223"];
+  "RootInput" -> "FileMetaData" [color="#A22223"];
+  "RootInput" -> "MCParticles" [color="#A22223"];
+  "CDCSimHits" -> "CDCHits" [color="#A22223",style=dashed];
+  "MCParticles" -> "CDCHits" [color="#A22223",style=dashed];
+  "MCParticles" -> "CDCSimHits" [color="#A22223",style=dashed];
+  subgraph "clusterMain" {
+    rank=min;
+    style=solid;
+    color=grey;
+    "clusterMain_inv" [shape=point,style=invis];
+    "RootInput";
+    "Gearbox";
+    "RootInput" -> "Gearbox" [color=black];
+    "CDCLegendreTracking";
+    "Gearbox" -> "CDCLegendreTracking" [color=black];
+    "StereoHitFinderCDCLegendreHistogramming";
+    "CDCLegendreTracking" -> "StereoHitFinderCDCLegendreHistogramming" [color=black];
+    "RootOutput";
+    "StereoHitFinderCDCLegendreHistogramming" -> "RootOutput" [color=black];
+  }
+  "CDCHits" [shape=box,style=filled,fillcolor="#009682"];
+  "CDCSimHits" [shape=box,style=filled,fillcolor="#009682"];
+  "CDCTrackVector" [shape=box,style=filled,fillcolor="#009682"];
+  "EventMetaData" [shape=box,style=filled,fillcolor="#009682"];
+  "FileMetaData" [shape=box,style=filled,fillcolor="#009682"];
+  "MCParticles" [shape=box,style=filled,fillcolor="#009682"];
+  "TrackCands" [shape=box,style=filled,fillcolor="#009682"];
+}
+

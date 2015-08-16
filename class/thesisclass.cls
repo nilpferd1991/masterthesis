@@ -38,6 +38,7 @@
 \usetikzlibrary{arrows, decorations.markings, shapes, positioning, backgrounds, calc, fit}
 \usepackage[english]{babel}
 \usepackage{listing}
+\usepackage{listings}
 \usepackage{amsmath}
 \usepackage{todonotes}
 \usepackage{letltxmacro}
