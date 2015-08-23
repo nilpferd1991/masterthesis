@@ -71,9 +71,6 @@ Instead of using the deposited charge in every sensor directly the ADC count val
  \label{fig-adc-count}
 \end{figure}
 
-
-
-
 \subsection{Calculation of the path length in the clusters}
 The \dedx value in every cluster can be calculated using the calibrated charge as described above and the length of the path the trajectory travels in the sensor region. There are five ways to calculate this path length implemented in the momentum estimation:
 \begin{zlist}
@@ -111,14 +108,17 @@ The second subplot shows the distribution of the residuals of the other four pat
 \begin{figure}
  \centering
 %  \includegraphics{}
+  \todo{missing plot}
  \caption{The right plot shows the path length distribution as a result of the simulation. This distribution is used for reference in the right plot which shows the residuum distribution of the other path length calculation modes.}
+ \label{fig-pathlengths}
 \end{figure}
-
 
 \subsection{Transformation function from dE/dX to momentum}
 
-
 dEdX with calibration
+
+No analytic + Distribution
+Landau
 Calculation of the function + calibration?
 dEdX with p + fit on data + correction + q/p residdum etc.
 
