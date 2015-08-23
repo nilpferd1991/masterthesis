@@ -1,8 +1,7 @@
 \newcommand{\dedx}{$\mathrm d E / \mathrm d x$ }
 \chapter{Momentum estimation of slow pions with the ADC in the VXD}
 
-When looking onto the typical momentum distribution of the particles flying through the tracking detectors as show in figure \ref{fig-particles-momentum} it is clear that there is a significant amount of so called slow pions with momenta below $\unit[120]{MeV}$. These particles get produced at the interaction point but because of their small momentum and therefore high curvature and their huge energy losses they can not be detected in the CDC tracking detector. This means they can only be measured in the VXD. Because of the small radius of the VXD and the resulting small number of independent measurement points, the momentum resolution is very poor as it can be seen also in the Glückstern formula \todo{quote?}
-
+When looking onto the typical momentum distribution of the particles flying through the tracking detectors as show in figure \ref{fig-particles-momentum} it is clear that there is a significant amount of so called slow pions with momenta below $\unit[120]{MeV}$. These particles get produced at the interaction point but because of their small momentum and therefore high curvature and their huge energy losses they can not be detected in the CDC tracking detector. This means they can only be measured in the VXD. Because of the small radius of the VXD and the resulting small number of independent measurement points, the momentum resolution is very poor as it can be seen also in the Glückstern formula
 \begin{align*}
  \frac{\sigma_{p_T}}{p_T} = \sqrt{\frac{720}{N + 4}} \sigma_x \frac{p_T \text{[GeV]}}{0.3 q B \text{[T]} L^2}
 \end{align*}
@@ -25,8 +24,10 @@ In figure \ref{fig-dedx-over-p} the energy loss per travel length in the VXD sen
 for small particle energies. The equation can be used to calculate the momentum with the energy loss per travel length. But as this formula describes the averaged energy loss it is only correct for all small number of cases. The variance in the energy loss is distributed according to a landau distribution which is described later in more detail. This deviation from the Bethe formula decreases the momentum resolution of the estimation based on the energy loss.
 
 \begin{figure}
- \todo{missing pictures}
- \caption{\dedx information of the VXD clusters of  approximately 100000 pions in the momentum range from 50 to 120 MeV. The averaged energy loss can be described by the Bethe formula. The distribution of energy losses for a given momentum is distributed according to a landau distribution which can be seen in the right sub figure for particles with roughly 100 MeV.}
+ \centering
+ \includegraphics[width=0.8\linewidth]{figures/vxd/dedx.png}
+ \todo{Bethe fomrular einfügen!}
+ \caption{\dedx information of the VXD clusters of approximately 100000 pions in the momentum range from 50 to 120 MeV. The averaged energy loss can be described by the Bethe formula. The distribution of energy losses for a given momentum is distributed according to a landau distribution which is described later in mroe detail.}
  \label{fig-dedx-over-p}
 \end{figure}
 
@@ -47,26 +48,75 @@ For the following studies an event sample of slow pions in the momentum range be
  \label{fig-vxd-event-display}
 \end{figure}
 
-Before calculating the function to transform the \dedx information to a momentum estimation and using this information in the helix fit some prestudies are performed to check for the consistency of the input data. They are shown here for reference too.
+Before calculating the function to transform the \dedx to a momentum estimation and using this information in the helix fit some prestudies are performed to check for the consistency of the input data. They are shown here for reference too.
 
-For calculating the path length used in the \dedx information the correct position of the hit and the sensor information is needed. This information is provided by the clusters used in the track finder. Its results can be seen in figure \ref{fig-cluster-position} where the distance to the beam pipe over the z position is shown for some SVD hits. This position information is later used to calculate the path length of the tracks in the sensor region.
+For calculating the path length used in the \dedx value the correct position of the hit and the sensor information is needed. This information is provided by the clusters used in the track finder. Its results can be seen in figure \ref{fig-cluster-position} where the distance to the beam pipe over the z position is shown for some SVD hits. This position is later used to calculate the path length of the tracks in the sensor region.
 
 \begin{figure}
  \centering
  \includegraphics[width=0.8\linewidth]{figures/vxd/cluster_positions.png}
- \caption{Picture showing the simulated hit information of the first 1000 clusters in the event sample. The color code gives information on the sensor ID property of the clusters.}
+ \caption{Picture showing the simulated hit information of the first 1000 clusters in the event sample. The color code separated between the sensor ID property of the clusters.}
+ \todo{Show also the geometry infromaition?}
  \label{fig-cluster-position}
 \end{figure}
 
+Instead of using the deposited charge in every sensor directly the ADC count value of every sensor is used. This ADC count comes directly from the digitalization process and does therefore not rely on any calibration process. As it is proportional to the deposited energy and the parameters of the transformation function from \dedx to the momentum have to be determined by a fit in either way the ADC count is used as a measure for the energy deposition. Picture \ref{fig-adc-count} shows the distribution of this ADC count for the two different detectors SVD and PXD. As it can be seen, the calibration coefficients to the correct deposited energy are different for the two detectors and therefore the two distributions are not superimposable. To cope with this fact the ADC counts coming from the PXD sensors get multiplied by a factor of 0.653382 which was calculated on data. The resulting distribution is shown in the right subplot of figure \ref{fig-adc-clount}.
+
+\begin{figure}
+  \centering
+ \includegraphics[width=0.48\linewidth]{figures/vxd/dEdXUncalibrated.png}
+ \includegraphics[width=0.48\linewidth]{figures/vxd/dEdXCalibrated.png}
+ \caption{Distributions of the uncalibrated (left) and the calibrated (right) ADC counts of the PXD and SVD hits. Only clusters found by the VXD track finder are shown here.}
+ \todo{Use ADC counts here!}
+ \label{fig-adc-count}
+\end{figure}
+
+
+
 
 \subsection{Calculation of the path length in the clusters}
-Why do we need it?
-How to calculate the path length?
-Thickness, Seed at origin (TF + MC), MC Hit Information = state while fitting
+The \dedx value in every cluster can be calculated using the calibrated charge as described above and the length of the path the trajectory travels in the sensor region. There are five ways to calculate this path length implemented in the momentum estimation:
+\begin{zlist}
+ \item using the simulated MC information of the clusters,
+ \item using the current trajectory parameters while fitting and a helix calculation,
+ \item using the related MC trajectory at the origin,
+ \item using the trajectory parameters estimated by the track finder without MC truth information,
+ \item using the thickness of the cluster.
+\end{zlist}
 
-- Path Lengths with different infromation
+The different possibilities are ordered by their anticipated correctness. The two MC modes are only implemented for reference as they can obviously not be used in the later detector measurement. 
+
+Besides the first and the last possibilities all modes rely on calculating the path length of a trajectory using only their helix parameters without any energy loss or material effects. This is done as follows:
+\begin{zlist}
+ \item Take the position of the cluster hit and calculate the distance to the beam line.
+ \item Add and subtract half of the sensor thickness from this radius to gain an estimation of the start and the end radius of the sensor.
+ \item Calculate the arc length from the perigee point to these two radii and from these arc lengths the distance between the two penetration points of the helix through the sensor using trigonometrical relations.
+\end{zlist}
+
+This procedure is correct for most of the cases but fails in some rare cases. Some examples are shown in figure \ref{fig-errors-in-path-length}. As it can be seen in the pictures errors in the calculation occur mainly for particles curling in the sensors. As the VXD sensors have only a very thin thickness the probability for such particles is very rare. Therefore these cases should not bias the momentum measurement much. Also as the calculation error can only occur in the most outer sensor touched by the particles all other senors give correct momentum estimations.
+
+\begin{figure}
+  \centering
+  \todo{missing prictures}
+  \caption{Exemplary cases of path length calculations. The correct path length is show in orange whereas the calculated one is shown in blue.}
+  \label{fig-errors-in-path-length}
+\end{figure}
+
+In figure \ref{fig-pathlengths} the distribution of the correct path lengths from the simulated MC truth values is shown. As expected there are two peaks in the distribution - one for each hit type as the two types PXD and SVD have a different thickness. Most of the particles go more or less straight through the sensors. Deviations from the thickness come from curling particles. The fact that there are only few tracks with very high deviations from the thickness values verifies th claim that the helix calculation is wrong only for very rare cases.
+
+The second subplot shows the distribution of the residuals of the other four path length calculations to these reference values as a violin plot.
+
+\todo{Beschreibung!}
+
+\begin{figure}
+ \centering
+%  \includegraphics{}
+ \caption{The right plot shows the path length distribution as a result of the simulation. This distribution is used for reference in the right plot which shows the residuum distribution of the other path length calculation modes.}
+\end{figure}
+
 
 \subsection{Transformation function from dE/dX to momentum}
+
 
 dEdX with calibration
 Calculation of the function + calibration?
