@@ -6,33 +6,52 @@ In the following sections the experimental setup for this thesis - the Belle II 
 
 The future Belle II is currently being build at the KEK high energy research facility in Tsukuba, Japan. It is a general purpose $4\pi$ detector for high energy particle experiments. A scheme of the whole detector with the planned measuring devices can be found in figure \ref{fig-belle2}.
 
-The Belle II detector is used for measuring the electron positron collisions induced by the SuperKEKB collider. As its predecessor KEKB its center of mass energy is tuned in such a way that it lays near the $\PgUc$ resonance. This beam energy is chosen that way because a $\PgUc$ particle decays in nearly all cases into a pair of B-mesons. The daughter particles of these B mesons open a window to a very wide window of physical studies like CP violation or B-meson spectroscopy. The energy of the colliding electrons an positrons is asymmetric which leads to a slightly asymmetric collision as well. This fact is exploited in measuring the decay length of the two formed B-Mesons - one of the main ingredients for quantifying the CP violation in the B-Meson system. The usage of electrons and their antiparticles for collisions leads to very clean events compared to other collision partners like protons or even gold atoms. Clean means in this context a reduced number of created decay products (only 11 charged tracks on average) and more or less no pile up (only one collision occurring at the same time) are expected. These circumstances can be used for high precision measurements on the formed particles.
+\begin{figure}
+ \centering
+ \includegraphics[height=0.4\textheight]{figures/experimental_setup/superkekb.jpg}
+ \caption{Sketch showing the SuperKEKB electron-positron collider with the Belle II detector. Taken from \cite{DesyWebseite}.}
+ \label{fig-superkekb}
+\end{figure}
+
+
+The Belle II detector is used for measuring the electron positron collisions induced by the two-ring asymmetric-energy SuperKEKB collider. A sketch of the collider can be found in figure \ref{fig-superkekb}. As its predecessor KEKB its center of mass energy is tuned in such a way that it lays near the $\PgUc$ resonance. This beam energy is chosen that way because a $\PgUc$ particle decays with a branching fraction of 96 \% into a pair of entangled B-mesons. As described in the introduction the daughter particles of these B mesons open a window to a very wide range of physical studies like CP violation or meson spectroscopy. The energy of the colliding electrons an positrons is asymmetric which leads to a slightly asymmetric collision as well. This fact is exploited in measuring the decay length of the two formed B-Mesons - one of the main ingredients for quantifying the CP violation in the B-Meson system. The usage of electrons and their antiparticles for collisions leads to very clean events compared to other collision partners like protons or even gold atoms. Clean means in this context that a reduced number of created decay products (only 11 charged tracks on average) and more or less no pile up (only one collision occurring at the same time) are expected. These circumstances can be used for high precision measurements on the formed particles.
+
+The detector consists of six main measurement layers:
+\begin{zlist}
+  \item two layers of Si pixel detectors for measuring the region near the interaction point (PXD),
+  \item another four layers of doubled-sided Si strip layers (SVD),
+  \item the central drift chamber (CDC) for measuring the momentum of charged particles,
+  \item a time-of-propagation counter (TOP) together with the endcap particle identification detector (aerogel ring imaging Cherenkov detector) for identification of the produced particles using Cherenkov radiation,
+  \item an electromagnetic calorimeter (ECL) build of scintillating CsI(Tl) crystals for measuring the energy of all electromagnetic interacting particles
+  \item and the longliving kaon and myon detector (KLM) identifying these particle types in the outer region of the detector to improve the overall particle identification.
+\end{zlist}
+
 
 \begin{figure}
  \centering
- \includegraphics[width=0.8\linewidth]{figures/experimental_setup/detector_crossection_labels.pdf}
+ \includegraphics[height=0.4\textheight]{figures/experimental_setup/detector_crossection_labels.pdf}
  \caption{Scheme showing the planned Belle II detector in top view. The single measuring devices are shown with their names. Some more information on the tracking devices can be found in the text. Taken from \cite{christian}.}
  \label{fig-belle2}
 \end{figure}
 
 \section{The Tracking Detectors}
 
-As every general purpose high energy particle physics detector the Belle II detector is composed of several single measuring devices - each one with a different task. For collecting as many information on the physical process in the collision as many infromation on the created decay products are needed. These include
+As every general purpose high energy particle physics detector the Belle II detector is composed of several single measuring devices - each one with a different task. For collecting many information on the physical process in the collision many information on the created decay products are needed. These include
 \begin{zlist}
  \item Identification of the created particles (for example by their mass),
  \item Measurement of the kinematic properties (like momentum and energy) of the charged particles,
  \item Resolution of their origin position - also called their vertex.
 \end{zlist}
 
-The tracking detectors described in this thesis are mainly for recording the momenta of the particles as well as their vertex position. Further more special applications are identification of the particle type by their energy loss.
+The tracking detectors described in this thesis are mainly build for recording the momenta of the particles as well as their vertex position. Further more special applications are identification of the particle type by their energy loss.
 
-The measuring principle of the momentum and also the vertex is to let the charge particles fly throw a sensor region with space-resolved measurement and obtain their full path through the detector - a so called track - by combining the different location information - the so called hits. By applying a magnetic field - in Belle II it has a nominal field strength of $B = \unit[1.5]{T}$ parallel to the beam axis - the $z$ axis in the coordinate system of the detector - the charged particle are curled. By measuring the curvature of the curled tracks an estimation of the momentum in the plane perpendicular to the beam axis - the $r$-$\phi$-plane - can be made. The remaining $z$-direction parallel to the beam axis can be computed with the angle of the track to the beam axis.
+The measuring principle of the momentum and also the vertex of charged decay products is to let the particles fly throw a sensor region with space-resolved measurement and obtain their full path through the detector - a so called track - by combining the different location information - the so called hits. By applying a magnetic field - in Belle II it has a nominal field strength of $B = \unit[1.5]{T}$ - parallel to the beam axis which is the $z$ axis in the coordinate system of the detector the charged particle are curled. By measuring the curvature of the curled tracks an estimation of the momentum in the plane perpendicular to the beam axis - the $r$-$\phi$-plane - can be made. The remaining $z$-direction parallel to the beam axis can be computed with the angle of the track to the beam axis.
 
-There exist many different ways to measure the position of a charge particle. Each of them exploits the charge of the particles and their interaction with materials which makes these techniques unusable for neutral particles. In the following two of the used ways in Belle II are described in more detail.
+There exist many different ways to measure the position of a charge particle. Each of them exploits the charge of the particles and their interaction with materials which makes these techniques unusable for neutral particles. The vertex positions and momenta of uncharged particles can not be measured with the here presented methods. In Belle II the momenta of neutral particles are resolved by assuming momentum conservation or by measuring the total energy of the particles in the calorimeter. In the following two tracking devices for charged particles are described in more detail. The main part of this thesis covers the tracking in the CDC detector. Only the chapter on the VXD momentum estimation for slow pions handles the tracking in the VXD detectors.
 
 \subsection{CDC}
 
-CDC is an acronym for Central Drift Chamber and is the largest tracking detector in Belle 2. The CDC is a typical gas chamber detector with 14336 sense wires arranged in 56 layer and 9 superlayers. These wires are strained mostly parallel to the beam axis in a cylindrical tank flooded with gas. The gas is a mixture of 50 \% helium and 50 \% ethane. For more information on gas chamber detectors see for example \cite{grupen}.
+CDC is an acronym for Central Drift Chamber and is the largest tracking detector in Belle 2. The CDC is a typical \todo{radius} gas chamber detector with 14336 sense wires arranged in 56 layer and 9 superlayers. These wires are strained mostly parallel to the beam axis in a cylindrical tank flooded with gas. The gas is a mixture of 50 \% helium and 50 \% ethane. For more information on gas chamber detectors see for example \cite{grupen}.
 Each charged particle produced in the collision of the electron and position interacts with the gas and can ionize the helium atoms. The energy deposit of a charged particle is given by the Bethe formula \cite{bethe}
 \begin{align}
  - \left\langle \dd{E}{x} \right\rangle = \frac{4 \pi n z^2}{m_e c^2 \beta^2} \cdot \left( \frac{e^2}{4 \pi \varepsilon_0} \right)^2 \left[ \ln\left( \frac{2 m_e c^2 \beta^2}{I(1 - \beta^2} \right) - \beta^2 \right] \label{form-bethe}
@@ -62,11 +81,14 @@ If all CDC wires were strained parallel to the beam axis there were no way in me
 \begin{figure}
   \centering
   \includegraphics[width=0.8\linewidth]{figures/experimental_setup/eventDisplayPionGun.png}
-  \caption{Simulated event of the passage of 10 $\Ppi^\pm$ with approximately $\unit[10]{GeV}$ through the CDC shown in a plane perpendicular to the beam axis. The interaction point is drawn as a black cirlce in the center. Each particle is colored differently to distinguish between them. Only the CDC detector is shown for better visuability. The wires are shown as gray (stereo) or black (axial) points. The hitten wires are depicted with their drift circles. The appearing disruption in the circular paths of the particle araise due to the stereo and axial wires.}
+  \caption{Simulated event of the passage of 10 $\Ppi^\pm$ with approximately $\unit[10]{GeV}$ through the CDC shown in a plane perpendicular to the beam axis. The interaction point is drawn as a black circle in the center. Each particle is colored differently to distinguish between them. Only the CDC detector is shown for better visibility. The wires are shown as gray (stereo) or black (axial) points. The hit wires are depicted with their drift circles. The appearing disruption in the circular paths of the particle arise due to the stereo and axial wires.}
   \label{fig-event-display}
 \end{figure}
 
-
-
+\clearpage
 \subsection{VXD}
-\todo{machen}
+VXD stands for vertex detectors and describes a group of two sorts of detectors: the pixel vertex detector (PXD) and the strip vertex detector (SVD). These two detectors are the innermost tracking detectors and are therefore used for measuring low momentum particles that do not reach into the CDC and the vertex positions of all produced decay products. 
+
+The PXD consists of two layers of over eight million depleted field effect transistor pixels made of silicon. Because of their large number the occupancy is below 1 \% so their long readout time of over $\unit[20]{\mu s}$ can be handled better. \todo{size, form -> later, describe measurement system, describe energy loss -> later} 
+
+The SVD is build of 4 layers of double-sided silicon strips todo{size, form -> later}. Its measurement system is comparable to the pixel detectors described before. As it can be seen in figure \ref{fig-belle2} the strips in the forward direction of the detector are constructed with a small slope of about $15^\circ$ because in this direction the bigger part of the decay products is expected. The found tracks in the SVD can be used to connect the results from the CDC and the PXD. Also because of the much smaller readout time in the SVD one can use it to improve the tracking in the pixel detector. 
