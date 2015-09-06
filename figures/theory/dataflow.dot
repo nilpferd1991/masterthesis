@@ -8,13 +8,13 @@ digraph allModules {
   "CDCTrackVector" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
   "EventMetaData" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
   "StereoHitFinderCDCLegendreHistogramming" -> "TrackCands" [color="#A22223"];
-  "CDCLegendreTracking";
+  "CDCLegendreTracking" [fontsize=36];
   "CDCHits" -> "CDCLegendreTracking" [color="#4664AA"];
   "EventMetaData" -> "CDCLegendreTracking" [color="#4664AA"];
   "CDCLegendreTracking" -> "CDCTrackVector" [color="#A22223"];
-  "Gearbox";
+  "Gearbox"[fontsize=36];
   "EventMetaData" -> "Gearbox" [color="#4664AA"];
-  "RootInput";
+  "RootInput"[fontsize=36];
   "RootInput" -> "CDCHits" [color="#A22223"];
   "RootInput" -> "CDCSimHits" [color="#A22223"];
   "RootInput" -> "EventMetaData" [color="#A22223"];
@@ -28,22 +28,22 @@ digraph allModules {
     style=solid;
     color=grey;
     "clusterMain_inv" [shape=point,style=invis];
-    "RootInput";
-    "Gearbox";
+    "RootInput"[fontsize=36];
+    "Gearbox" [fontsize=36];
     "RootInput" -> "Gearbox" [color=black];
     "CDCLegendreTracking";
     "Gearbox" -> "CDCLegendreTracking" [color=black];
-    "StereoHitFinderCDCLegendreHistogramming";
+    "StereoHitFinderCDCLegendreHistogramming" [fontsize=36];
     "CDCLegendreTracking" -> "StereoHitFinderCDCLegendreHistogramming" [color=black];
-    "RootOutput";
+    "RootOutput" [fontsize=36];
     "StereoHitFinderCDCLegendreHistogramming" -> "RootOutput" [color=black];
   }
-  "CDCHits" [shape=box,style=filled,fillcolor="#009682"];
-  "CDCSimHits" [shape=box,style=filled,fillcolor="#009682"];
-  "CDCTrackVector" [shape=box,style=filled,fillcolor="#009682"];
-  "EventMetaData" [shape=box,style=filled,fillcolor="#009682"];
-  "FileMetaData" [shape=box,style=filled,fillcolor="#009682"];
-  "MCParticles" [shape=box,style=filled,fillcolor="#009682"];
-  "TrackCands" [shape=box,style=filled,fillcolor="#009682"];
+  "CDCHits" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "CDCSimHits" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "CDCTrackVector" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "EventMetaData" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "FileMetaData" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "MCParticles" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "TrackCands" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
 }
 
