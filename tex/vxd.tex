@@ -1,9 +1,6 @@
 \newcommand{\dedx}{$\mathrm d E / \mathrm d x$ }
 \chapter{Momentum estimation of slow pions with the ADC in the VXD}
 
-\todo{Path length MC = Calculated as in algorithm!}
-\todo{Include correct new pictures}
-
 When looking onto the typical momentum distribution of the particles flying through the tracking detectors as show in figure \ref{fig-particles-momentum} it is clear that there is a significant amount of so called slow pions with momenta in the order of $\unit[100]{MeV}$. These particles get produced more or less at the interaction point and because of their small momentum and therefore high curvature and their huge energy losses they can not be detected in the CDC tracking detector. This means they can only be measured in the VXD. Because of the small radius of the VXD and the resulting small number of independent measurement points, the momentum resolution is very poor as it can be seen in the Glückstern formula
 \begin{align*}
  \frac{\sigma_{p_T}}{p_T} = \sqrt{\frac{720}{N + 4}} \sigma_x \frac{p_T \text{[GeV]}}{0.3 q B \text{[T]} L^2}
@@ -48,9 +45,9 @@ For the following studies an event sample of slow pions in the momentum range be
 
 \begin{figure}
  \centering
- \caption{Typical event display of one event used for analyzing the momentum estimation for the fitting procedure in the helix fit.}
+ \includegraphics[width=0.8\linewidth]{figures/vxd/event_display.png}
+ \caption{Typical event display of one event used for analyzing the momentum estimation for the fitting procedure in the helix fit. The blue box depicts the inner wall of the CDC. As it can be seen, most of the particles do not reach into the drift chamber and can only be detected with the VXD sensors.}
  \label{fig-vxd-event-display}
- \todo{picture}
 \end{figure}
 
 Before calculating the function to transform the \dedx value to a momentum estimation and using this information in the helix fit some prestudies are performed to check for the consistency of the input data. They are shown here for reference too.
@@ -71,7 +68,6 @@ Instead of using the deposited charge in every sensor directly the ADC count val
  \includegraphics[width=0.48\linewidth]{figures/vxd/dEdXUncalibrated.png}
  \includegraphics[width=0.48\linewidth]{figures/vxd/dEdXCalibrated.png}
  \caption{Distributions of the uncalibrated (left) and the calibrated (right) ADC counts of the PXD and SVD hits. Only clusters found by the VXD track finder are shown here.}
- \todo{Correct}
  \label{fig-adc-count}
 \end{figure}
 
@@ -115,9 +111,8 @@ The second subplot shows the distribution of the residuals of the other four pat
 
 \begin{figure}
  \centering
-  \includegraphics[width=0.5\linewidth]{figures/vxd/pathlengthHitType.png}
-  \todo{missing plot}
- \caption{The left plot shows the path length distribution for the two sensor types as a result of the simulation. This distribution is used for reference in the right plot which shows the residuum distribution of the other path length calculation modes.}
+  \includegraphics[width=0.5\linewidth]{figures/vxd/pathLengths.png}
+ \caption{The plot shows the path length distribution for the two sensor types as a result of the simulation. This distribution is used for reference in the right plot which shows the residuum distribution of the other path length calculation modes.}
  \label{fig-pathlengths}
 \end{figure}
 
