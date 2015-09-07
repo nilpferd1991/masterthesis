@@ -19,7 +19,7 @@ As it was shown in previous studies \cite{robert}, the momentum resolution compa
 In figure \ref{fig-dedx-over-p} the energy loss per travel length in the VXD sensors for low momentum pions is shown. How these numbers are calculated is described in the next sections. As it can be seen the \dedx increases with falling momentum of the particles. This relation can be also seen in the already quoted Bethe formula \ref{form-bethe} in chapter \ref{chapter-ex} which can be reduced to 
 \begin{align}
  -\left \langle \dd{E}{x} \right\rangle \approx \frac{4 \pi n z^2}{m_e v^2} \left( \frac{e^2}{4 \pi \varepsilon_0} \right)^2 \ln \left( \frac{2 m_e v^2}{I} \right) \label{form-bethe-simpl}
-\end{align} \todo{see in chapter 1: described mean?}
+\end{align}
 for small particle energies. The equation can be used to calculate the momentum using the energy loss per travel length. But as this formula describes the averaged energy loss it is only correct for a small number of cases. The variance in the energy loss is distributed according to a landau distribution which is described later in more detail. This deviation from the Bethe formula decreases the momentum resolution of the estimation based on the energy loss.
 
 \begin{figure}
@@ -61,7 +61,7 @@ For calculating the path length used in \dedx the correct position of the hit an
  \label{fig-cluster-position}
 \end{figure}
 
-Instead of using the deposited charge in every sensor directly the ADC count value of every sensor is used. This ADC count comes directly from the digitalization process and does therefore not rely on any calibration process. As it is directly proportional to the deposited energy and the parameters of the transformation function from \dedx to the momentum have to be determined by a fit in either way, the ADC count is used as a measure for the energy deposition. Picture \ref{fig-adc-count} shows the the \dedx value calculated with this ADC count for the two different detectors SVD and PXD. As it can be seen, the calibration coefficients to the correct deposited energy are different for the two detectors and therefore the two distributions are not superimposable. To cope with this fact the ADC counts coming from the PXD sensors get multiplied by a factor of 0.653382 which was calculated on data. The resulting distribution is shown in the right subplot of figure \ref{fig-adc-count}.
+Instead of using the deposited charge in every sensor directly the ADC count value of every sensor is used. This ADC count comes directly from the digitalization process and does therefore not rely on any calibration process. As it is directly proportional to the deposited energy and the parameters of the transformation function from \dedx to the momentum have to be determined by a fit in either way, the ADC count is used as a measure for the energy deposition. Picture \ref{fig-adc-count} shows the the \dedx value calculated with this ADC count for the two different detectors SVD and PXD. As it can be seen, the calibration coefficients to the correct deposited energy are different for the two detectors and therefore the two distributions are not superimposable. To cope with this fact the ADC counts coming from the PXD sensors get multiplied by a factor of 0.565868 which was calculated on data. The resulting distribution is shown in the right subplot of figure \ref{fig-adc-count}. This calibration is mainly done to be able to treat both hit types in the same manner later. 
 
 \begin{figure}
   \centering
@@ -72,7 +72,7 @@ Instead of using the deposited charge in every sensor directly the ADC count val
 \end{figure}
 
 \subsection{Calculation of the path length in the clusters}
-The \dedx value in every cluster can be calculated using the calibrated charge as described above and the length of the path the trajectory travels in the sensor region. There are five ways to calculate this path length. All of them are implemented in the code basis.
+The \dedx value in every cluster can be calculated using the calibrated charge as described above and the length of the path the particle travels in the sensor region. There are five ways to calculate this path length. All of them are implemented in the code basis.
 \begin{zlist}
  \item Using the correct (simulated) MC trajectory information of the tracks at the position of the clusters, \label{list-mc}
  \item Using the current trajectory parameters while fitting,
@@ -90,7 +90,7 @@ Besides the last possibilities all modes rely on calculating the path length of 
  \item Calculate the arc length between these two radii and from this arc length the distance between the two penetration points of the helix through the sensor using trigonometrical relations.
 \end{zlist}
 
-This procedure is correct for most of the time but fails in some rare cases. Some examples are shown in figure \ref{fig-errors-in-path-length}. As it can be seen in the pictures, errors in the calculation occur mainly for particles which have their apogee\footnote{The apogee is the opposite to the perigee - the point on the helical trajectory the most far away from the interaction point} in the sensors. As the VXD sensors have only a very thin thickness the probability for such particles is very rare. Therefore - as seen later - these cases do not bias the momentum measurement much. Also as the calculation error can only occur in the most outer sensor touched by the particles all other sensors give correct momentum estimations. \todo{Percentage!}
+This procedure is correct for most of the time but fails in some rare cases. Some examples are shown in figure \ref{fig-errors-in-path-length}. As it can be seen in the pictures, errors in the calculation occur mainly for particles which have their apogee\footnote{The apogee is the opposite to the perigee - the point on the helical trajectory the most far away from the interaction point} in the sensors. As the VXD sensors have only a very thin thickness the probability for such particles is very rare. Therefore these cases do not bias the momentum measurement much. Also as the calculation error can only occur in the most outer sensor touched by the particles all other sensors give correct momentum estimations. A short preliminary study shows that only about 0.4 \% of the particles are affected.
 
 \begin{figure}
   \centering
@@ -111,7 +111,7 @@ The second subplot shows the distribution of the residuals of the other four pat
 
 \begin{figure}
  \centering
-  \includegraphics[width=0.5\linewidth]{figures/vxd/pathLengths.png}
+  \includegraphics[width=0.7\linewidth]{figures/vxd/pathLengths.png}
  \caption{The plot shows the path length distribution for the two sensor types as a result of the simulation. This distribution is used for reference in the right plot which shows the residuum distribution of the other path length calculation modes.}
  \label{fig-pathlengths}
 \end{figure}
@@ -124,10 +124,22 @@ For calculating a momentum estimation from the \dedx value the inverted function
 \end{align}
 with the free parameters $a, b, c$ and $d$ is fitted to the \dedx-momentum-values where \dedx is calculated with path lengths from mode (\ref{list-mc}) and the momentum is taken from the MC simulation at this cluster (so including energy loss by material effects).
 
-The fitting parameters can not be determined by fitting the model function to the whole distribution at once as shown for example in figure \ref{fig-dedx-over-p}. The reason is that because of the landau distributed energy loss the number of outliers is too high and caused the fit to fail. An example of the landau distribution showing the large amount of outliers deviating from the mean energy loss is shown in picture \ref{fig-landau}. This is why a reduce approach is chosen here: First the \dedx-range is split into several small bins. In each of them the momentum distribution is build. This distribution is then fitted with a landau or a normal distribution. Mathematically the momentum distribution in these \dedx-bins is neither distributed according to a landau nor a normal distribution but the correct form can not be calculated analytically and these two distributions describe the data best.\footnote{The correct form of the distribution can be calculated by integrating over parts of the landau distribution folded with the inverted Bethe-equation.} The resulting parameters of the distributions (the mean of the gauß or the location parameter of the landau distribution\cite{landau}) are then used for fitting the model function \ref{form-model}. The whole process can be seen in figure \ref{fig-fit-bins}.
+The fitting parameters can not be determined by fitting the model function to the whole distribution at once as shown for example in figure \ref{fig-dedx-over-p}. The reason is that because of the landau distributed energy loss the number of outliers is too high and caused the fit to fail. An example of the landau distribution showing the large amount of outliers deviating from the mean energy loss is shown in picture \ref{fig-landau}. This is why a reduce approach is chosen here: First the \dedx-range is split into several small bins. In each of them the momentum distribution is build. This distribution is then fitted with a landau or a normal distribution. Mathematically, the momentum distribution in these \dedx-bins is neither distributed according to a landau nor a normal distribution but the correct form can not be calculated analytically and these two distributions describe the data best.\footnote{The correct form of the distribution can be calculated by integrating over parts of the landau distribution folded with the inverted Bethe-equation, which is not analytically solvable.} The resulting parameters of the distributions (the mean of the gauß or the location parameter of the landau distribution\cite{landau}) are then used for fitting the model function (\ref{form-model}). The whole process can be seen in figure \ref{fig-fit-bins}.
 
-\todo{pictures: landau, git-bins}
-\todo{correction?}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/vxd/landau.png}
+  \caption{Energy loss of particles in a sharp momentum range near of $\unit[70]{GeV}$. The distribution spreads over a large area in the \dedx space which causes the fit of the momentum estimation function to the raw data to fail.}
+  \label{fig-landau}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.48\linewidth]{figures/vxd/fitLandau1.png}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/fitLandau2.png}
+  \caption{The process of obtaining the estimator function $p(\mathrm d E/\mathrm d x)$. The left picture shows the p-distributions for 15 \dedx bins. Each of the distributions get fitted by a landau distribution. The right plot shows the location parameter of these fitted landau distributions are then used to fit the model in equation (\ref{form-model}).}
+  \label{fig-fit-bins}
+\end{figure}
 
 For the incorporation of the gained momentum estimation into the helix fit of genfit, not the momentum value directly but $q/p$ is needed. This is why in the following the residuum of $p^{-1}$ instead of $p$ is presented.
 

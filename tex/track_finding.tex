@@ -237,10 +237,10 @@ The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively ad
 When taking into account fake or background hits in a track, the Kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a wrong bias on these parameters. Therefore a weighting scheme is applied to all hits after each Kalman passage and this weight defines how strong a hit effects the final parameters. There are many different ways to do so including elastic tracking and nonlinear filters \cite{daf_fruh}. The one currently used for the tracking in the Belle II software framework is the \emph{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie. The procedure is as follows:
 \begin{zlist}
   \item Set the weights of all hits to 1.
-  \item Fit the track with a Kalman fitter taking into account the weights of each hit. \label{daf-loop-start}
+  \item Fit the track with a Kalman fitter taking into account the weights of each hit. \label{list-daf-loop-start}
   \item Recalculate the weight of each hit with the distance of the hit to the current trajectory hypothesis.
   \item Dismiss hits with a weight below a certain threshold.
-  \item Repeat with (\ref{daf-loop-start}) until a defined number of iterations is reached or the fit is converged.
+  \item Repeat with (\ref{list-daf-loop-start}) until a defined number of iterations is reached or the fit is converged.
 \end{zlist}
 
 To overcome the difficulties of badly chosen starting parameters of the fit that would lead to dismissing a large number of hits in the first iteration an annealing schema is applied: each weight is transformed with a Maxwell-Boltzmann distribution depending on a ``temperature'' $T$ which is decreased with every iteration. In the first few iterations with a high temperature hits with a small weight are kept while in later iterations these hits are dismissed.
