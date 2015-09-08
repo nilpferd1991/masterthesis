@@ -151,6 +151,10 @@ Besides the here presented two methods to gain the estimator function $p(\mathrm
 
 Before describing the results of the momentum resolution with and without the new momentum estimation, the incorporation of this new measurement type is described shortly. For this, the measurement model used in genfit is summarized here briefly. More information can be found elsewhere \cite{genfit}.
 
+The idea of the genfit package as a generalized track fitting package is to not rely on a certain detector configuration but rather threat the measured hits in a general form. For this, every hit is transformed into a an overloaded class of an \texttt{AbstractMeasurement}. This general measurement can hold 5 general coordinate measurements, which are two local coordinates $u$ und $v$, two local direction measurements $u'$ and $v'$ and an measurement for $q/p$. The measurement stores also the errors and covariances to these measurements and a generalized plane one which the measurements are defined and on which the local coordinates are defined. As the user does not have to provide all coordinate measurement on every \texttt{AbstractMeasurement}. This general scheme makes it possible to incorporate all different results of the measuring detectors, e.g. SVD hits (which define a plane as the sensor plane and give one coordinate measurement of $u$ or $v$ for each strip) or CDC wire hits (where the definition of a plane is more difficult to choose why the plane gets redefined in every fit iteration). As the real detector measurements are uncoupled from the fitting algorithm, the implemented fitters do not have to be adopted to cope with different measurements.
+
+To include the momentum estimation based on the 
+
 MeasurementCreator, State On Plane -> TrackPoint
 
 Results with fit, p value, iqr, median
