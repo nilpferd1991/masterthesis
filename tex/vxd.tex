@@ -71,7 +71,7 @@ Instead of using the deposited charge in every sensor directly the ADC count val
  \label{fig-adc-count}
 \end{figure}
 
-\subsection{Calculation of the path length in the clusters}
+\subsection{Calculation of the path length in the clusters} \label{subsection-calc}
 The \dedx value in every cluster can be calculated using the calibrated charge as described above and the length of the path the particle travels in the sensor region. There are five ways to calculate this path length. All of them are implemented in the code basis.
 \begin{zlist}
  \item Using the correct (simulated) MC trajectory information of the tracks at the position of the clusters, \label{list-mc}
@@ -116,7 +116,7 @@ The second subplot shows the distribution of the residuals of the other four pat
  \label{fig-pathlengths}
 \end{figure}
 
-\subsection{Transformation function from dE/dX to momentum}
+\subsection{Transformation function from dE/dX to momentum} \label{subsection-transform}
 
 For calculating a momentum estimation from the \dedx value the inverted function of equation \ref{form-bethe-simpl} is needed which can not be calculated analytically. Therefore a much easier model function
 \begin{align}
@@ -168,9 +168,34 @@ The task of this module is to create the measurements for each hit added to the 
 	\label{fig-measurement-creator}
 \end{figure}
 
+The momentum estimation of the VXD hits is included into the fit as another measurement - created also by a \texttt{MeasurementCreator} object. The measurements are created before the track fit but get called for their parameters in ever fitting iteration right before the fit uses the coordinates in the measurement. This fact can be used to calculate the plane (as used in the CDC hits) or the coordinates just before using them. Therefore it is possible to use the fitted state right in front of the hit to calculate the path length as described in subsection \ref{subsection-calc}. Together with the estimation for $q/p$ also the error on this coordinate has to be included into the \texttt{AbstractMeasurement}. This error can be calculated using the MC momentum used for calculating the estimator function and comparing this to the estimator function result. The error is fixed to \todo{value}, but can in principle be also calculated for every measurement independently.
 
-Results with fit, p value, iqr, median
+\subsection{Results for the resolution after track fitting}
 
-Pictures:
-- residuum, median + iqr function for different path length calculations
-- p values
+The above described estimation is included as a \texttt{MeasurementCreator} for SVD and PXD hits and the pion tracks in the momentum range of 50 - 100 MeV are fitted using the Kalman filter. Then the momentum calculated in the fit is compared to the one used in the MC simulation. To show the resolution in an easier way, the median and the interquartile range for the residuum is calculated. They can be seen in figure \ref{fig-results-fit} for both fit functions landau and gauß and for the different path length calculations in figure \ref{fig-results-fit2}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.48\linewidth]{figures/vxd/fitMedian.pdf}
+	\includegraphics[width=0.48\linewidth]{figures/vxd/fitIQR.pdf}
+	\includegraphics[width=0.48\linewidth]{figures/vxd/fitCount.pdf}
+	\caption{Figure showing the median (left) and the interquartile range (right) for the residuum between the MC momentum and the momentum coming from the helix fit with or without the momentum estimation based on the energy loss information. The two different fit functions landau and norm (like described in subsection \ref{subsection-transform}) are both shown here. The third plots shows the number of successful fits divided by the number of found tracks.}
+	\label{fig-results-fit}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.48\linewidth]{figures/vxd/fitMedianDifferentPathLengths.pdf}
+	\includegraphics[width=0.48\linewidth]{figures/vxd/fitIQRDifferentPathLengths.pdf}
+	\includegraphics[width=0.48\linewidth]{figures/vxd/fitCountDifferentPathLengths.pdf}
+	\caption{Figure showing also the median (left) and the interquartile range (right) of the residuum and the ratio of successful fits as in figure \ref{fig-results-fit}. This time the different path length calculations are shown for the case of using a landau distribution for fitting the \dedx values.}
+	\label{fig-results-fit2}
+\end{figure}
+
+As it can be seen in the result figures, the incorporation of the VXd momentum estimation into the helix fit can increase the resolution of the momentum quite drastically for low momentum tracks while also increasing the number of successful fits. As the landau seems to perform slightly better than the gauß fitted estimator function, these values are used in the following. The differences between the different path length calculations are not that big as expected from the prestudies of the path lengths before. As expected, the calculation with the MC track parameters at the hit perform best followed by the track parameters at the hit while fitting wheres the distance is only very small as the fitted parameters and the MC parameters are similar enough.
+
+Besides the momentum resolution, the resolution of the other helix parameters should not be decreased by the momentum estimation measurements. The perigee position of the fitted tracks with and without the momentum estimation with the landau fit function and path lengths from the track fit state is shown in figure \ref{fig-position}. As all tracks where simulated using a particle gun at the origin, the position should be exactly zero. \todo{Beschriebung}.
+
+Results p value
+Result position measurement (perigee, vertex)
