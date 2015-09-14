@@ -67,7 +67,7 @@ Because the free electrons have to drift through the gas, the measured peak has 
 If all CDC wires were strained perfectly parallel to the beam axis in $z$-direction, there would be no possibility to measure the $z$-information like the angle between the charged particles and the beam axis. That is the reason why some of the wires are installed with a small tilting angle to the beam axis\footnote{More correct is that these wires get twisted not tilted, but as the twisting angle is small, there is not much difference in the two descriptions.}. These wires are called stereo wires in contrast to the axial wires without tilting angle. A measured hit on the stereo wires alone does not give information neither on the position along the beam axis nor in the layer parallel to it as there is no possibility to measure the position along the wire where the particle passed by. Only the information collected among all axial and stereo hits lead to a correct estimation of the momentum in all directions as the axial wires define the position on the $r$-$\phi$-plane which in turn can be used to calculate the $z$-information with the stereo wires. A sketch of some axial and stereo wires sharing the same distance from the beam axis - also called a layer of wires - are shown in \ref{fig-axial-stereo}.
 
 \begin{SCfigure}
-  \caption{Simulation of the electron field in an extract of the wires in the central drift chamber. The violet circles depict the field wires whereas the red small points are the sense wires. The yellow paths are examples for the drift paths of ionized electrons. This simulation includes the distortion by the magnetic field. Taken from \cite{cdc_design}.}
+  \caption[Simulation of the electron field in the central drift chamber.]{Simulation of the electron field in an extract of the wires in the central drift chamber. The violet circles depict the field wires whereas the red small points are the sense wires. The yellow paths are examples for the drift paths of ionized electrons. This simulation includes the distortion by the magnetic field. Taken from \cite{cdc_design}.}
   \includegraphics[width=0.5\linewidth]{figures/experimental_setup/electronsInCDC.pdf}
   \label{fig-sense-wires}
 \end{SCfigure}
@@ -80,14 +80,14 @@ If all CDC wires were strained perfectly parallel to the beam axis in $z$-direct
   \vspace*{1.5cm}
   
   \includegraphics{figures/experimental_setup/stereoLayers.pdf}
-  \caption{Drawing sketching the axial (top) and stereo wires in the CDC. The skewing against the beamline of the stereo (bottom) wires is exaggerated. Taken from \cite{oliver}.}
+  \caption[Drawing sketching the axial (top) and stereo wires in the CDC.]{Drawing sketching the axial (top) and stereo wires in the CDC. The skewing against the beamline of the stereo (bottom) wires is exaggerated. Taken from \cite{oliver}.}
   \label{fig-axial-stereo}
 \end{figure}
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\linewidth]{figures/experimental_setup/eventDisplayPionGun.png}
-  \caption{Simulated event of the passage of 10 $\Ppi^\pm$ with approximately $\unit[1]{GeV}$ through the CDC shown in a plane perpendicular to the beam axis. The interaction point is drawn as a black circle in the center. Each particle is colored differently to distinguish between them. Only the CDC detector is shown for better visibility. The wires are shown as gray (stereo) or black (axial) points. The hit wires are depicted with their drift circles. The appearing disruption in the circular paths of the particle arise due to the tilting angle of the stereo wires in respect to the axial wires.}
+  \caption[Simulated event of the passage of 10 $\Ppi^\pm$ through the CDC.]{Simulated event of the passage of 10 $\Ppi^\pm$ with approximately $\unit[1]{GeV}$ through the CDC shown in a plane perpendicular to the beam axis. The interaction point is drawn as a black circle in the center. Each particle is colored differently to distinguish between them. Only the CDC detector is shown for better visibility. The wires are shown as gray (stereo) or black (axial) points. The hit wires are depicted with their drift circles. The appearing disruption in the circular paths of the particle arise due to the tilting angle of the stereo wires in respect to the axial wires.}
   \label{fig-event-display}
 \end{figure}
 
@@ -95,11 +95,20 @@ If all CDC wires were strained perfectly parallel to the beam axis in $z$-direct
 VXD stands for vertex detectors and describes a group of two sorts of detectors: the pixel vertex detector (PXD) and the strip vertex detector (SVD). These two detectors are the innermost tracking detectors and are therefore used for measuring low momentum particles that do not reach into the CDC and the vertex positions of all produced decay products by combining the measured particle trajectories later.
 
 The PXD consists of two layers of over eight million depleted field effect transistor (DEPFET) pixels made of silicon. Because of their large number the occupancy is below 1 \% so their long readout time of over $\unit[20]{\mu s}$ can be handled better. Strip detectors would lead to much higher occupancies making it impossible to measure the $\PB$-decays. 
-The DEPFET technology makes it possible to build very thin (approximately $\uni[50]{\mu m}$) sensors which consume very little power making air cooling sufficient. As the ASICs-build readout electronics is located outside the acceptance region of the detector the non-sensing material budget close to the interaction region is reduced.
+The DEPFET technology makes it possible to build very thin (approximately $\unit[50]{\mu m}$) sensors which consume very little power making air cooling sufficient. As the ASICs-build readout electronics is located outside the acceptance region of the detector the non-sensing material budget close to the interaction region is reduced.
 
 The pixels are grouped into two layers of sensors at radii of $\unit[14]{mm}$ and $\unit[22]{mm}$. The two layers consist of 8 respectively 12 sensor panels with a width of $\unit[15]{mm}$ and a sensitive length of $\unit[90]{mm}$ and $\unit[123]{mm}$ leading to the typical acceptance region of 17 (forward) to 150 (backward) degrees which is used throughout the whole detector setup. The readout-electronics is mounted at the end of each layer which is connected to the data acquisition system outside the detector by optical fibers.
 
-\todo{detection system}
+Each pixel consist of a fully depleted p-channel MOSFET (or JFET) with a artificial potential minimum shortly below the transistor channel by additional phosporus depletion. Incident particles generate electron-hole pairs in the n-bulk. The electrons drift towards this internal gate. When switching the p-channel MOSFET on, these accumulated electrons change the electronic behavior of the transistor which can be measured by the external electronics. The measurement is non-destructive - therefore the signal electrons have to be ``cleared'' from the internal gate by a high-voltage punch-through. A cross-section of one pixel is shown in figure \ref{fig-pxd-schema}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/experimental_setup/pxd.pdf}
+  \caption[Cross-section of a PXD sensor]{Schematic cross-section of on PXD sensor pixel of the Belle II detector with the different parts as described in the text. Taken from \cite{tdr}.}
+  \label{fig-pxd-schema}
+\end{figure}
 
 
-The SVD is build of 4 layers of double-sided silicon strips todo{size, form -> later}. Its measurement system is comparable to the pixel detectors described before. As it can be seen in figure \ref{fig-belle2} the strips in the forward direction of the detector are constructed with a small slope of about $15^\circ$ because in this direction the bigger part of the decay products is expected. The found tracks in the SVD can be used to connect the results from the CDC and the PXD. Also because of the much smaller readout time in the SVD one can use it to improve the tracking in the pixel detector. 
+The SVD is build of four layers of double-sided silicon strips. The main task of the SVD is to connect the measurements from the PXD, the innermost detector, with the CDC measurements. Although it is also possible to perform a VXD-standalone tracking in Belle II which can improve the efficiency for very-low momentum particles which can not read the CDC\footnote{The minimal transversal momentum to reach the CDC is defined by the magnetic field strength and the inner radius of the CDC and differs for different particle types because of material effects, The typical minimal momentum lays in the region of some tens of megavolts.}. The four layers reach from 38 to 140 mm and fill therefore the gap between the PXD and the CDC detector. The 187 distinct sensors cover the whole acceptance region. As it can be seen in figure \ref{fig-belle2} and \ref{fig-cluster-position}, the strips in the forward direction of the detector are constructed with a small slope of about $15^\circ$ because in this direction the bigger part of the decay products is expected. 
+
+The sensors in the SVD consist of double-sided 12cm-long strips with pitch sizes of approximately $\unit[50]{\mu m}$ on the p-side and $\unit[200]{\mu m}$ on the n-side. As multiple scattering is the main issue in these measurement region, the thickness is with $\unit[320]{\mu m}$ for the barrel and $\unit[300]{\mu m}$ for the slanted forward sensors very small. The measuring process is similar to the one in the PXD sensors. Particles passing through the sensor strips produce electron-hole-pairs in the depleted region which get measured by the external electronics. 
