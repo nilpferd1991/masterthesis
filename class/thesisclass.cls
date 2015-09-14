@@ -105,7 +105,7 @@
 \setcounter{tocdepth}{1}    % Register \subsubsections in content directory
 
 \setpapersize{A4}
-\setmarginsrb{3cm}{1cm}{3cm}{1cm}{6mm}{7mm}{5mm}{15mm}
+\setmarginsrb{3cm}{3cm}{3cm}{2cm}{6mm}{7mm}{5mm}{15mm}
 
 \parindent 0cm                     % Do not indent beginning of paragraph
 \parskip1.5ex plus0.5ex minus0.5ex % Margin between paragraphs
