@@ -155,7 +155,7 @@
   }
 }
 
-\lstdefinestyle{customc}{
+\lstdefinestyle{customP}{
   belowcaptionskip=1\baselineskip,
   breaklines=false,
   %frame=L,
@@ -169,4 +169,50 @@
   stringstyle=\color{kit-orange100},
 }
 
-\lstset{escapechar=@,style=customc}
+\lstdefinestyle{customC}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=false,
+  %frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{kit-green70},
+  commentstyle=\itshape\color{kit-blue70},
+  identifierstyle=\color{black},
+  stringstyle=\color{kit-orange100},
+}
+
+\definecolor{light-gray}{gray}{0.98}
+
+% the space reserved between for the ``In'' numbers and the code
+\newlength\inwd
+\setlength\inwd{1.3cm}
+
+\newcounter{ipythcntr}
+
+\newtcblisting{ipythonnb}[1][\theipythcntr]{
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0.2pt,
+  colback=light-gray,
+  listing only,
+  listing options={
+    style=customP
+  },
+  top=-6pt,
+  bottom=-6pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{kit-blue100},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {\stepcounter{ipythcntr}In [#1]:};
+  }
+}

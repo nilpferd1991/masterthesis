@@ -53,6 +53,9 @@
 \usepackage[maybess]{hepnames}
 \usepackage{units}
 \usepackage[fixlanguage]{babelbib}	% sets german style for literature entries
+\usepackage{xcolor}
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{listings}
 
 
 \usepackage[

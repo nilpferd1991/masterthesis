@@ -1,0 +1,78 @@
+\newcommand{\RecoTrack}{\texttt{RecoTrack}\ }
+\newcommand{\Track}{\texttt{genfit::Track}\ }
+\newcommand{\Hit}{\texttt{RecoHitInformation}\ }
+\chapter{Additional software changes} \label{chapter-addon}
+
+This chapter summarizes all the additional changes made to basf2 during the writing of this thesis for documentation purposes. They all stay in relation to the changes made for the tracking framework but do not try to increase the physical figures of merit. They are listed here without a special ordering or connections.
+
+\section{\texttt{RecoTrack}}
+As described in chapter \ref{chapter-vxd}, the former \Track and the \texttt{genfit::TrackCand} were merged together to form a new \RecoTrack class which is described with its accompanying models in the following. The motivation was to create a better interface to the fitting-algorithms provided by the genfit package and fit seamlessly into the StoreArray structure. As one of the goals of the genfit package is to stay as general as possible, it is not possible to incorporate this structure tight into the fitting algorithms. Instead, a wrapper class is build which inherits both from the \Track and from the \texttt{RelationInterface} in form of a public inheritance 
+\begin{center}
+  \lstset{escapechar=@,style=customC}
+  \lstinline@ class RecoTrack : public RelationInterface<genfit::Track> { ... }@
+\end{center}
+which turns the \RecoTrack as a drop-in-replacement for the \Track as all algorithms of genfit work the same. 
+
+In the first subsection, the \RecoTrack dataobject is described in more detail whereas the second subsection describes the needed environmental modules.
+
+\subsection{\RecoTrack and \Hit}
+
+The \Track objects are more or less containers for a list of \texttt{genfit::TrackPoint} pointers with one or few \texttt{AbstractMeasurement} in each of them (see chapter \ref{chapter-vxd} for more information on the measurements). These track points are needed for the fitting algorithm and include not only the hit information but also sorting parameters and additional information like the detector where this hit was found. On the other side are the raw hit information coming from the detector that get written to several StoreArrays. These raw hit classes, namely \texttt{CDCHit}, \texttt{SVDHit} and \texttt{PXDHit} get used by the track finder algorithms and have to be transformed into the track points needed by genfit. To encapsulate the track finding from the track fitting, this step is not included in the finder modules, also because the track points can not be saved into StoreArrays and written into ROOT output files. The \RecoTrack needs to handle both hit types: the track points and the raw hits. Therefore, the raw hits are saved as relations to the \RecoTrack instances (this is possible as the raw hits as well as the \RecoTrack inherit from \texttt{RelationInterface}) and then turned into track points by the \texttt{MeasurementCreatorModule} (again see chapter \ref{chapter-vxd} for more details). These points are stored in the \RecoTrack itself as a \texttt{std::vector}. This approach together with some methods of the \RecoTrack to ass and receive hit information conveniently makes the \RecoTrack relatively lightweight as it does not have to store lists of raw hits in addition.
+
+One problem with this approach is, that it is impossible to store additional information like the sorting order of the hits or the track finder which has found the hit, as the relation can only be used to store one additional \texttt{double} together with each pair. To solve this issue a second dataobject - the \Hit - was created to store these additional information. When adding a raw hit to the \RecoTrack one \Hit instance is created automatically and stored with relations to the raw hit and the \RecoTrack, which leads to the triangular shaped relation diagram showed in figure \ref{fig-reco-hit-relation}. As the \RecoTrack has already buildin function to access the additional information in a convenient way, there is no need for the user of the dataobject to take care of the \Hit instances by himself. 
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[thick]
+    \node[module, text width=10em, fill=kit-orange50] (track) {\RecoTrack};
+    \node[module, text width=10em, fill=kit-orange50, right=6.0 of track] (hit) {\Hit};
+    \node[module, text width=10em, fill=kit-orange50, below right=of track] (cdchit) {\texttt{CDCHit}};
+
+    \draw[vecArrow, <->] (track) -- (hit) node [midway, above] {1:n};
+    \draw[vecArrow, <->] (cdchit) -- (hit) node [midway, below] {1:p};
+    \draw[vecArrow, <->] (track) -- (cdchit) node [midway, below] {m:k};
+  \end{tikzpicture}
+  \caption[Relation diagram between \RecoTrack, \Hit and raw hits.]{Relation diagram between the two newly created dataobjects \RecoTrack and \Hit and one raw hit. The arrows describe the relation between the objects which are accessible in both ways. The numbers on the arrows describe the cardinality of the relation. These cardinalities are the reason why the relation diagram can not be reduced further.}
+  \label{fig-reco-hit-relation}
+\end{figure}
+
+Together with the already described convenience-functions to add and receive raw hit information the \RecoTrack also includes a method to prepare the underlaying \Track for the fitting algorithm. This includes setting of the time seed information and adding a representation instance which stores the particle type information.
+
+\subsection{Modules for the \RecoTrack}
+
+Together with the \RecoTrack dataobject four modules where written which altogether have the same functionalities as the \texttt{GenfitterModule} but split up to improve the configurability. These modules are
+\begin{description}
+ \item[RecoTrackCreatorModule] Although the \RecoTrack should replace the \texttt{genfit::Track\-Cand} in the future, it is possible to easily possible to include the \RecoTrack workflow into the module path without rewriting all the track finder modules with the \texttt{Reco\-Track\-Creator\-Module}. The module transform an ingoing StoreArray of \texttt{genfit::\ Track\-Cand} objects into \RecoTrack instances and creates the needed relations between the track candidates and the tracks.
+ \item[MeasurementCreatorModule] As described before, this module is responsible for transforming the added raw hits of the \RecoTrack into track points. It uses highly configurable \texttt{MeasurementCreatorFactory} objects which can add arbitrary track points (which is used for adding the momentum estimations in the VXD).
+ \item[BaseFitterModule] This module and its derived modules \texttt{KalmanRecoFitter} and \texttt{DAF\-Reco\-Fitter} are responsible for creating an object of the genfit fitting algorithm and passing this to every \RecoTrack to use it for fitting. When doing this, also the preparation functions for the fit are called.
+ \item[TrackBuilderFromRecoTracksModule] In the end not the whole track but only the perigee parameters are important for the physics analysis. Therefore this module extrapolates the tracks to the perigee with the extrapolation methods provided by genfit. It saves its results in \texttt{Belle2::Track} objects which are used in the analysis later.
+\end{description}
+
+The modules in the typical use case with its input and output arrays are shown in figure \ref{fig-reco-fitter-modules}.
+
+\begin{figure}
+  \centering
+  \todo{picture}
+  %\includegraphics[width=\linewidth]{figures/addon/recoFitterModules.pdf}
+  \caption[Modules for fitting \RecoTrack objects.]{The described modules for fitting the \RecoTrack objects in the typical order and with the typical input and output parameters. See figure \ref{fig-viz-datastore} for a description of the colors and labels.}
+  \label{fig-reco-fitter-modules}
+\end{figure}
+
+
+\section{IPython interface for basf2}
+
+Description of IPython (What is it, benefits)
+Description of the ipy thon\_tools (why? what is in there, some examples: calculation with properties, parameter space, some widgets)
+
+\begin{ipythonnb}
+from ipython_tools import handler
+path = ...
+calculation = handler.process(path)
+\end{ipythonnb}
+
+\section{Docker images of the basf2 software}
+
+What is docker?
+Why for basf2?
+What is done?
+What could be done/possible?
