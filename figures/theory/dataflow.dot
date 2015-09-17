@@ -1,20 +1,19 @@
 digraph allModules {
-  rankdir=LR;
+  
   compound=true;
-  "RootOutput";
+  "RootOutput" [fontsize=36];
   "RootOutput" -> "FileMetaData" [color="#A22223"];
-  "StereoHitFinderCDCLegendreHistogramming";
-  "CDCHits" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
+  "StereoHitFinderCDCLegendreHistogramming" [fontsize=36];
   "CDCTrackVector" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
-  "EventMetaData" -> "StereoHitFinderCDCLegendreHistogramming" [color="#4664AA"];
   "StereoHitFinderCDCLegendreHistogramming" -> "TrackCands" [color="#A22223"];
   "CDCLegendreTracking" [fontsize=36];
-  "CDCHits" -> "CDCLegendreTracking" [color="#4664AA"];
-  "EventMetaData" -> "CDCLegendreTracking" [color="#4664AA"];
   "CDCLegendreTracking" -> "CDCTrackVector" [color="#A22223"];
-  "Gearbox"[fontsize=36];
+  "WireHitTopologyPreparer" [fontsize=36];
+  "CDCHits" -> "WireHitTopologyPreparer" [color="#4664AA"];
+  "WireHitTopologyPreparer" -> "CDCWireHitTopology" [color="#A22223"];
+  "Gearbox" [fontsize=36];
   "EventMetaData" -> "Gearbox" [color="#4664AA"];
-  "RootInput"[fontsize=36];
+  "RootInput" [fontsize=36];
   "RootInput" -> "CDCHits" [color="#A22223"];
   "RootInput" -> "CDCSimHits" [color="#A22223"];
   "RootInput" -> "EventMetaData" [color="#A22223"];
@@ -25,25 +24,28 @@ digraph allModules {
   "MCParticles" -> "CDCSimHits" [color="#A22223",style=dashed];
   subgraph "clusterMain" {
     rank=min;
-    style=solid;
-    color=grey;
+    style=invis
+    
     "clusterMain_inv" [shape=point,style=invis];
-    "RootInput"[fontsize=36];
+    "RootInput" [fontsize=36];
     "Gearbox" [fontsize=36];
     "RootInput" -> "Gearbox" [color=black];
-    "CDCLegendreTracking";
-    "Gearbox" -> "CDCLegendreTracking" [color=black];
+    "WireHitTopologyPreparer" [fontsize=36];
+    "Gearbox" -> "WireHitTopologyPreparer" [color=black];
+    "CDCLegendreTracking" [fontsize=36];
+    "WireHitTopologyPreparer" -> "CDCLegendreTracking" [color=black];
     "StereoHitFinderCDCLegendreHistogramming" [fontsize=36];
     "CDCLegendreTracking" -> "StereoHitFinderCDCLegendreHistogramming" [color=black];
     "RootOutput" [fontsize=36];
     "StereoHitFinderCDCLegendreHistogramming" -> "RootOutput" [color=black];
   }
-  "CDCHits" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
-  "CDCSimHits" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
-  "CDCTrackVector" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
-  "EventMetaData" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
-  "FileMetaData" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
-  "MCParticles" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
-  "TrackCands" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=36];
+  "CDCHits" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "CDCSimHits" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "CDCTrackVector" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "CDCWireHitTopology" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "EventMetaData" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "FileMetaData" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "MCParticles" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
+  "TrackCands" [shape=box,style=filled,fillcolor="#00DBBE",fontsize=40];
 }
 

@@ -15,7 +15,7 @@ In these steering files a path is created, filled and passed to the framework wh
 Because many modules need the data produced by other modules before there is a need for intermodular communication. This communication is performed within the framework with the help of the data store. This class is a wrapper around a collection of named \texttt{TClonesArrays} from the ROOT library \cite{tclonesarray} which can store lists of instances of nearly arbitrary C++ classes, called \texttt{StoreArrays}. It is used in the framework to store e.g. the hit information produced by the particles in the simulation or the found tracks after the track finding modules. The modules have read and write access to every \texttt{StoreArray} in the data store. A visualization of the data flow between the modules created with the steering file in listing \ref{lis-steering-file} can be found in figure \ref{fig-viz-datastore}. The data store can be written to or read from disk using ROOTs own serialization mechanism together with data member dictionaries for the C++ classes created by the C++ interpreter of ROOT called CINT \cite{cint}.
 
 \begin{listing}
- \begin{lstlisting}[language=Python]
+ \begin{lstlisting}[style=customP]
   # Import the needed basf2 package
   import basf2
 
@@ -76,17 +76,21 @@ into the legendre space as shown in figure \ref{fig-legendre-explained}. In the 
 
 \begin{figure}
  \centering
- \includegraphics[scale=0.15]{figures/theory/legendre_1.png}
- \includegraphics[scale=0.15]{figures/theory/legendre_2.png}
- \includegraphics[scale=0.15]{figures/theory/legendre_3.png}
+ \includegraphics[scale=0.3]{figures/theory/legendre_1.png}
+ \hspace*{1cm}
+ \includegraphics[scale=0.3]{figures/theory/legendre_2.png}
+ 
+ \vspace*{1cm}
+ \includegraphics[scale=0.3]{figures/theory/legendre_3.png}
  \caption[Axial legendre algorithm.]{Transformation of hits belonging to the same charged particle (left side) to the inverted plane (middle) and to the legendre space with the characteristic sinusoidal functions (right). As described in the text, the circular trajectory is first transformed into lines and then into intersecting sinograms. Each sinogram includes all possible trajectory parameters which would have touched the hit from which the function was created. The intersection corresponds to the parameters of the trajectory and are marked with a red circle. For better visibility the wrong half of the sinograms is colored gray.}
  \label{fig-legendre-explained}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[scale=0.2]{figures/theory/sinosodial_1.png}
-  \includegraphics[scale=0.2]{figures/theory/sinosodial_2.png}
+  \includegraphics[scale=0.27]{figures/theory/sinosodial_1.png}
+  \hspace*{1cm}
+  \includegraphics[scale=0.27]{figures/theory/sinosodial_2.png}
   \caption[Sinograms in the legendre algorithm.]{The left picture shows one single oversized drift circle (black) and four trajectories (in color) that could have possibly created that hit as they touch the drift circle tangentially. The hit is transformed into two sinograms on the right picture. The drift circle lays on the outside of the green and the red trajectory (the gray sinogram = right side) and on the inside of the blue and the yellow one (the black sinogram = left side).}
   \label{fig-sinosodial}
 \end{figure}
@@ -100,7 +104,7 @@ After finding the possible hit subsets for the track candidates a post processin
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\linewidth]{figures/theory/quad_tree.png}
+  \includegraphics[width=0.5\linewidth]{figures/theory/quad_tree.png}
   \caption[Quad tree search.]{Depiction of a quad the search to find the bin with the most interceptions of sinograms shown in red here. Only the first round of the search without multicandidate search is shown for better visibility. Each color shows sinograms that belong to the same charged particle. Taken from \cite{viktor_dpg}.}
   \label{fig-quad-tree-search}
 \end{figure}
@@ -119,9 +123,12 @@ As the energy loss has for most of the particles no influence on the $z$ motion 
 
 \begin{figure}
  \centering
- \includegraphics[scale=0.15]{figures/theory/stereo_1.png}
- \includegraphics[scale=0.15]{figures/theory/stereo_2.png}
- \includegraphics[scale=0.15]{figures/theory/stereo_3.png}
+ \includegraphics[scale=0.3]{figures/theory/stereo_1.png}
+ \hspace*{1cm}
+ \includegraphics[scale=0.3]{figures/theory/stereo_2.png}
+ 
+ \vspace*{1cm}
+ \includegraphics[scale=0.3]{figures/theory/stereo_3.png}
  \caption[Stereo legendre algorithm.]{Stereo hit finder algorithm shown for a single track. The track trajectory in the $r$-$\phi$ (left) plane leads to two possible $z$ positions for each stereo hit (center). On the left side the trajectory together with the stereo wires projected to the $r$-$\phi$ plane is show. In principle each stereo hit could have been created by an infinite number of tracks. Some of them are shown in green in the center picture. The dark green track is the correct hypothesis. Each line correspond to a single point in the $\tan \lambda$-$z_0$ plane which is shown on the right side together with the correct trajectory parameters as a red diamond. The green diamonds on the right side correspond to the wrong green lines in the center diagram. The $\tan \lambda$-$z_0$-lines for each hit as described in the text are also shown in black (correct hits) or in gray (wrong hits).}
  \label{fig-stereo-explained}
 \end{figure}
@@ -168,15 +175,12 @@ Both steps include the same problem: find the correct candidate among all combin
 \label{fig-automaton}
 \end{figure}
 
-The first step of the automaton track finder is to clusterize the hits into bunches. A cluster of hits is defined as the largest set of directly adjacent hits in a single superlayer. This condition can also be weakened to allow for one-cell-wide gaps in the clusters. A typical event display with the found clusters is shown in figure \ref{fig-clusters-and-segments} on the left side. The segments which are build next are fully contained in one single cluster - but one cluster can contain more than one segment when two tracks cross each other in this superlayer. To decide from which partition of hits in a cluster the segment should be build the cellular algorithm is applied for each cluster independently. The nodes in the graph are given by the so called facets. One facet is one of the possibilities of assembling three wire hits with two pairs of wire hits in close proximity to each other. Three possibilities for facets are shown in figure \ref{fig-facets}. As it can be seen in the figure each wire hit has already a right-left passage information attached to it and combinations of the same three wires with different right-left information form different facets. With this right-left information a direction of flight can be defined (except for the sign). Configurable filters are used to trim down the created three hit combinations to only compatible facets by limiting for example the angular deviation between the tangents to pairs of hits. Before applying the cellular automaton one has to define the edges of the graph also. Two facets have a directed connection in the graph if and only if the second and third hit of the first facet resembles the first and second hit of the second facet together with its right-left information and the angle between the defined directions of flight is belong a certain threshold. After performing the cellular automaton algorithm a set of paths including those facets is obtained. By collecting the hits included in those paths single segments can be build.
+The first step of the automaton track finder is to clusterize the hits into bunches. A cluster of hits is defined as the largest set of directly adjacent hits in a single superlayer. This condition can also be weakened to allow for one-cell-wide gaps in the clusters. A typical event display with the found clusters is shown in figure \ref{fig-clusters-and-segments}. The segments which are build next are fully contained in one single cluster - but one cluster can contain more than one segment when two tracks cross each other in this superlayer. To decide from which partition of hits in a cluster the segment should be build the cellular algorithm is applied for each cluster independently. The nodes in the graph are given by the so called facets. One facet is one of the possibilities of assembling three wire hits with two pairs of wire hits in close proximity to each other. Three possibilities for facets are shown in figure \ref{fig-facets}. As it can be seen in the figure each wire hit has already a right-left passage information attached to it and combinations of the same three wires with different right-left information form different facets. With this right-left information a direction of flight can be defined (except for the sign). Configurable filters are used to trim down the created three hit combinations to only compatible facets by limiting for example the angular deviation between the tangents to pairs of hits. Before applying the cellular automaton one has to define the edges of the graph also. Two facets have a directed connection in the graph if and only if the second and third hit of the first facet resembles the first and second hit of the second facet together with its right-left information and the angle between the defined directions of flight is belong a certain threshold. After performing the cellular automaton algorithm a set of paths including those facets is obtained. By collecting the hits included in those paths single segments can be build.
 
 \begin{figure}
   \centering
-  \todo{correct figure}
-  \includegraphics[width=0.4\linewidth]{figures/theory/segments.png} 
-  \hspace*{0.1\linewidth}
-  \includegraphics[width=0.4\linewidth]{figures/theory/segments.png}
-  \caption[Clusters and resulting segments in the automaton track finder.]{A typical event with the colored clusters (left side) and the resulting segments (right side). As it can be seen, one segment is always contained in one single cluster, but one cluster can be split up in more than one segment.}
+  \includegraphics[width=0.8\linewidth]{figures/theory/segments.png} 
+  \caption[Clusters and resulting segments in the automaton track finder.]{A typical event with the colored clusters.}
   \label{fig-clusters-and-segments}
 \end{figure}
 
@@ -229,7 +233,7 @@ The Kalman fitter algorithm \cite{kalman} is based on the idea of iteratively ad
 
 \begin{figure}
  \centering
- \includegraphics[width=0.5\linewidth]{figures/theory/kalman.pdf}
+ \includegraphics[width=0.6\linewidth]{figures/theory/kalman.pdf}
  \caption[One step of the Kalman fitter procedure.]{Sketch with one step in the Kalman fitter procedure. The correct track parameters are depicted by the black trajectory. The green planes are given by two sensors. The track passage positions - the hit position measurements - are shown as black circles. The current state of the fitting parameters is shown in gray. The state is extrapolated from the lower to the upper plane (gray dashed) and a new reconstructed position is calculated (gray circle on the upper plane). As there is a deviation between the current and the measured hit position, the current trajectory is changed according to the blue arrow.}
  \label{fig-kalman}
 \end{figure}

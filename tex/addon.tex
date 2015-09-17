@@ -48,15 +48,15 @@ Together with the \RecoTrack dataobject four modules where written which altoget
  \item[TrackBuilderFromRecoTracksModule] In the end not the whole track but only the perigee parameters are important for the physics analysis. Therefore this module extrapolates the tracks to the perigee with the extrapolation methods provided by genfit. It saves its results in \texttt{Belle2::Track} objects which are used in the analysis later.
 \end{description}
 
-The modules in the typical use case with its input and output arrays are shown in figure \ref{fig-reco-fitter-modules}.
+The names modules together with the \texttt{SetupGenfitExtrapolationModule} should run in the given order in the usual use case.
 
-\begin{figure}
-  \centering
-  \todo{picture}
-  %\includegraphics[width=\linewidth]{figures/addon/recoFitterModules.pdf}
-  \caption[Modules for fitting \RecoTrack objects.]{The described modules for fitting the \RecoTrack objects in the typical order and with the typical input and output parameters. See figure \ref{fig-viz-datastore} for a description of the colors and labels.}
-  \label{fig-reco-fitter-modules}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \todo{picture}
+%   %\includegraphics[width=\linewidth]{figures/addon/recoFitterModules.pdf}
+%   \caption[Modules for fitting \RecoTrack objects.]{The described modules for fitting the \RecoTrack objects in the typical order and with the typical input and output parameters. See figure \ref{fig-viz-datastore} for a description of the colors and labels.}
+%   \label{fig-reco-fitter-modules}
+% \end{figure}
 
 
 \section{IPython interface for basf2}

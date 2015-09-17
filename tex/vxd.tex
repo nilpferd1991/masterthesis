@@ -37,8 +37,7 @@ For the following studies an event sample of slow pions in the momentum range be
 \begin{figure}
  \centering
  \includegraphics[width=0.48\linewidth]{figures/vxd/finding_efficiency.png}
- \includegraphics[width=0.48\linewidth]{figures/vxd/finding_efficiency.png}
- \todo{correct picture}
+ \includegraphics[width=0.48\linewidth]{figures/vxd/finding_efficiency_mc.png}
  \caption[Momentum distribution of the found and simulated pions.]{Momentum distribution of the simulated pions as found by the VXD track finder (left) and the MC track finder (which has the simulated truth information, right). The finding efficiency decreases with lower momenta as the number of hits in the VXD is lower for slow pions and the energy loss is stronger. The MC track finder has also not a flat distribution of momenta as it only uses those particles for tracks which have at least 3 hits in the VXD detector.}
  \label{fig-vxd-finding-efficiency}
 \end{figure}
@@ -145,14 +144,13 @@ The fitting parameters can not be determined by fitting the model function to th
 
 For the incorporation of the gained momentum estimation into the helix fit of genfit, not the momentum value directly but $q/p$ is needed. This is why in the following the residuum of $p^{-1}$ instead of $p$ is presented.
 
-In the two subplots of figure \ref{fig-divp-residuum} the median and the interquartile range of the residuum of the estimated to the MC momentum is shown. As both fit functions (gauß and landau) lead to quite large shifts in the median indicating a biased momentum estimation a correction procedure is introduced: a cubic polynomial is fitted to the median values which is later subtracted from the momentum estimation. These corrected estimators are also shown in the figure.
+In the two subplots of figure \ref{fig-divp-residuum} the median and the interquartile range of the residuum of the estimated to the MC momentum is shown. As both fit functions (gauß and landau) lead to quite large shifts in the median indicating a biased momentum estimation a correction procedure is introduced: a cubic polynomial is fitted to the median values which is later subtracted from the momentum estimation. These corrected estimators are also shown in the figure. They do reduce the median of the residuum but increase the IQR in turn.
 
 \begin{figure}
   \centering
-%   \includegraphics[width=0.47\linewidth]{figures/vxd/divPMedian.pdf}
-%   \includegraphics[width=0.47\linewidth]{figures/vxd/divPIWR.pdf}
-  \todo{picture}
-  \caption[Median and IQR of $1/p$.]{The median (left) and the interquartile range (right) of the residuum between $1/p$ calculated with the estimator function and the MC information over the MC momentum. For all path length calculations the MC information at the hit is used. Together with the wto fit functions landau and gauß also the median-corrected estimators (as described in the text) are shown.}
+   \includegraphics[width=0.47\linewidth]{figures/vxd/divPMedian.png}
+   \includegraphics[width=0.47\linewidth]{figures/vxd/divPIQR.png}
+  \caption[Median and IQR of $1/p$.]{The median (left) and the interquartile range (right) of the residuum between $1/p$ calculated with the estimator function and the MC information over the MC momentum. For all path length calculations the MC information at the hit is used. Together with the two fit functions landau and gauß also the median-corrected estimators (as described in the text) are shown.}
   \label{fig-divp-residuum}
 \end{figure}
 
@@ -180,15 +178,15 @@ The task of this module is to create the measurements for each hit added to the 
   \label{fig-measurement-creator}
 \end{figure}
 
-The momentum estimation of the VXD hits is included into the fit as another measurement - created also by a \texttt{MeasurementCreator} object. The measurements are created before the track fit but get called for their parameters in ever fitting iteration right before the fit uses the coordinates in the measurement. This fact can be used to calculate the plane (as used in the CDC hits) or the coordinates just before using them. Therefore it is possible to use the fitted state right in front of the hit to calculate the path length as described in subsection \ref{subsection-calc}. Together with the estimation for $q/p$ also the error on this coordinate has to be included into the \texttt{AbstractMeasurement}. This error can be calculated using the MC momentum used for calculating the estimator function and comparing this to the estimator function result. The error is fixed to \todo{value}, but can in principle be also calculated for every measurement independently.
+The momentum estimation of the VXD hits is included into the fit as another measurement - created also by a \texttt{MeasurementCreator} object. The measurements are created before the track fit but get called for their parameters in ever fitting iteration right before the fit uses the coordinates in the measurement. This fact can be used to calculate the plane (as used in the CDC hits) or the coordinates just before using them. Therefore it is possible to use the fitted state right in front of the hit to calculate the path length as described in subsection \ref{subsection-calc}. Together with the estimation for $q/p$ also the error on this coordinate has to be included into the \texttt{AbstractMeasurement}. This error can be calculated using the MC momentum used for calculating the estimator function and comparing this to the estimator function result. The error is fixed to 0.3, but can in principle be also calculated for every measurement independently.
 
 \subsection{Results for the resolution after track fitting}
 
-The above described estimation is included as a \texttt{MeasurementCreator} for SVD and PXD hits and the pion tracks in the momentum range of 50 - 100 MeV are fitted using the Kalman filter. Then the momentum calculated in the fit is compared to the one used in the MC simulation. To show the resolution in an easier way, the median and the interquartile range for the residuum is calculated. They can be seen in figure \ref{fig-results-fit} for both fit functions landau and gauß and for the different path length calculations in figure \ref{fig-results-fit2}.
+The above described estimation is included as a \texttt{MeasurementCreator} for SVD and PXD hits and the pion tracks in the momentum range of 50 - 100 MeV are fitted using the Kalman filter. Then the momentum calculated in the fit is compared to the one used in the MC simulation. To show the resolution in an easier way, the median and the interquartile range for the residuum is calculated. They can be seen in figure \ref{fig-results-fit} for both fit functions landau and gauß (with their median-corrected estimators also) and for the different path length calculations in figure \ref{fig-results-fit2}.
 
 \begin{figure}
   \centering
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/fitMedian.pdf}
+%   \includegraphics[width=0.48\linewidth]{figures/vxd/fitMedian.png}
 %   \includegraphics[width=0.48\linewidth]{figures/vxd/fitIQR.pdf}
 %   \includegraphics[width=0.48\linewidth]{figures/vxd/fitCount.pdf}
   \todo{picture}
@@ -199,28 +197,26 @@ The above described estimation is included as a \texttt{MeasurementCreator} for 
 
 \begin{figure}
   \centering
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/fitMedianDifferentPathLengths.pdf}
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/fitIQRDifferentPathLengths.pdf}
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/fitCountDifferentPathLengths.pdf}
-  \todo{picture}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/landauKalman0_3Median.png}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/landauKalman0_3IQR.png}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/landauKalman0_3Count.png}
   \caption[Residuum of the momentum estimation for different path length calculations.]{Figure showing also the median (left) and the interquartile range (right) of the residuum and the ratio of successful fits as in figure \ref{fig-results-fit}. This time the different path length calculations are shown for the case of using a landau distribution for fitting the \dedx values.}
   \label{fig-results-fit2}
 \end{figure}
 
-As it can be seen in the result figures, the incorporation of the VXd momentum estimation into the helix fit can increase the resolution of the momentum quite drastically for low momentum tracks while also increasing the number of successful fits. As the landau seems to perform slightly better than the gauß fitted estimator function, these values are used in the following. The differences between the different path length calculations are not that big as expected from the prestudies of the path lengths before. As expected, the calculation with the MC track parameters at the hit perform best followed by the track parameters at the hit while fitting wheres the distance is only very small as the fitted parameters and the MC parameters are similar enough.
+As it can be seen in the result figures, the incorporation of the VXD momentum estimation into the helix fit can increase the resolution of the momentum quite drastically for low momentum tracks while also increasing the number of successful fits. As the landau seems to perform slightly better than the gauß fitted estimator function, these values are used in the following. Although the median-corrected functions should theoretically behave better, the resolution could not be increased. This may come from the worsen IQR of the corrected estimators as seen in figure \ref{fig-divp-residuum}. The differences between the different path length calculations are not that big as expected from the prestudies of the path lengths before. As expected, the calculation with the MC track parameters at the hit perform best followed by the track parameters at the hit while fitting wheres the distance is only very small as the fitted parameters and the MC parameters are similar enough.
 
-Besides the momentum resolution, the resolution of the other helix parameters should not be decreased by the momentum estimation measurements. The perigee position of the fitted tracks with and without the momentum estimation with the landau fit function and path lengths from the track fit state is shown in figure \ref{fig-position}. As all tracks where simulated using a particle gun at the origin, the position should be exactly zero. \todo{Beschriebung}.
+Besides the momentum resolution, the resolution of the other helix parameters should not be decreased by the momentum estimation measurements. The perigee position of the fitted tracks with and without the momentum estimation with the landau fit function and path lengths from the track fit state is shown in figure \ref{fig-position}. As all tracks where simulated using a particle gun at the origin, the position should be exactly zero. For better comparison, the VXD and CDC tracks where merged and fitted together. As it can be seen in the picture, the resolution in the position is reduced by introducing the momentum estimation into the fit. One reason for this is probably the neglected correlation between the momentum estimation and the position measurement. Another issue is the fixed error of the momentum estimation, which can bias the fit. The resolution in the $z$ coordinate stays equally good - only the $x$ and $y$ coordinates are affected. Further analysis must be done to increase the resolution of the perigee position again.
 
 \begin{figure}
   \centering
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/positionX.pdf}
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/positionY.pdf}
-%   \includegraphics[width=0.48\linewidth]{figures/vxd/positionZ.pdf}
-  \todo{picture}
-  \caption[erigee position with and without the momentum estimation.]{The position at the perigee resulting from the helix fit with and without the momentum estimation. As the MC position is exactly zero, a residuum can not be calculated properly. TODO: Beschreibung.}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/perigee_x.png}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/perigee_y.png}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/perigee_z.png}
+  \includegraphics[width=0.48\linewidth]{figures/vxd/perigee_r.png}
+  \caption[Perigee position with and without the momentum estimation.]{The IQR of the position at the perigee resulting from the helix fit with and without the momentum estimation. As the MC position is exactly zero, a residuum can not be calculated properly. The value of $r$ is calculated using $r=\sqrt{x^2 + y^2}$}
   \label{fig-position}
 \end{figure}
-
 
 The next analysis is concerning the errors included into the momentum measurement. As the error is included as a fixed value for all momenta, it is not expected to be correct. Nevertheless the pull distribution of the momentum and the three position resolutions is calculated and shown in figure \ref{fig-pull}. \todo{Beschreibung}
 
