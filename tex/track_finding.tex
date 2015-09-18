@@ -1,4 +1,4 @@
-\chapter{Track Finder Theory and Multivariate Classification}
+\chapter{Track Finder Theory and Multivariate Classification} \label{chapter-theory}
 
 The track finders are implemented in the Belle II analysis software framework for which a short introduction is given. More information can be found elsewhere \cite{tdr}. Afterwards a more detailed description of the theory of track finding and common figures of merit for all track finders are explained and discussed. As some parts of the track finders rely on the usage of multivariate classification the basic principle of boosted decision trees can be found in the end of the chapter.
 
@@ -92,7 +92,7 @@ into the legendre space as shown in figure \ref{fig-legendre-explained}. In the 
   \hspace*{1cm}
   \includegraphics[scale=0.27]{figures/theory/sinosodial_2.png}
   \caption[Sinograms in the legendre algorithm.]{The left picture shows one single oversized drift circle (black) and four trajectories (in color) that could have possibly created that hit as they touch the drift circle tangentially. The hit is transformed into two sinograms on the right picture. The drift circle lays on the outside of the green and the red trajectory (the gray sinogram = right side) and on the inside of the blue and the yellow one (the black sinogram = left side).}
-  \label{fig-sinosodial}
+  \label{fig-sinusodial}
 \end{figure}
 
 
@@ -175,13 +175,13 @@ Both steps include the same problem: find the correct candidate among all combin
 \label{fig-automaton}
 \end{figure}
 
-The first step of the automaton track finder is to clusterize the hits into bunches. A cluster of hits is defined as the largest set of directly adjacent hits in a single superlayer. This condition can also be weakened to allow for one-cell-wide gaps in the clusters. A typical event display with the found clusters is shown in figure \ref{fig-clusters-and-segments}. The segments which are build next are fully contained in one single cluster - but one cluster can contain more than one segment when two tracks cross each other in this superlayer. To decide from which partition of hits in a cluster the segment should be build the cellular algorithm is applied for each cluster independently. The nodes in the graph are given by the so called facets. One facet is one of the possibilities of assembling three wire hits with two pairs of wire hits in close proximity to each other. Three possibilities for facets are shown in figure \ref{fig-facets}. As it can be seen in the figure each wire hit has already a right-left passage information attached to it and combinations of the same three wires with different right-left information form different facets. With this right-left information a direction of flight can be defined (except for the sign). Configurable filters are used to trim down the created three hit combinations to only compatible facets by limiting for example the angular deviation between the tangents to pairs of hits. Before applying the cellular automaton one has to define the edges of the graph also. Two facets have a directed connection in the graph if and only if the second and third hit of the first facet resembles the first and second hit of the second facet together with its right-left information and the angle between the defined directions of flight is belong a certain threshold. After performing the cellular automaton algorithm a set of paths including those facets is obtained. By collecting the hits included in those paths single segments can be build.
+The first step of the automaton track finder is to clusterize the hits into bunches. A cluster of hits is defined as the largest set of directly adjacent hits in a single superlayer. This condition can also be weakened to allow for one-cell-wide gaps in the clusters. A typical event display with the found clusters is shown in figure \ref{fig-clusters}. The segments which are build next are fully contained in one single cluster - but one cluster can contain more than one segment when two tracks cross each other in this superlayer. To decide from which partition of hits in a cluster the segment should be build the cellular algorithm is applied for each cluster independently. The nodes in the graph are given by the so called facets. One facet is one of the possibilities of assembling three wire hits with two pairs of wire hits in close proximity to each other. Three possibilities for facets are shown in figure \ref{fig-facets}. As it can be seen in the figure each wire hit has already a right-left passage information attached to it and combinations of the same three wires with different right-left information form different facets. With this right-left information a direction of flight can be defined (except for the sign). Configurable filters are used to trim down the created three hit combinations to only compatible facets by limiting for example the angular deviation between the tangents to pairs of hits. Before applying the cellular automaton one has to define the edges of the graph also. Two facets have a directed connection in the graph if and only if the second and third hit of the first facet resembles the first and second hit of the second facet together with its right-left information and the angle between the defined directions of flight is belong a certain threshold. After performing the cellular automaton algorithm a set of paths including those facets is obtained. By collecting the hits included in those paths single segments can be build.
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\linewidth]{figures/theory/segments.png} 
-  \caption[Clusters and resulting segments in the automaton track finder.]{A typical event with the colored clusters.}
-  \label{fig-clusters-and-segments}
+  \caption[Clusters in the automaton track finder.]{A typical event with the colored clusters.}
+  \label{fig-clusters}
 \end{figure}
 
 \begin{figure}

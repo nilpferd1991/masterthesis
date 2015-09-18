@@ -1,4 +1,4 @@
-\chapter{Track Finding in \texttt{basf2}}
+\chapter{Track Finding in \texttt{basf2}} \label{chapter-workflow}
 
 After having described the principle of the track finders implemented in \basf in the previous chapters we can now go on to show the actual implementation. The two track finders were already written and one of the tasks of this thesis was to put them together and improve them. Because we want to make use of the benefits of both track finders we use the workflow shown in figure \ref{fig-workflow}. The shown steps are all described in more detail further down.
 
@@ -49,7 +49,19 @@ This filter algorithm is a very general one and leaves the possibility open to c
 
 As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table \ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. The trained BDT has PARAMETERS... EVENTS were used for training. 
 
+\begin{table}
+  \caption{}
+  \label{tab-varset-cluster}
+\end{table}
+
+
 After the training procedure the corresponding TMVAFilter can be used. The results are summerized in \ref{fig-result-background-hit-finder}. 
+
+\begin{figure}
+  \caption{}
+  \label{fig-result-background-hit-finder}
+\end{figure}
+
 
 \todo{Results for Clusters/Hits, Results for Legendre Finder}
 

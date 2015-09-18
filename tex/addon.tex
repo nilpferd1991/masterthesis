@@ -61,7 +61,7 @@ The names modules together with the \texttt{SetupGenfitExtrapolationModule} shou
 
 \section{IPython interface for basf2}
 
-IPython (or jupyter as it is now called \cite{jupyter}) is a application which provides interactive computing including an interactive shell and a client-server structure for notebooks. It has support for many different languages (like C++, ROOT \cite{root-ipython}, Haskell, Julia, R) and also for Python, which is included by default. Using IPython notebooks instead of raw python has many advantages, e.g.
+IPython (or jupyter as it is now called \cite{jupyter}) is a application which provides interactive computing including an interactive shell and a client-server structure for notebooks. It has support for many different languages (like C++, ROOT \cite{root_ipython}, Haskell, Julia, R) and also for Python, which is included by default. Using IPython notebooks instead of raw python has many advantages, e.g.
 \begin{itemize}
   \item context-sensitive tab completion which is better as the one provide by many IDEs, as it can use the duck-typing of the running python interpreter.
   \item syntax highlighting and automatic indention.
@@ -78,11 +78,11 @@ Calling \texttt{handler.process} with a path returns an instance of a \texttt{Ba
 
 If the further results depend on the output of the path calculation or a status bar with the current percentage should be shown, the calculation offers an \verb+wait_for_end+-function which blocks until the background calculation is finished or has failed. For accessing the current percentage of the calculation, a small python module is included into the processed path on every call of \texttt{handler.process}. This module collects the current event number and the total number of events from the \texttt{Environment} singleton and sends it to a dedicated pipe attached to the background process running the path calculation and the foreground notebook. This value is constantly pulled and shown as a progress bar with timing estimation when the method \verb+wait_for_end+ is called until the calculation has terminated.
 
-\todo{queue}
+The \texttt{handler} associates to each path in instance of the \texttt{Basf2Queue} class. This queue objects mimic the behavior of a python dictionary as they can be filled with pairs of a string as a key and an arbitrary pickable python object as value with their \verb+get+ function. They can be used before, in or after the path processing as they get passed to the background process by a multiprocessing queue. They should store calculation-related information like the name of output and input files and get used extensively in the \texttt{ipython\_tools} to store for example the statistics of the calculation.
 
 To increase the usability in the typical browser environment the IPython notebook is running, most of the typical output results of a path calculation are turned into often interactive HTML-widgets. Examples are the calculation statistics, the module path and the store array content which are accessible via the functions \verb+show_statistics+, \verb+show_path+ and \verb+show_collections+ of the \texttt{Basf2Calculation} objects.
 
-One \texttt{Basf2Calculation} object can not only handle on single basf2 module path but also a list of them. The command to generate one calculation for many different paths is the method \verb+process_parameter_space+ of the \texttt{handler} object can be used working like a grid search. This method expects a function \verb+path_creator+ returning basf2 paths and the same arguments as function \verb+path_creator+. These arguments should be iterable objects as the \verb+process_parameter_space+ builds every argument combination and calls the \verb+path_creator+ with this.\footnote{} The resulting lists of paths is then used to build a \texttt{Basf2Calculation} object. All the before mentioned methods and properties of the calculation work as expected also for lists of paths. Per default, they return a list of results -- one item for each path. Also, by supplying a non-negative number to the methods, the result of a certain path can be selected. The methods returning a widget return a tab viewer widget now, which includes all the resulting widgets for the different paths.
+One \texttt{Basf2Calculation} object can not only handle on single basf2 module path but also a list of them. The command to generate one calculation for many different paths is the method \verb+process_parameter_space+ of the \texttt{handler} object can be used working like a grid search. This method expects a function \verb+path_creator+ returning basf2 paths and the same arguments as function \verb+path_creator+. These arguments should be iterable objects as the \verb+process_parameter_space+ builds every argument combination and calls the \verb+path_creator+ with this.\footnote{One exception is, when you use an argument called \texttt{queue} in the \texttt{path\_creator} function. You can not provide a list for this argument as it gets automatically filled with queue objects by the \texttt{handler}.} The resulting lists of paths is then used to build a \texttt{Basf2Calculation} object. All the before mentioned methods and properties of the calculation work as expected also for lists of paths. Per default, they return a list of results -- one item for each path. Also, by supplying a non-negative number to the methods, the result of a certain path can be selected. The methods returning a widget return a tab viewer widget now, which includes all the resulting widgets for the different paths.
 
 \begin{listing}
 \begin{inputipynb}
@@ -118,8 +118,9 @@ print calculation.get_log()
 \end{listing}
 
 \section{Docker images of the basf2 software}
-
+\todo{
 What is docker?
 Why for basf2?
 What is done?
 What could be done/possible?
+}
