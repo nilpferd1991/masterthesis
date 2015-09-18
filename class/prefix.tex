@@ -188,11 +188,11 @@
 % the space reserved between for the ``In'' numbers and the code
 % after http://tex.stackexchange.com/questions/223465/ipython-notebook-cells-with-listings
 \newlength\inwd
-\setlength\inwd{1.3cm}
+\setlength\inwd{1.6cm}
 
 \newcounter{ipythcntr}
 
-\newtcblisting{ipythonnb}[1][\theipythcntr]{
+\newtcblisting{inputipynb}[1][\theipythcntr]{
   enlarge left by=\inwd,
   width=\linewidth-\inwd,
   enhanced,
@@ -204,6 +204,7 @@
   },
   top=-6pt,
   bottom=-6pt,
+  left=4pt,
   overlay={
     \node[
       anchor=north east,
@@ -215,5 +216,33 @@
       ] 
       at (frame.north west)
       {\stepcounter{ipythcntr}In [#1]:};
+  }
+}
+
+\newtcblisting{outputipynb}[1][\theipythcntr]{
+  enlarge left by=\inwd,
+  width=\linewidth-\inwd,
+  enhanced,
+  boxrule=0pt,
+  frame hidden,
+  colback=white,
+  listing only,
+  listing options={
+    basicstyle=\footnotesize\ttfamily,
+  },
+  top=-6pt,
+  bottom=-6pt,
+  left=4pt,
+  overlay={
+    \node[
+      anchor=north east,
+      text width=\inwd,
+      font=\footnotesize\ttfamily\color{kit-blue100},
+      inner ysep=2mm,
+      inner xsep=0pt,
+      outer sep=0pt
+      ] 
+      at (frame.north west)
+      {Out [#1]:};
   }
 }

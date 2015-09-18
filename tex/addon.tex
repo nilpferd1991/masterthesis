@@ -61,14 +61,61 @@ The names modules together with the \texttt{SetupGenfitExtrapolationModule} shou
 
 \section{IPython interface for basf2}
 
-Description of IPython (What is it, benefits)
-Description of the ipy thon\_tools (why? what is in there, some examples: calculation with properties, parameter space, some widgets)
+IPython (or jupyter as it is now called \cite{jupyter}) is a application which provides interactive computing including an interactive shell and a client-server structure for notebooks. It has support for many different languages (like C++, ROOT \cite{root-ipython}, Haskell, Julia, R) and also for Python, which is included by default. Using IPython notebooks instead of raw python has many advantages, e.g.
+\begin{itemize}
+  \item context-sensitive tab completion which is better as the one provide by many IDEs, as it can use the duck-typing of the running python interpreter.
+  \item syntax highlighting and automatic indention.
+  \item inline graphics created with python (e.g. matplotlib) and the possibility to include equations with \LaTeX, markdown comments, images and videos.
+  \item well-organized notebook structure which can hold the script and the result in a structured way which makes it easily readable for other people.
+  \item no additional programs needed as the notebook server is accessible with your browser (making it possible to use smartphones, tablets and remote computers) or with plugins (for pcharm, emacs etc.)
+\end{itemize}
 
-\begin{ipythonnb}
+All these mentioned points making IPython suitable for quick analysis in the tracking software development as well as for larger physics analysis which may be stored centralized and accessible for other developers to share thoughts and solutions. For calculating most of the results presented in this thesis, IPython notebooks were used. As the basf2 framework is not build for interactive use, a \texttt{ipython\_tools} python module was created which will be presented in the following.
+
+The main entrance point of the module is a predefined handler object. For normal use cases, this it the only object one needs to import from the module. After importing the handler, the user can create the basf2 module path as in a normal steering file (see listing \ref{lis-steering-file} for an example). Instead of using the normal basf2 process function, it is better to use the one provided by the handler. The calculation is send as a different process to the background (using the \texttt{multiprocessing} module of python \cite{multiprocessing}) and can be monitored using IPython instead of blocking the IPython notebook until it finishes. Also, in case of failure, the IPython notebook still keeps on running making it possible to look into the log files of the process which get written to temporary files and can be accessed with the handler.
+
+Calling \texttt{handler.process} with a path returns an instance of a \texttt{Basf2Calculation} which summarizes all properties and methods of a module path calculation. The calculation can be for instance started or stopped, the log or the running status can be accessed or the input parameters can be checked. Some example uses are shown in the notebook in \autoref{lis-calculation}. As it can be seen in the listing, the notebook processing goes on although the path calculation is running. As it runs in a different process it is even possible to close the notebook running in the browser (but not the notebook kernel) and reaccess it e.g. from another device later with the path calculation still going on.
+
+If the further results depend on the output of the path calculation or a status bar with the current percentage should be shown, the calculation offers an \verb+wait_for_end+-function which blocks until the background calculation is finished or has failed. For accessing the current percentage of the calculation, a small python module is included into the processed path on every call of \texttt{handler.process}. This module collects the current event number and the total number of events from the \texttt{Environment} singleton and sends it to a dedicated pipe attached to the background process running the path calculation and the foreground notebook. This value is constantly pulled and shown as a progress bar with timing estimation when the method \verb+wait_for_end+ is called until the calculation has terminated.
+
+\todo{queue}
+
+To increase the usability in the typical browser environment the IPython notebook is running, most of the typical output results of a path calculation are turned into often interactive HTML-widgets. Examples are the calculation statistics, the module path and the store array content which are accessible via the functions \verb+show_statistics+, \verb+show_path+ and \verb+show_collections+ of the \texttt{Basf2Calculation} objects.
+
+One \texttt{Basf2Calculation} object can not only handle on single basf2 module path but also a list of them. The command to generate one calculation for many different paths is the method \verb+process_parameter_space+ of the \texttt{handler} object can be used working like a grid search. This method expects a function \verb+path_creator+ returning basf2 paths and the same arguments as function \verb+path_creator+. These arguments should be iterable objects as the \verb+process_parameter_space+ builds every argument combination and calls the \verb+path_creator+ with this.\footnote{} The resulting lists of paths is then used to build a \texttt{Basf2Calculation} object. All the before mentioned methods and properties of the calculation work as expected also for lists of paths. Per default, they return a list of results -- one item for each path. Also, by supplying a non-negative number to the methods, the result of a certain path can be selected. The methods returning a widget return a tab viewer widget now, which includes all the resulting widgets for the different paths.
+
+\begin{listing}
+\begin{inputipynb}
 from ipython_tools import handler
 path = ...
 calculation = handler.process(path)
-\end{ipythonnb}
+\end{inputipynb}
+\begin{inputipynb}
+print calculation.get_status()
+print calculation.is_running()
+calculation.start()
+print calculation.get_status()
+print calculation.is_running()
+\end{inputipynb}
+\begin{outputipynb}
+not started
+False
+running
+True
+\end{outputipynb}
+\begin{inputipynb}
+calculation.stop()
+print calculation.get_log()
+\end{inputipynb}
+\begin{outputipynb}[\theipythcntr]
+[INFO] Creating Geometry
+[INFO] Creating geometry for detector: Belle2Detector
+...
+\end{outputipynb}
+
+  \caption[Example use cases for the Basf2Calculation objects.]{Example use cases for the \texttt{Basf2Calculation} instance returned by a call to \texttt{handler.process}. As the process runs in the background, the IPython kernel can go on with the foreground calculation.}
+  \label{lis-calculation}
+\end{listing}
 
 \section{Docker images of the basf2 software}
 
