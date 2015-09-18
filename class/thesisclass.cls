@@ -54,6 +54,9 @@
 \usepackage{units}
 \usepackage[fixlanguage]{babelbib}	% sets german style for literature entries
 \usepackage{xcolor}
+
+\usepackage{microtype}
+
 \usepackage[many]{tcolorbox}
 \tcbuselibrary{listings}
 
