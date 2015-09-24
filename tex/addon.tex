@@ -132,9 +132,19 @@ The benefits of using docker like the easier distribution of software among hete
 \begin{itemize}
  \item running the build bot as it is easy to test the compilation process against different operation systems or different library versions without the need to rebuild a physical computer,
  \item running the validation scrips and the unit tests as the containers run with a defined starting point making it impossible to include dependencies between consequent runs,
- \item 
+ \item doing a physics analysis as the setup time is rather low and the updating process is easy as the compilation can be performed by the image creator,
+ \item providing server applications as the isolation of processes makes it even possible to give full access to remote users for example by exposing a python interpreter.
 \end{itemize}
 
 Because of the numerous benefits, a docker image holding the full basf2 software components with all the needed dependencies was created in this thesis. It is build using the orchestration software ansible \cite{ansible} to make the scripts reusable for other purposes like creating VirtualBox images or provisioning a server system. The ansible scripts download and compile the basf2 tools, externals and the software into a docker images which can then be started on a machine without the need for configuration or long-lasting compilations.
 
-\todo{combination with ipython}
+The docker software can be combined with the IPython concept presented before. Users can be given access to a docker container with a running IPython server instance. The user can then perform their calculations using the data and computing power provided by the host system and without the need for installations on their local machine. Various concepts like the jupyterhub~\cite{jupyterhub} or the tmpnb-project~\cite{tmpnb} can be easily incorporated. 
+
+\section{The \texttt{root\_pandas} module}
+
+The ROOT data format is a high-efficient, strongly compressed storage format which is used extensively in high energy physics projects because of its benefits especially for typical experiment data of long tuples full of floating point numbers. Modern data analysis techniques however include the data processing with python and the python own modules like \texttt{pandas}~\cite{pandas} or \texttt{matplotlib}~\cite{matplotlib}. To close this gap between the in-memory database processor \texttt{pandas} and the ROOT data format the \texttt{root\_pandas} module was implemented in this thesis which was based on the already available project with the same name~\cite{root-pandas}. The methods provided by the already developed module were rewritten to cope better with ROOT data files containing both numerical and non-numerical data and for large data files. The package provides mainly two functionalities. Both use the \texttt{root\_numpy}~\cite{root-numpy} package for the interconnection with ROOT.
+
+\begin{description}
+ \item[ROOT import] The \verb+read_root+ method can read ROOT files and export the \texttt{TNtuples} in the files to \texttt{pandas} data frames with the same column names. It can export single trees (by handing in a tree\_key argument) or for each tree in the file a data frame. It automatically filters out non-numerical data. When giving the chunksize argument the ROOT file get split into chunk of the given size and a python generator object is returned which can be used to keep the data in memory small.
+ \item[ROOT export] The \verb+to_root+ function can be used to export arbitrary pandas data frames to the ROOT format. The branch names are copied from the data frame.
+\end{description}
