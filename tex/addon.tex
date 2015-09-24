@@ -3,21 +3,21 @@
 \newcommand{\Hit}{\texttt{RecoHitInformation}\ }
 \chapter{Additional software changes} \label{chapter-addon}
 
-This chapter summarizes all the additional changes made to basf2 during the writing of this thesis for documentation purposes. They all stay in relation to the changes made for the tracking framework but do not try to increase the physical figures of merit. They are listed here without a special ordering or connections.
+This chapter summarizes some of the additional changes made to basf2 during the writing of this thesis for documentation purposes. They all stay in relation to the changes made for the tracking framework but do not try to increase the physical figures of merit. They are listed here without a special ordering or connections.
 
 \section{\texttt{RecoTrack}}
-As described in chapter \ref{chapter-vxd}, the former \Track and the \texttt{genfit::TrackCand} were merged together to form a new \RecoTrack class which is described with its accompanying models in the following. The motivation was to create a better interface to the fitting-algorithms provided by the genfit package and fit seamlessly into the StoreArray structure. As one of the goals of the genfit package is to stay as general as possible, it is not possible to incorporate this structure tight into the fitting algorithms. Instead, a wrapper class is build which inherits both from the \Track and from the \texttt{RelationInterface} in form of a public inheritance 
+As described in chapter \ref{chapter-vxd}, the former \Track and the \texttt{genfit::TrackCand} were merged together to form a new \RecoTrack class which is described with its accompanying models in the following. The motivation was to create a better interface to the fitting algorithms provided by the genfit package and fit seamlessly into the StoreArray structure. As one of the goals of the genfit package is to stay as general as possible, it is not possible to incorporate this structure tightly into the fitting algorithms. Instead, a wrapper class is build which inherits both from the \Track and from the \texttt{RelationInterface} in form of a public inheritance 
 \begin{center}
   \lstset{escapechar=@,style=customC}
   \lstinline@ class RecoTrack : public RelationInterface<genfit::Track> { ... }@
 \end{center}
-which turns the \RecoTrack as a drop-in-replacement for the \Track as all algorithms of genfit work the same. 
+which turns the \RecoTrack into a drop-in-replacement for the \Track as all algorithms of genfit work with \Track objects. 
 
 In the first subsection, the \RecoTrack dataobject is described in more detail whereas the second subsection describes the needed environmental modules.
 
 \subsection{\RecoTrack and \Hit}
 
-The \Track objects are more or less containers for a list of \texttt{genfit::TrackPoint} pointers with one or few \texttt{AbstractMeasurement} in each of them (see chapter \ref{chapter-vxd} for more information on the measurements). These track points are needed for the fitting algorithm and include not only the hit information but also sorting parameters and additional information like the detector where this hit was found. On the other side are the raw hit information coming from the detector that get written to several StoreArrays. These raw hit classes, namely \texttt{CDCHit}, \texttt{SVDHit} and \texttt{PXDHit} get used by the track finder algorithms and have to be transformed into the track points needed by genfit. To encapsulate the track finding from the track fitting, this step is not included in the finder modules, also because the track points can not be saved into StoreArrays and written into ROOT output files. The \RecoTrack needs to handle both hit types: the track points and the raw hits. Therefore, the raw hits are saved as relations to the \RecoTrack instances (this is possible as the raw hits as well as the \RecoTrack inherit from \texttt{RelationInterface}) and then turned into track points by the \texttt{MeasurementCreatorModule} (again see chapter \ref{chapter-vxd} for more details). These points are stored in the \RecoTrack itself as a \texttt{std::vector}. This approach together with some methods of the \RecoTrack to ass and receive hit information conveniently makes the \RecoTrack relatively lightweight as it does not have to store lists of raw hits in addition.
+The \Track objects are containers for a list of \texttt{genfit::TrackPoint} pointers with one or few \texttt{AbstractMeasurement} in each of them (see chapter \ref{chapter-vxd} for more information on the measurements). These track points are needed for the fitting algorithm and include not only the hit information but also sorting parameters and additional information like the detector where this hit was found. On the other side are the raw hit information coming from the detector that get written to several StoreArrays. These raw hit classes, namely \texttt{CDCHit}, \texttt{SVDHit} and \texttt{PXDHit} get used by the track finder algorithms and have to be transformed into the track points needed by genfit. To encapsulate the track finding from the track fitting, this step is not included in the finder modules, also because the track points can not be saved into StoreArrays and written into ROOT output files. The \RecoTrack needs to handle both hit types: the track points and the raw hits. Therefore, the raw hits are saved as relations to the \RecoTrack instances (this is possible as the raw hits as well as the \RecoTrack inherit from \texttt{RelationInterface}) and then turned into track points by the \texttt{MeasurementCreatorModule} (again see chapter \ref{chapter-vxd} for more details). These points are stored in the \RecoTrack itself as a \texttt{std::vector}. This approach together with some methods of the \RecoTrack to ass and receive hit information conveniently makes the \RecoTrack relatively lightweight as it does not have to store lists of raw hits in addition.
 
 One problem with this approach is, that it is impossible to store additional information like the sorting order of the hits or the track finder which has found the hit, as the relation can only be used to store one additional \texttt{double} together with each pair. To solve this issue a second dataobject - the \Hit - was created to store these additional information. When adding a raw hit to the \RecoTrack one \Hit instance is created automatically and stored with relations to the raw hit and the \RecoTrack, which leads to the triangular shaped relation diagram showed in figure \ref{fig-reco-hit-relation}. As the \RecoTrack has already buildin function to access the additional information in a convenient way, there is no need for the user of the dataobject to take care of the \Hit instances by himself. 
 
@@ -116,11 +116,3 @@ print calculation.get_log()
   \caption[Example use cases for the Basf2Calculation objects.]{Example use cases for the \texttt{Basf2Calculation} instance returned by a call to \texttt{handler.process}. As the process runs in the background, the IPython kernel can go on with the foreground calculation.}
   \label{lis-calculation}
 \end{listing}
-
-\section{Docker images of the basf2 software}
-\todo{
-What is docker?
-Why for basf2?
-What is done?
-What could be done/possible?
-}
