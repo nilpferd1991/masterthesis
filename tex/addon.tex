@@ -116,3 +116,25 @@ print calculation.get_log()
   \caption[Example use cases for the Basf2Calculation objects.]{Example use cases for the \texttt{Basf2Calculation} instance returned by a call to \texttt{handler.process}. As the process runs in the background, the IPython kernel can go on with the foreground calculation.}
   \label{lis-calculation}
 \end{listing}
+
+\section{Docker and the basf2 software}
+
+Docker is an open-source-project \cite{docker} which allows to package and ship arbitrary applications with all of its dependencies. It uses a standardized image format and runs it processes in specific cgroups and namespaces isolating the docker applications from the rest of the operation system. Running docker containers can share libraries and the kernel with the rest of the system decreasing the memory footprint of running the same application more than once in parallel. The isolation and the smaller memory consumption compared to normal virtualization solutions (like VirtualBox) make the program suitable for batch systems or server applications.
+
+A typical docker workflow consists of three steps:
+\begin{description}
+  \item[Create the docker image] Using a standardized domain specific language the contents of a docker image can be defined. A docker image consists of different layers of the AuFS or btrfs filesystem which can contain a whole application with all its libraries and even the operation system. Because the images share resources with their host system, the size of such an image is typically in the order of a few gigabytes.
+  \item[Ship the docker image] The image can be extracted into a tar-ball keeping the layer structure which makes it possible to update the software more easily. Every docker user can extract the image and use it not depending on the kernel version or the operation system. To non confuse different images docker has an inbuilt versioning system which can be used to give tags and labels to the images.
+  \item[Run the docker image] Each time a docker image is started a new container is created with the form defined exactly by the image. Because of the underlaying filesystem only the changes performed in the running docker containers are stored. Starting the same image twice does therefore not imply to copy the libraries again. The docker processes are given a special cgroup with adjustable restrictions. Per default, the docker processes are not allowed to access the filesystem of the host machine or change and kernel parameters which isolates the processes from the host. The docker container runs as long as the process it is running and gets deleted after the process has finished.
+\end{description}
+
+The benefits of using docker like the easier distribution of software among heterogeneous systems like in a collaboration, the small memory consumption even with multiple instances of the same application and the isolation can be used for various basf2-related tasks. Possible examples are
+\begin{itemize}
+ \item running the build bot as it is easy to test the compilation process against different operation systems or different library versions without the need to rebuild a physical computer,
+ \item running the validation scrips and the unit tests as the containers run with a defined starting point making it impossible to include dependencies between consequent runs,
+ \item 
+\end{itemize}
+
+Because of the numerous benefits, a docker image holding the full basf2 software components with all the needed dependencies was created in this thesis. It is build using the orchestration software ansible \cite{ansible} to make the scripts reusable for other purposes like creating VirtualBox images or provisioning a server system. The ansible scripts download and compile the basf2 tools, externals and the software into a docker images which can then be started on a machine without the need for configuration or long-lasting compilations.
+
+\todo{combination with ipython}
