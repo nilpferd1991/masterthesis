@@ -3,7 +3,48 @@
 After having described the principle of the track finders implemented in \basf in the previous chapters we can now go on to show the actual implementation. The two track finders were already written and one of the tasks of this thesis was to put them together and improve them. Because we want to make use of the benefits of both track finders we use the workflow shown in figure \ref{fig-workflow}. The shown steps are all described in more detail further down.
 
 \begin{figure}
- \todo{picture}
+  \centering
+  \begin{tikzpicture}[thick]
+    \node[module] (simulation) {Simulation or Experiment};
+    \node[module, below=1 of simulation] (background) {Filter Background Hits};
+    \draw[vecArrow] (simulation) -- (background) node [midway, anchor=west] {CDC Hits};
+    \node[module, below right=1.8 of background] (local) {Local Track Finder};  
+    \node[module, below left=1.8 of background] (global) {Global Track Finder};  
+    \draw[vecArrow] (background) -- (local) node [midway, auto=false, anchor=south, sloped] {CDC Hits};
+    \draw[vecArrow] (background) -- (global) node [midway, auto=false, anchor=south, sloped] {CDC Hits};
+    \node[module, below right=1.8 of global] (combiner) {Segment and Track Combiner};  
+    \draw[vecArrow] (local) -- (combiner) node [midway, auto=false, anchor=south, sloped] {Segments};
+    \draw[vecArrow] (global) -- (combiner) node [midway, auto=false, anchor=south, sloped] {Tracks};
+    \node[module, below=1 of combiner] (fitter) {Track Fitter};
+    \draw[vecArrow] (combiner) -- (fitter) node [midway, auto=false, anchor=west] {Tracks};
+  \end{tikzpicture} 
+ \caption[Proposed workflow in the CDC tracking]{The proposed workflow and combination of the two track CDC finders in basf2. The green boxes refer to one or a few modules. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
+ \label{fig-workflow}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[thick]
+    \node[module, text width=12em] (hits) {{Wire\-Hit\-Topology\-Preparer}};
+    \node[module, below=1 of hits, text width=12em] (segment) {{Segment\-Finder\-CDC\-Facet\-Automaton\-Dev}};
+    \node[module, below=1 of segment, text width=12em] (axial) {{CDC\-Legendre\-Tracking}};
+    \node[module, below=1 of axial, text width=12em] (quality1) {{Track\-Quality\-Asserter\-CDC}};
+    \node[module, below=1 of quality1, text width=12em] (stereo) {{Stereo\-Hit\-Finder\-CDC\-Legendre\-Histogramming}};
+    \node[module, below=1 of stereo, text width=12em] (combiner) {{Segment\-Track\-Combiner\-Dev}};
+    \node[module, below=1 of combiner, text width=12em] (quality2) {{Track\-Quality\-Asserter\-CDC}};
+    
+    \node[cloud, right=3 of hits] (topo) {{CDCWireHitTopology}};
+    
+    \draw[vecArrow] (hits) -- (topo) node [midway, anchor=south, sloped, auto=false] {All CDC Hits};
+    \draw[vecArrow] (topo) -- (segment) node [midway, anchor=south, sloped, auto=false] {All CDC Hits};
+    \draw[vecArrow] (segment.east) -- (topo.south) node [midway, anchor=north, sloped, auto=false] {Filtered CDC Hits};
+    \draw[vecArrow] (topo.south) -- (axial.east) node [midway, anchor=north, sloped, auto=false] {Filtered CDC Hits};
+    \draw[vecArrow] (axial) -- (quality1) node [midway, anchor=west] {Axial Tracks};
+    \draw[vecArrow] (quality1) -- (stereo) node [midway, anchor=west] {Corrected Axial Tracks};
+    \draw[vecArrow] (stereo) -- (combiner) node [midway, anchor=west] {Full Tracks};
+    \draw[vecArrow] (combiner) -- (quality2) node [midway, anchor=west] {Combined Tracks};
+    \draw[vecArrow] (segment.west) to[out=-150, in=150] node [midway, anchor=east] {Segments} (combiner.west) ;
+  \end{tikzpicture} 
  \caption[Proposed workflow in the CDC tracking]{The proposed workflow and combination of the two track CDC finders in basf2. The green boxes refer to one or a few modules. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
  \label{fig-workflow}
 \end{figure}
