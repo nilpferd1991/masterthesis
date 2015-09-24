@@ -1,6 +1,16 @@
 \chapter{Track Finding in basf2} \label{chapter-workflow}
 
-After having described the principle of the track finders implemented in \basf in the previous chapters we can now go on to show the actual implementation. The two track finders were already written and one of the tasks of this thesis was to put them together and improve them. Because we want to make use of the benefits of both track finders we use the workflow shown in figure \ref{fig-workflow}. The shown steps are all described in more detail further down.
+After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis is discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their adventages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the two Legendre track finder packages are shown. Then the newly written \texttt{SegmentTrackCombinerModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and a short outlook.
+
+\section{FOM of the two track finders}
+
+Standalone legendre + standalone local
+Legendre (old!): Finding efficiency, d0 influence, purity
+Local: Segment purity, Finding efficiency; Clone + Fake-Rate of whole track finder.
+Timing.
+
+\section{The \texttt{TrackFindingCDC} Package}
+Order etc. Common code basis. WireHitTopology, Output and Input of Modules.
 
 \begin{figure}
   \centering
@@ -49,17 +59,6 @@ After having described the principle of the track finders implemented in \basf i
  \label{fig-workflow}
 \end{figure}
 
-\todo{steps, why this order etc.}
-
-\section{FOM of the two track finders}
-
-Standalone legendre + standalone local
-Legendre (old!): Finding efficiency, d0 influence, purity
-Local: Segment purity, Finding efficiency; Clone + Fake-Rate of whole track finder.
-
-\section{The \texttt{TrackFindingCDC} Package}
-Common code basis. WireHitTopology, Output and Input of Modules.
-
 \section{The Background Hit Finder}
 The beforementioned track finders are tuned to not pick up background hits into a found track candidate or even form a candidate from background hits only. Nevertheless even a single background hit per track can lead to a reduced momentum resolution or can even cause the fit to fail completely. Together with the reduced combinatorics and therefore reduced computing time when throwing away unusable hits there is the need to distinguish between signal and background hits even before the tracking starts. This is the purpose of the background hit finder module described in this section.
 
@@ -106,14 +105,17 @@ After the training procedure the corresponding TMVAFilter can be used. The resul
 
 \todo{Results for Clusters/Hits, Results for Legendre Finder}
 
-\section{Improvements on the Legendre Track Finder}
+\todo{describe axial or not?}
+\section{Improvements on the Axial Legendre Track Finder}
+Is already very good and advanced. 
+
 \subsection{The class \texttt{QuadTreeProcessorTemplate}}
 \subsection{Postprocessing after the track finding}
 \subsection{Results}
 Timing
 
-\section{Improvements on the Stereo Hit Finder}
-\subsection{Principle of the StereoQuadTree}
+\section{Improvements on the Stereo Legendre Hit Finder}
+\subsection{Implemented algorithm}
 \subsection{Results}
 Timing
 
@@ -123,11 +125,17 @@ Timing
 \subsection{Used Filters}
 \subsection{Results}
 
-\section{Further Approaches}
-\subsection{A quad tree for segments}
-\subsection{Filter for tracks}
-\subsection{VXD-Merger??}
+\section{The \texttt{TrackQualityAsserterCDCModule} and the \texttt{TrackQualityTools}}
 
-\section{Additional software changes}
-\subsection{The class \texttt{RecoTrack}}
-\subsection{The \texttt{ipython\_handler}}
+Fitting problem. Implemented quality tools (description). Some event displays.
+
+\section{Further Approaches}
+\subsection{Quad tree search with segments}
+Benefits: Purity high, more or less no reassignment needed. RL-information already present, lower combinatorics = more then one axis possible?
+
+More than one possibility to do that: axial + stereo or only stereo or only axial, when should a segment belong to this legendre bin?
+
+\subsection{VXD-CDC-Merger before fitting}
+Benefits: Possible better efficiency (no loss because of fit). Faster, less fakes, better finding efficiency (because a track is kept which would be maybe deleted by a quality tool)
+
+Ho to do it: BDT with trained variables. First results.
