@@ -6,8 +6,12 @@ After having described the principle of the track finders implemented in basf2 i
 
 Standalone legendre + standalone local
 Legendre (old!): Finding efficiency, d0 influence, purity
-Local: Segment purity, Finding efficiency; Clone + Fake-Rate of whole track finder.
+Local: Segment purity, Finding efficiency; Clone + Fake-Rate of both track finder.
 Timing.
+
+\todo{pictures: Finding efficiency legendre over pt, d0 influence, purity as histogramm}
+\todo{pictures: Timing of legendre + stereo and local}
+\todo{pictures: Purity of segments as hist, Finding eficiency over pt + d0}
 
 \section{The \texttt{TrackFindingCDC} Package}
 Order etc. Common code basis. WireHitTopology, Output and Input of Modules.
@@ -75,7 +79,6 @@ Figure \ref{fig-clusters} in chapter \ref{chapter-theory} shows an event display
 
 In every event, each formed cluster is passed to the chosen filter with the chosen filter parameters. This filter can return every number as a result including the C++ std::nan, which is used as the value for indicating that the cluster should not be used further for track finding as it is marked as background by the filter. Actually, the non NaN numbers returned by the filter are not used further in the following algorithms and are just described here for later reference. 
 
-\todo{filer factor}
 This filter algorithm is a very general one and leaves the possibility open to compare many different filters. For this as well as for any other used filter in the CDC tracking, five filters are implemented by default which can be switched by using module parameters. These filters are:
 
 \begin{description}
@@ -90,6 +93,7 @@ This filter algorithm is a very general one and leaves the possibility open to c
 As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table \ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. The trained BDT has PARAMETERS... EVENTS were used for training. 
 
 \begin{table}
+  \todo{var set}
   \caption{}
   \label{tab-varset-cluster}
 \end{table}
@@ -98,6 +102,7 @@ As an example for the mentioned VarSet, the variables for distinguishing the bac
 After the training procedure the corresponding TMVAFilter can be used. The results are summerized in \ref{fig-result-background-hit-finder}. 
 
 \begin{figure}
+  \todo{ROC curve}
   \caption{}
   \label{fig-result-background-hit-finder}
 \end{figure}
