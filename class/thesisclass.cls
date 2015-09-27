@@ -28,6 +28,8 @@
 \usepackage[pdftex]{graphicx}
 \usepackage[toc,page]{appendix}
 
+\usepackage{geometry}
+
 \addtokomafont{disposition}{\rmfamily}
 \usepackage{vmargin}          % Adjust margins in a simple way
 \usepackage{subcaption}
