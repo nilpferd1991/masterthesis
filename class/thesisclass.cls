@@ -57,6 +57,8 @@
 \usepackage[fixlanguage]{babelbib}	% sets german style for literature entries
 \usepackage{xcolor}
 
+\usepackage{multirow}
+
 \usepackage{microtype}
 
 \usepackage[many]{tcolorbox}
