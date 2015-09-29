@@ -1,20 +1,25 @@
 \chapter{Track Finding in basf2} \label{chapter-workflow}
 
-After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis is discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their adventages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the two Legendre track finder packages are shown. Then the newly written \texttt{SegmentTrackCombinerModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and a short outlook.
+After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis is discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their advantages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the stereo Legendre track finder are shown. Then the newly written \texttt{SegmentTrackCombinerModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and an outlook.
 
 \section{FOM of the two track finders}
 
 Standalone legendre + standalone local
 Legendre (old!): Finding efficiency, d0 influence, purity
-Local: Segment purity, Finding efficiency; Clone + Fake-Rate of both track finder.
+Local: Segment purity, Finding efficiency; Clone + Fake-Rate of both track finder (Local with combined Segments)
 Timing.
 
 \todo{pictures: Finding efficiency legendre over pt, d0 influence, purity as histogramm}
 \todo{pictures: Timing of legendre + stereo and local}
-\todo{pictures: Purity of segments as hist, Finding eficiency over pt + d0}
+\todo{pictures: Purity of segments as hist, Finding efficiency over pt + d0}
 
 \section{The \texttt{TrackFindingCDC} Package}
-Order etc. Common code basis. WireHitTopology, Output and Input of Modules.
+As presented in the section before, the two track finding algorithms have different characteristics. To use the benefits of both, a combined approach is suited best. The proposed workflow as a result of the analysis done in this thesis is presented simplified in figure~\ref{fig-workflow}. The idea is to run both track finders on the same (full) set of hits and combine the resulting tracks/segments afterwards. Another solution is to use only the hits that are not already used by the first track finder in the second one. This proposed approach has an increased computing time in contrast to this solution but has some other advantages: 
+\begin{itemize}
+ \item If a track is found by both track finders, the probability of it being a fake is very small.
+ \item If a track is only found partly by the first track finder, the second algorithm will probably not find the rest as only some hits are unused. When both track finders use the full set of hits, the combined tracks include most of the hits of a track.
+ \item Both track finder can be optimized independently. It is even possible to run only one of them to save computing time or for special detector setups (e.g. for cosmic runs) without changing much in the software configuration.
+\end{itemize}
 
 \begin{figure}
   \centering
@@ -32,9 +37,22 @@ Order etc. Common code basis. WireHitTopology, Output and Input of Modules.
     \node[module, below=1 of combiner] (fitter) {Track Fitter};
     \draw[vecArrow] (combiner) -- (fitter) node [midway, auto=false, anchor=west] {Tracks};
   \end{tikzpicture} 
- \caption[Proposed workflow in the CDC tracking]{The proposed workflow and combination of the two track CDC finders in basf2. The green boxes refer to one or a few modules. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
+ \caption[Proposed workflow in the CDC tracking]{The proposed workflow and combination of the two track finders in the CDC detector. The green boxes refer to one or a few modules. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
  \label{fig-workflow}
 \end{figure}
+
+For better interconnectivity between the track finders, they share a large code basis including common data objects and module system in addition to the already given framework by basf2. Combining the code basis of the two track finders was also part of this thesis. The common software design consists e.g.\ of a common singleton (called \texttt{CDCWireHitTopology}) saved in the data store which is responsible for storing the used-flag of the CDC hits and their connection to other objects (like clusters or segments). Also the in- and output of all tracking modules in the CDC is handled by shared code which makes changes in the data flow much easier.
+
+Figure~\ref{fig-workflow2} shows the same workflow as presented im figure~\ref{fig-workflow} (except the simulation and the track fit), but now with the correct module names and the relevant data flow. The \texttt{CDCWireHitTopology} singleton is not parts of the modules but gets used by all modules to check the usage flag and the geometrical information of the wire hits. The modules in the path are described in the following in more detail.
+
+\begin{description}
+  \item[Wire\-Hit\-Topology\-Preparer] This module receives the simulated or measured hit information from the CDC detector and connects it with the geometrical information from a database. All hits with configurable flags are saved in the wire hit topology object which is stored as a persistent \texttt{StoreObj} in the data store.
+  \item[Segment\-Finder\-CDC\-Facet\-Automaton\-Dev] The module is the first part of the local track finder as described in chapter~\ref{chapter-theory}. As the clusterizer is one part in the cellular automaton used in this algorithm it is -- apart from creating segments -- also used for separating signal and background hits. This filter is described in section~\ref{section-background}. The rest of the module was not developed in this thesis and can be found elsewhere~\cite{oliver}. As all CDC tracking modules communicate over the wire hit topology object, the background flag is propagated to all other modules.
+  \item[CDC\-Legendre\-Tracking] Running the axial Legendre track finder with the quad tree search is done in this part as described also in chapter~\ref{chapter}. It uses the full wire hit set (except the background hits). It has also some post-processing steps included directly after the search, which were analyzed and improved in this thesis. \todo{describe?}
+  \item[Track\-Quality\-Asserter\-CDC] Although all track finding algorithms are highly optimized there is a need for quality improvement tools for the resulting track candidates. To make this step configurable for later adjustment and to share the code basis between the algorithms, tools for track corrections were developed in this thesis (see section~\ref{section-quality}). They can be used in the modules directly or via this module which is used in two positions in the path with different configurations.
+  \item[Stereo\-Hit\-Finder\-CDC\-Legendre\-Histogramming] After the axial track finder created tracks, the get used in this module to add stereo hits with a quad tree search also. This module was rewritten from scratch in this thesis and is described in section~\ref{section-stereo}.
+  \item[Segment\-Track\-Combiner\-Dev] The final step (except for quality improvements) is the combination of the results of the global and local track finder which is handled by this module. It was also created in this thesis and is presented in section~\ref{section-combiner}.
+\end{description}
 
 \begin{figure}
   \centering
@@ -59,16 +77,16 @@ Order etc. Common code basis. WireHitTopology, Output and Input of Modules.
     \draw[vecArrow] (combiner) -- (quality2) node [midway, anchor=west] {Combined Tracks};
     \draw[vecArrow] (segment.west) to[out=-150, in=150] node [midway, anchor=east] {Segments} (combiner.west) ;
   \end{tikzpicture} 
- \caption[Proposed workflow in the CDC tracking]{The proposed workflow and combination of the two track CDC finders in basf2. The green boxes refer to one or a few modules. The arrows describe parts of the data flow between the modules. For clarity not all necessary parts are shown here.}
+ \caption[Detailed workflow in the CDC tracking]{The detailed workflow for the track finding procedure for the CDC detector with the correct names of the modules as in the software. The green boxes refer to one modules. The red ellipse is an object on the data store. Some dependencies between the modules are shown as arrows.}
  \label{fig-workflow2}
 \end{figure}
 
-\section{The Background Hit Finder}
+\section{The Background Hit Finder} \label{section-background}
 The beforementioned track finders are tuned to not pick up background hits into a found track candidate or even form a candidate from background hits only. Nevertheless even a single background hit per track can lead to a reduced momentum resolution or can even cause the fit to fail completely. Together with the reduced combinatorics and therefore reduced computing time when throwing away unusable hits there is the need to distinguish between signal and background hits even before the tracking starts. This is the purpose of the background hit finder module described in this section.
 
-For deciding if a hit is to be used in the track finder, the module uses implemented filters. As these filters are used widely in the whole CDC tracking framework, they will be described here in more detail. To filter out bad hits, not only the information of one hit but the information of the clusters constructed in the local track finder is used. As described in chapter \ref{chapter-theory} they are created by clusterizing all CDC hits in such a way that one cluster includes the maximum number of connected hits. Two hits are called connected if there is no non-fired wire geometrically between them. Because of the modular framework and the reusable \texttt{CDCWireHitTopology} it is possible to run the local track finder with the clusterizer before the legendre track finder and propagate the background information to the following tracking algorithms. 
+For deciding if a hit is to be used in the track finder, the module uses implemented filters. As these filters are used widely in the whole CDC tracking framework, they will be described here in more detail. To filter out bad hits, not only the information of one hit but the information of the clusters constructed in the local track finder is used. As described in chapter~\ref{chapter-theory} they are created by clusterizing all CDC hits in such a way that one cluster includes the maximum number of connected hits. Two hits are called connected if there is no non-fired wire geometrically between them. Because of the modular framework and the reusable \texttt{CDCWireHitTopology} it is possible to run the local track finder with the clusterizer before the legendre track finder and propagate the background information to the following tracking algorithms. 
 
-Figure \ref{fig-clusters} in chapter \ref{chapter-theory} shows an event display in the $r$-$\phi$-plane with the clusters drawn in different colors. Figure \ref{fig-cluster-hit-purity} shows the hit purity of ANZAHL of the clusters from typical events. The hit purity is computed as the ratio between the number of hits in a cluster which belong to a signal track divided by the number of all hits (including the ones coming from background only). As can be seen clearly in this histogramm a cluster is either full of background or full of signal hits - for that throwing away a background cluster does not involve deleting hits that are needed for signal tracks.
+Figure~\ref{fig-clusters} in chapter~\ref{chapter-theory} shows an event display in the $r$-$\phi$-plane with the clusters drawn in different colors. Figure~\ref{fig-cluster-hit-purity} shows the hit purity of ANZAHL of the clusters from typical events. The hit purity is computed as the ratio between the number of hits in a cluster which belong to a signal track divided by the number of all hits (including the ones coming from background only). As can be seen clearly in this histogramm a cluster is either full of background or full of signal hits - for that throwing away a background cluster does not involve deleting hits that are needed for signal tracks.
 
 \begin{figure}
   \todo{figure}
@@ -90,7 +108,7 @@ This filter algorithm is a very general one and leaves the possibility open to c
   \item[MCFilter] filters the items according to the truth information compiled with the MC information that also the recording filter uses. 
 \end{description}
 
-As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table \ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. The trained BDT has PARAMETERS... EVENTS were used for training. 
+As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table~\ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. The trained BDT has PARAMETERS... EVENTS were used for training. 
 
 \begin{table}
   \todo{var set}
@@ -99,7 +117,7 @@ As an example for the mentioned VarSet, the variables for distinguishing the bac
 \end{table}
 
 
-After the training procedure the corresponding TMVAFilter can be used. The results are summerized in figure \ref{fig-result-background-hit-finder}. 
+After the training procedure the corresponding TMVAFilter can be used. The results are summerized in figure~\ref{fig-result-background-hit-finder}. 
 
 \begin{figure}
   \todo{ROC curve}
@@ -111,26 +129,26 @@ After the training procedure the corresponding TMVAFilter can be used. The resul
 \todo{Results for Clusters/Hits, Results for Legendre Finder}
 
 \todo{describe axial or not?}
-\section{Improvements on the Axial Legendre Track Finder}
-Is already very good and advanced. 
+% \section{Improvements on the Axial Legendre Track Finder}
+% Is already very good and advanced. 
 
-\subsection{The class \texttt{QuadTreeProcessorTemplate}}
-\subsection{Postprocessing after the track finding}
-\subsection{Results}
-Timing
+% \subsection{The class \texttt{QuadTreeProcessorTemplate}}
+% \subsection{Postprocessing after the track finding}
+% \subsection{Results}
+% Timing
 
-\section{Improvements on the Stereo Legendre Hit Finder}
+\section{Improvements on the Stereo Legendre Hit Finder} \label{section-stereo}
 \subsection{Implemented algorithm}
 \subsection{Results}
 Timing
 
-\section{The \texttt{SegmentTrackCombinerModule}}
+\section{The \texttt{SegmentTrackCombinerModule}} \label{section-combiner}
 \subsection{Principle of the Segment Track Combiner}
 + Task
 \subsection{Used Filters}
 \subsection{Results}
 
-\section{The \texttt{TrackQualityAsserterCDCModule} and the \texttt{TrackQualityTools}}
+\section{The \texttt{TrackQualityAsserterCDCModule} and the \texttt{TrackQualityTools}}  \label{section-quality}
 
 Fitting problem. Implemented quality tools (description). Some event displays.
 
