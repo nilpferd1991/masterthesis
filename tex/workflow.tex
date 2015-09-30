@@ -109,7 +109,7 @@ The filter design is very general and leaves the possibility open to compare man
   \item[MCFilter] filters the items according to the truth information compiled with the MC information that is also used in the recording filter.
 \end{description}
 
-As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table~\ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. It is not always obvious why the described variables can help to separate between background and signal cluster. This is why one typical signal and one background cluster is shown in figure~\ref{figure-cluster-versus}. As can be seen in the figure, background clusters have a different shape as signal clusters. Particles creating signal hits pass almost straight through the wires leaving behind a defined long-shaped trace of hits whereas background hits get created in a single spot forming more circular-shaped clusters. This shape-information is used in the number of neighbors as well as in the averaged distance to the superlayer center. The latter is zero for most of the signal clusters as the particles go through the whole superlayer whereas background hits do not span the whole section. As the background clusters are made of hits coming from stochastically distributed processes, the parameters of the hits like time information (which gets transformed to the drift length) or deposited energy (which is encoded in the ADC count) are probably randomly distributed. This is why the first two momenta of the distributions (mean and variance) are also taken into account.
+As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table~\ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. It is not always obvious why the described variables can help to separate between background and signal cluster. This is why one typical signal and one background cluster is shown in figure~\ref{fig-cluster-versus}. As can be seen in the figure, background clusters have a different shape as signal clusters. Particles creating signal hits pass almost straight through the wires leaving behind a defined long-shaped trace of hits whereas background hits get created in a single spot forming more circular-shaped clusters. This shape-information is used in the number of neighbors as well as in the averaged distance to the superlayer center. The latter is zero for most of the signal clusters as the particles go through the whole superlayer whereas background hits do not span the whole section. As the background clusters are made of hits coming from stochastically distributed processes, the parameters of the hits like time information (which gets transformed to the drift length) or deposited energy (which is encoded in the ADC count) are probably randomly distributed. This is why the first two momenta of the distributions (mean and variance) are also taken into account.
 
 \begin{figure}
   \todo{Cluster versus}
@@ -187,24 +187,36 @@ By applying a cut on the BDT output the background hits can be marked and do net
 
 \section{Improvements on the Stereo Legendre Hit Finder} \label{section-stereo}
 
-The previous implementation of the stereo hit finder yielded good finding and hit efficiencies with an acceptable fake and clone rate. However, the module was partly built with legacy code and had a very bad computing performance as the processing time of the stereo finder was about 20 times higher than the axial finder. Instead of refactoring the module, it was rebuilt from scratch in this thesis using the common code basis for all track finder algorithms in the CDC and the same quad tree structure as the axial hit finder. Additionally, a refined stereo position calculation was implemented using the already provided methods from the framework and a second coordinate in the quad tree structure is now used. Before, the stereo hit finder used only the $z$-slope values for a histogramming method whereas in the new module the the slope in the $s$-$z$-plane and $z_0$ are used as described in chapter~\ref{chapter-theory}. Because of an introduced caching method the computation could be speed up by a factor of approximately 100. The algorithm is described in the next paragraph whereas the results in comparison to the old implementation are shown after that.
+The previous implementation of the stereo hit finder yielded good finding and hit efficiencies with an acceptable fake and clone rate. However, the module was partly built with legacy code and had a very bad computing performance as the processing time of the stereo finder was about 20 times higher than the axial finder. Instead of refactoring the module, it was rebuilt from scratch in this thesis using the common code basis for all track finder algorithms in the CDC and the same quad tree structure as the axial hit finder. Additionally, a refined stereo position calculation was implemented using the already provided methods from the framework and a second coordinate in the quad tree structure is now used. Before, the stereo hit finder used only the $\lambda$ angle for a histogramming method whereas in the new module the the slope in the $s$--$z$-plane and $z_0$ are used as described in chapter~\ref{chapter-theory}. Because of an introduced caching method the computation could be speed up by a factor of approximately 100. The algorithm is described in the next paragraph whereas the results in comparison to the old implementation are shown after that.
 
 \subsection{Implemented algorithm}
 
-The stereo hit finding algorithm consists of ... stages which are repeated for every found axial track:
+The stereo hit finding algorithm consists of three stages, which are repeated for every found axial track. In between the iterations for every track, the found hits are marked to not use them twice. The steps are in detail:
 \begin{zlist}
-  \item Fill hits vector and pass them to the quad tree. RL-Info + check for back 2 back.
-  \item Quad tree search for best candidate (with SameSignChecker, how) + rl-info raus fiddeln
-  \item Add hits to track + delete quad tree elements
+  \item Fill a vector of hits and pass them to the quad tree. All non-used stereo hits from the wire hit topology are used to create a vector of reconstructed hits. These hits have a cached travel distance $s$ and a $z$ position, that is calculated using the track. It is chosen in such a way A check if the travel distance is negative (which happens for hits laying on the other side of the CDC) and if the reconstructed $z$ value is outside of the CDC boundaries is applied. RL-Info.
+  \item Quad tree search for the best candidate. (with SameSignChecker, how) + rl-info raus fiddeln
+  \item Add the found hits to track and clear the quad tree.
 \end{zlist}
 
 With new + old quad tree, with segments or not.
 
 \subsection{Results}
 
-The two operation modes in the new stereo hit finder module (with bare wire hits or with segments) can be compared to the old stereo hit finder implementation and also with the reference implementation trasan from Belle. The figures of merit are shown in table~\ref{tab-stereo-results} together with the finding and hit efficiency as a function of $p_T$ in figure~\ref{fig-stereo-results}. 
+The two operation modes in the new stereo hit finder module (with bare wire hits or with segments) can be compared to the old stereo hit finder implementation and also with the reference implementation trasan from Belle. The figures of merit and the computation time per event are shown in table~\ref{tab-stereo-results} together with the finding and hit efficiency as a function of $p_T$ in figure~\ref{fig-stereo-results}. 
 
-Timing
+\begin{table}
+  \todo{Results stereo.}
+  \caption{}
+  \label{tab-stereo-results}
+\end{table}
+
+\begin{figure}
+  \todo{Results stereo.}
+  \caption{}
+  \label{fig-stereo-results}
+\end{figure}
+
+As can be seen, the figures of merit are enhanced by the newly written module and are now comparable or better than the reference implementation. This is mainly because of the additional coordinate in the quad tree which handles track not coming from the interaction point. The computing time is much smaller which is mainly because of caching and optimized calculation procedures, e.g.\ by changing the coordinates in the Legendre space from $\lambda$ which needed heavy trigonometrical calculations to the much easier to calculate $s$--$z$-slope.
 
 \section{The \texttt{SegmentTrackCombinerModule}} \label{section-combiner}
 \subsection{Principle of the Segment Track Combiner}
