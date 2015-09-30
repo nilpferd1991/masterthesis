@@ -1,10 +1,10 @@
 \chapter{Track Finding in basf2} \label{chapter-workflow}
 
 After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis is discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their advantages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the stereo Legendre track finder are shown. Then the newly written \texttt{SegmentTrackCombinerModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and an outlook.
+\section{FOM of the two track finders}
+
 
 \todo{TRASAN??}
-
-\section{FOM of the two track finders}
 
 Standalone legendre + standalone local
 Legendre (old!): Finding efficiency, d0 influence, purity
@@ -51,9 +51,9 @@ Figure~\ref{fig-workflow2} shows the same workflow as presented im figure~\ref{f
   \item[Wire\-Hit\-Topology\-Preparer] This module receives the simulated or measured hit information from the CDC detector and connects it with the geometrical information from a database. All hits with configurable flags are saved in the wire hit topology object which is stored as a persistent \texttt{StoreObj} in the data store.
   \item[Segment\-Finder\-CDC\-Facet\-Automaton\-Dev] The module is the first part of the local track finder as described in chapter~\ref{chapter-theory}. As the clusterizer is one part in the cellular automaton used in this algorithm it is -- apart from creating segments -- also used for separating signal and background hits. This filter is described in section~\ref{section-background}. The rest of the module was not developed in this thesis and can be found elsewhere~\cite{oliver}. As all CDC tracking modules communicate over the wire hit topology object, the background flag is propagated to all other modules.
   \item[CDC\-Legendre\-Tracking] Running the axial Legendre track finder with the quad tree search is done in this part as described also in chapter~\ref{chapter}. It uses the full wire hit set (except the background hits). It has also some post-processing steps included directly after the search, which were analyzed and improved in this thesis. \todo{describe?}
-  \item[Track\-Quality\-Asserter\-CDC] Although all track finding algorithms are highly optimized there is a need for quality improvement tools for the resulting track candidates. To make this step configurable for later adjustment and to share the code basis between the algorithms, tools for track corrections were developed in this thesis (see section~\ref{section-quality}). They can be used in the modules directly or via this module which is used in two positions in the path with different configurations.
-  \item[Stereo\-Hit\-Finder\-CDC\-Legendre\-Histogramming] After the axial track finder created tracks, the get used in this module to add stereo hits with a quad tree search also. This module was rewritten from scratch in this thesis and is described in section~\ref{section-stereo}.
-  \item[Segment\-Track\-Combiner\-Dev] The final step (except for quality improvements) is the combination of the results of the global and local track finder which is handled by this module. It was also created in this thesis and is presented in section~\ref{section-combiner}.
+  \item[Track\-Quality\-Asserter\-CDC] Although all track finding algorithms are highly optimized there is a need for quality improvement tools for the resulting track candidates. To make this step configurable for later adjustment and to share the code basis between the algorithms, tools for track corrections were developed in this thesis (see section~\ref{section-quality}). They can be used in the other modules directly or via this module which is used in two positions in the path with different configurations.
+  \item[Stereo\-Hit\-Finder\-CDC\-Legendre\-Histogramming] After the axial track finder created tracks, they get used in this module to add stereo hits with a quad tree search also. This module was rewritten from scratch in this thesis and is described in section~\ref{section-stereo}.
+  \item[Segment\-Track\-Combiner\-Dev] The final step (except for quality improvements) is the combination of the results of the global and local track finder which is handled by this module. It was created in this thesis also and is presented in section~\ref{section-combiner}.
 \end{description}
 
 \begin{figure}
@@ -91,7 +91,8 @@ For deciding if a hit is to be used in the track finder, the module uses impleme
 Figure~\ref{fig-clusters} in chapter~\ref{chapter-theory} shows an event display in the $r$-$\phi$-plane with the clusters drawn in different colors. Figure~\ref{fig-cluster-hit-purity} shows the hit purity of clusters from typical events. The hit purity is computed as the ratio between the number of hits in a cluster which belong to a signal track divided by the number of all hits (including the ones coming from background only). As can be seen clearly in this histogram a cluster is either full of background or full of signal hits - for that throwing away a background cluster does not involve deleting hits that are needed for signal tracks. However using clusters instead of single hits for deciding the signalness of the hits has the advantage of more information about the neighborhood of the hits.
 
 \begin{figure}
-  \todo{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/workflow/cluster_purity.png}
   \caption{Histogram of the hit purities (ratio between signal hits to all hits in a cluster) of the found clusters by the clusterizer as part of the local track finder algorithm. As the clusters are either purely signal or purely background, they can be kept or thrown away as whole objects.}
   \label{fig-cluster-hit-purity}
 \end{figure}
@@ -109,11 +110,19 @@ The filter design is very general and leaves the possibility open to compare man
   \item[MCFilter] filters the items according to the truth information compiled with the MC information that is also used in the recording filter.
 \end{description}
 
-As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table~\ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. It is not always obvious why the described variables can help to separate between background and signal cluster. This is why one typical signal and one background cluster is shown in figure~\ref{fig-cluster-versus}. As can be seen in the figure, background clusters have a different shape as signal clusters. Particles creating signal hits pass almost straight through the wires leaving behind a defined long-shaped trace of hits whereas background hits get created in a single spot forming more circular-shaped clusters. This shape-information is used in the number of neighbors as well as in the averaged distance to the superlayer center. The latter is zero for most of the signal clusters as the particles go through the whole superlayer whereas background hits do not span the whole section. As the background clusters are made of hits coming from stochastically distributed processes, the parameters of the hits like time information (which gets transformed to the drift length) or deposited energy (which is encoded in the ADC count) are probably randomly distributed. This is why the first two momenta of the distributions (mean and variance) are also taken into account.
+As an example for the mentioned VarSet, the variables for distinguishing the background clusters from the signal clusters is described in table~\ref{tab-varset-cluster}. The truth information used for the BDT training is also described there. It is not always obvious why the described variables can help to separate between background and signal cluster. This is why one typical signal and one background cluster is shown in figure~\ref{fig-cluster-versus}. As can be seen in the figure, background clusters have a different shape as signal clusters. Particles creating signal hits pass almost straight through the wires leaving behind a defined long-shaped trace of hits whereas background hits get created in a single spot forming more circular-shaped clusters (if they have more than one hit at all). This shape-information is used in the number of neighbors as well as in the averaged distance to the superlayer center. The latter is zero for most of the signal clusters as the particles go through the whole superlayer whereas background hits do not span the whole section. As the background clusters are made of hits coming from stochastically distributed processes, the parameters of the hits like time information (which gets transformed to the drift length) or deposited energy (which is encoded in the ADC count) are probably randomly distributed. This is why the first two momenta of the distributions (mean and variance) are also taken into account.
 
 \begin{figure}
-  \todo{Cluster versus}
-  \caption{}
+  \centering
+  \begin{minipage}{0.58\linewidth}
+    \centering
+    \includegraphics[scale=0.8]{figures/workflow/cluster_display_background.pdf}
+  \end{minipage}
+  \begin{minipage}{0.4\linewidth}
+    \centering
+    \includegraphics[scale=0.8]{figures/workflow/cluster_display_signal.pdf}
+  \end{minipage}
+  \caption{Detailed view of a full event display (cf. figure \ref{fig-} in chapter~\ref{chapter-theory}) with found clusters colored differently for better visualization. The left subfigure shows background clusters, whereas the right one shows clusters with hits from simulated signal particles. The differences in the described variables like shape, number or distance can be seen.}
   \label{fig-cluster-versus}
 \end{figure}
 
@@ -151,28 +160,35 @@ As an example for the mentioned VarSet, the variables for distinguishing the bac
 After the recording and the training procedure (which is handled by Python scripts) the TMVAFilter with the mentioned VarSet can be used. Figure~\ref{fig-result-background-hit-finder} shows the ROC curve (left side) and the distribution of the BDT result for the training and the testing set of clusters. As can be seen, the BDT has a very good separation power between background and signal clusters. As the output distributions for testing and training data set is very similar, there is also no overtraining visible.
 
 \begin{figure}
-  \todo{ROC curve}
-  \caption{}
+  \centering
+  \includegraphics[width=0.48\linewidth]{figures/workflow/background_hit_finder_roc.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/background_hit_finder_overtraining.png}
+  \caption{The left plot shows the background rejection over the signal efficiency (so-called ROC curve) for the trained BDT to distinguish between signal and background clusters. Also shown is the ROC curve recalculated using the hits in each cluster. As the number of hits in each cluster is not constant, the two curves differ. The right histogram describes the distribution of the output variable of the BDT for signal and background clusters in the testing (cross markers) and the training (bars) data set. No overtraining is visible as the distributions match perfectly well.}
   \label{fig-result-background-hit-finder}
 \end{figure}
 
 By applying a cut on the BDT output the background hits can be marked and do net get used in the following tracking routines. How this cut is chosen depends on the desired optimization. A lower cut can include many background hits but does not throw away signal hits keeping the fake rate as well as the hit efficiency high. A harsher cut however can increase the finding efficiency as the combinatorics are reduced and the probability to collect background hits is reduced. Figure~\ref{fig-result-background-hit-finder2} shows the figures of merit of the axial Legendre track finder alone with different cuts on the BDT output. Especially the fake rate can be strongly reduced by using the background hit finder. Figure~\ref{fig-hits-numbers} shows the number of signal/background hits and clusters with different cut values. As the number of signal clusters/hits stays equal but the number of background clusters/hit is reduced with higher cut values, the combinatorics are reduced as well. This can be seen in figure~\ref{fig-performance-clusters}, where the computation time of the local track finder algorithm (which is in particular sensitive to the combinatorics) is shown.
 
 \begin{figure}
-  \todo{Results for Legendre Finder}
-  \caption{}
+  \centering
+  \includegraphics[width=0.48\linewidth]{figures/workflow/background_hit_finder_efficiency.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/background_hit_finder_rate.png}
+  \caption{Figures of merit of the Legendre track finder (without combination with the automaton track finder and without final track quality corrections) for different cut values on the background hit finder BDT. With the background hit finder, the rate of fakes could be reduced drastically. The finding efficiency and the clone rate stay almost the same. When the cut on the BDT output is to hard, the hit efficiency is decreased.}
   \label{fig-result-background-hit-finder2}
 \end{figure}
 
 \begin{figure}
-  \todo{Number of clusters/hits}
-  \caption{}
+  \centering
+  \includegraphics[width=0.48\linewidth]{figures/workflow/number_of_clusters.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/number_of_hits.png}
+  \caption{Number of signal/background clusters/hits after a cut on the BDT output. The number of signal hits stays more or less the same for the lower cut value region whereas the number of background hits decreases.}
   \label{fig-hits-numbers}
 \end{figure}
 
 \begin{figure}
-  \todo{Timing for local finder.}
-  \caption{}
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/workflow/background_hit_finder_performance.png}
+  \caption{Averaged computing time per event of the two track finder algorithms (local and global) in sum with the already implemented changes as described in the following sections for different cut values on the BDT output. Except for statistical fluctuations, the computing time decreases with harder cut, as the number of hits gets smaller.}
   \label{fig-performance-clusters}
 \end{figure}
 
