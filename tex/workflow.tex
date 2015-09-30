@@ -237,9 +237,25 @@ The two operation modes in the new stereo hit finder module (with bare wire hits
 As can be seen, the figures of merit are enhanced by the newly written module and are now comparable or better than the reference implementation. This is mainly because of the additional coordinate in the quad tree which handles track not coming from the interaction point. The computing time is much smaller which is mainly because of caching and optimized calculation procedures, e.g.\ by changing the coordinates in the Legendre space from $\lambda$ which needed heavy trigonometrical calculations to the much easier to calculate $s$--$z$-slope.
 
 \section{The \texttt{SegmentTrackCombinerModule}} \label{section-combiner}
+
+To increase the hit efficiency, the segments found by the local track finder and the axial and stereo tracks from the global track finder can be combined. This unifies the benefits of both track finder as the local track finder itself can not handle the combination of whole tracks well whereas the global track finder easily looses some hits of a track. Merging thw two track finders has however also another benefit: if all possible segments and tracks combinations are made, the remaining segments can be used to form new tracks and can help to fill the phasespace gaps of the Legendre track finder. Lastly, tracks without any matching segments are most likely fake tracks and can be deleted. 
+
 \subsection{Principle of the Segment Track Combiner}
-+ Task
-\subsection{Used Filters}
+
+The matching procedure between tracks and segments is a multi-step process including up to seven filters. In the default configuration, most of them are turned off because of their huge influence on the finding efficiency. The used filters are still under development and further analyses are needed. In the following tracks refers to the result of the global track finder whereas segments describes the output of the local track finder. The algorithm consists of the following steps:
+\begin{zlist}
+ \item Creation of a fast segment and track lookup.
+ \item First matching of segment and tracks that share one or more hits. \label{list-start}
+ \item Deletion of fake segments.
+ \item Flagging of segments belonging to particles that probably can not be found by the global track finder.
+ \item Matching of the remaining segments with the tracks or among themselves and then with the tracks.
+ \item Filtering of fake tracks in the made combinations.  \label{list-end}
+ \item Cleanup of the lookup cache.
+\end{zlist}
+
+The steps (\ref{list-start}) - (\ref{list-end}) include one or more filters which consist mostly of a trained BDT as the one described for the background hit finder. 
+
+
 \subsection{Results}
 
 \section{The \texttt{Track\-Quality\-Asserter\-CDC\-Module} and the \texttt{Track\-Quality\-Tools}}  \label{section-quality}
