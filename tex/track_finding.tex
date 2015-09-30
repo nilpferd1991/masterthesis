@@ -1,10 +1,10 @@
 \chapter{Track Finder Theory and Multivariate Classification} \label{chapter-theory}
 
-The track finders are implemented in the Belle II analysis software framework for which a short introduction is given. More information can be found elsewhere~\cite{moll_basf2}. Afterwards a more detailed description of the theory of track finding and common figures of merit for all track finders are explained and discussed. As some parts of the track finders rely on the usage of multivariate classification the basic principle of boosted decision trees can be found in the end of the chapter.
+The track finders are implemented in the Belle~II analysis software framework for which a short introduction is given. More information can be found elsewhere~\cite{moll_basf2}. Afterwards a more detailed description of the theory of track finding and common figures of merit for all track finders are explained and discussed. As some parts of the track finders rely on the usage of multivariate classification the basic principle of boosted decision trees can be found in the end of the chapter.
 
-\section{The Belle II Analysis Software Framework (basf2)}
+\section{The Belle~II Analysis Software Framework (basf2)}
 
-For simulation, data acquisition, data processing and analysis of the Belle II experiment basf2 is used. Although -- going by its name -- it seems to be built on top of the old software framework used for the Belle experiment, it is a complete rewrite of the software using modern programming principles in the programming languages C++~\cite{cpp} and Python~\cite{python}. Together with external programming libraries e.g.\ ROOT~\cite{root} or EvtGen~\cite{evtgen} this framework builds the base for every software written for the experiment.
+For simulation, data acquisition, data processing and analysis of the Belle~II experiment basf2 is used. Although -- going by its name -- it seems to be built on top of the old software framework used for the Belle experiment, it is a complete rewrite of the software using modern programming principles in the programming languages C++~\cite{cpp} and Python~\cite{python}. Together with external programming libraries e.g.\ ROOT~\cite{root} or EvtGen~\cite{evtgen} this framework builds the base for every software written for the experiment.
 
 The software is divided into several packages -- each serving a distinct purpose or summarizing code for a single detector. Examples for the packages are CDC, SVD or tracking which is described in more detail in chapters~\ref{chapter-workflow}.
 
@@ -239,7 +239,7 @@ The Kalman fitter algorithm~\cite{kalman} is based on the idea of iteratively ad
  \label{fig-kalman}
 \end{figure}
 
-When taking into account fake or background hits in a track, the Kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a wrong bias on these parameters. Therefore a weighting scheme is applied to all hits after each Kalman pass and this weight defines how strong a hit affects the final parameters. There are many different ways to do so, including elastic tracking and nonlinear filters~\cite{daf_fruh}. The one currently used for the tracking in the Belle II software framework is the \emph{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie. The procedure is as follows:
+When taking into account fake or background hits in a track, the Kalman fitter algorithm may not lead to good results anymore. As each hit is used for estimating the parameters of the trajectory a wrongly attached hit can give a wrong bias on these parameters. Therefore a weighting scheme is applied to all hits after each Kalman pass and this weight defines how strong a hit affects the final parameters. There are many different ways to do so, including elastic tracking and nonlinear filters~\cite{daf_fruh}. The one currently used for the tracking in the Belle~II software framework is the \emph{deterministic annealing filter} (DAF) introduced by Frühwirth and Strandlie. The procedure is as follows:
 \begin{zlist}
   \item Set the weights of all hits to 1.
   \item Fit the track with a Kalman fitter taking into account the weights of each hit. \label{list-daf-loop-start}
