@@ -2,11 +2,36 @@
 
 After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis are discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their advantages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the stereo Legendre track finder are shown. Then the newly written \texttt{SegmentTrackCombinerModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and an outlook.
 
-All the plots showing recent results are done with the svn revision 21586.
+All the plots showing recent results are done with the svn revision 21586. If the implementation before this thesis is compared to the recent results, svn revision number 18262 is used.
 
 \section{FOM of the two track finders}
 
-\todo{TRASAN??}
+In the following, the figures of merit of the both track finders -- the local and the global one -- are shown as they were before the works in this thesis. For comparison, the reference implementation trasan is shown. Trasan is the old track finder algorithm developed for the former Belle detector and was adopted to the new Belle~II geometry. It was highly optimized in the run of the experiment but will not be used for the Belle~II experiment, as it is neither build on modern programming principles nor easy to extend by other algorithms and most of the time also poorly documented. However, the figures of merit of trasan will be the levelling staff every new track finder has to be compared with as also done in the following.
+
+Table~\ref{tab-old-implementation-results} shows the overall figures of merit for the two track finders running standalone together with trasan. A detailed analysis can be found below. The table shows the finding and hit efficiency together with the clone and fake rate as described in chapter~\ref{chapter-theory} aggregated over 1000 generic $\PB \APB$-events. Together with these figures of merit, also the same numbers for primaries only are calculated using the \verb+isPrimary+ flag of the MC particles. As therefore a correct matching between tracks from the track finders and the MC particles is needed, it can only be calculated for non-fake tracks. This is why he fake rate is meaningless and not shown in the table. The time per event is measured with the basf2-own performance tools and are of course machine-dependent. All figures presented in this thesis were calculated using the same desktop machine.
+
+As expected, both the Legendre and the automaton track finder can not reach the figures of merit of the reference implementation. The Legendre track finder is in addition to that also much slower than trasan which is mainly due to a non-optimized stereo hit finder that will be discussed in section~\ref{section-stereo}. The automaton track finder has the worst figures of merit when it comes to efficiency. The problems in the implementation lay in the combination of the found segments in the second step (refer to chapter~\ref{chapter-theory}), which fails in most of the cases. As can be seen below, when using the segments alone, the purity and efficiency is very high.
+
+\begin{table}
+  \caption{Table showing the figures of merit for the two track finder implementations (global and local) and trasan.}
+  \centering
+  \begin{tabular}{lccc} \toprule
+    & Legendre Track Finder & Automaton Track Finder & Trasan \\ \midrule
+    Finding Efficiency & 83.17 & 12.84 & 85.47 \\
+    \quad on primaries & 89.94 & 14.20 & 91.39 \\ 
+    Hit Efficiency     & 74.03 & 58.29 & 82.19 \\
+    \quad on primaries & 78.22 & 59.76 & 87.40 \\ 
+    Clone Rate         & 7.69  & 14.02 & 19.72 \\
+    \quad on primaries & 4.71  & 26.54 & 17.27 \\ 
+    Fake Rate          & 26.82 & 48.17 & 15.72 \\ 
+    Time per Event in ms & 635.05 & 32.34 & 441.68 \\ \bottomrule
+  \end{tabular}
+  \label{tab-old-implementation-results}
+\end{table}
+
+\paragraph{Legendre Track Finder}
+
+\paragraph{Local Track Finder}
 
 Standalone legendre + standalone local
 Legendre (old!): Finding efficiency, d0 influence, purity
@@ -223,18 +248,35 @@ Both quad tree algorithm implementations currently available in the framework ar
 The two operation modes in the new stereo hit finder module (with bare wire hits or with segments) can be compared to the old stereo hit finder implementation and also with the reference implementation trasan from Belle. The figures of merit and the computation time per event are shown in table~\ref{tab-stereo-results} together with the finding and hit efficiency as a function of $p_T$ in figure~\ref{fig-stereo-results}. 
 
 \begin{table}
-  \todo{Results stereo.}
-  \caption{}
+  \caption{Table showing the figures of merit for the two new implementations (Hits and Segments), the old implementation and trasan. As trasan is responsible for adding axial and stereo hits, the computing time for stereo only can not be deduced.}
+  \centering
+  \begin{tabular}{lcccc} \toprule
+    & Hits & Segments & Old Implementation & Trasan \\ \midrule
+    Finding Efficiency & 86.00 & 87.38 & 83.17 & 85.47 \\
+    \quad on primaries & 91.59 & 92.55 & 89.94 & 91.39 \\ 
+    Hit Efficiency     & 84.62 & 80.05 & 74.03 & 82.19 \\
+    \quad on primaries & 90.20 & 85.50 & 78.22 & 87.40 \\ 
+    Clone Rate         & 15.42 & 15.79 & 7.69  & 19.72 \\
+    \quad on primaries & 7.29  & 7.63  & 4.71  & 17.27 \\ 
+    Fake Rate          & 17.76 & 16.28 & 26.82 & 15.72 \\ 
+    Time per Event in ms & 65.20 & 66.67 & 635.05 & 441.68 \\ 
+    \quad only Stereo Finder & 2.94 & 4.18 & 578.76 & - \\ \bottomrule
+  \end{tabular}
   \label{tab-stereo-results}
 \end{table}
 
 \begin{figure}
-  \todo{Results stereo.}
-  \caption{}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/stereo_finding_efficiency.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/stereo_hit_efficiency.png}
+  \caption{Finding (left) and hit (right) efficiency of the four tracking algorithms with axial and stereo finding. Although the two new implementation look worse than the reference implementation trasan, it must be noticed that in the lower $p_T$ region there are much more particles present leading to a higher weight on these tracks.}
   \label{fig-stereo-results}
 \end{figure}
 
-As can be seen, the figures of merit are enhanced by the newly written module and are now comparable or better than the reference implementation. This is mainly because of the additional coordinate in the quad tree which handles track not coming from the interaction point. The computing time is much smaller which is mainly because of caching and optimized calculation procedures, e.g.\ by changing the coordinates in the Legendre space from $\lambda$ which needed heavy trigonometrical calculations to the much easier to calculate $s$--$z$-slope.
+As can be seen, the figures of merit are enhanced by the newly written module and are now comparable or better than the reference implementation trasan. This is mainly because of the additional coordinate in the quad tree which handles track not coming from the interaction point. The computing time is much smaller which is mainly because of caching and optimized calculation procedures, e.g.\ by changing the coordinates in the Legendre space from $\lambda$ which needed heavy trigonometrical calculations to the much easier to calculate $s$--$z$-slope. Please keep in mind, that also some implementation details of the axial Legendre track finder have changed between the old and the new implementation.
+
+The both implementations - using bare hits or segments in the quad tree - share most of their properties like a small execution time and a high finding efficiency with rather low fake and clone rate. As described in the previous sub section, the approach with using segments has a lower fake rate (because the probability of adding wrong hits is rather low) and also a higher finding efficiency, but also a lower hit efficiency as when using bare wire hits in the quad tree. The execution time per event is surprisingly higher when using segments although the depth of the quad tree is reduced. One reason could be that the algorithm to check whether a hit belongs to a quad tree bin or not is more complicated than in the hit approach can because of the high number of iterations in the quad tree search, this can slow down the whole track finder. Further analysis is needed to optimize this module.
+
+\todo{Inhalt: Ist RL-drin? Kann man segment noch verbessern mit anderen parametern? Soll ich die Parameter beschreiben und eine Grid-Search durchführen?}
 
 \section{The \texttt{SegmentTrackCombinerModule}} \label{section-combiner}
 
@@ -248,13 +290,19 @@ The matching procedure between tracks and segments is a multi-step process inclu
  \item First matching of segment and tracks that share one or more hits. \label{list-start}
  \item Deletion of fake segments.
  \item Flagging of segments belonging to particles that probably can not be found by the global track finder.
- \item Matching of the remaining segments with the tracks or among themselves and then with the tracks.
+ \item Matching of the remaining segments with the tracks or among themselves and then with the tracks. \label{list-second}
  \item Filtering of fake tracks in the made combinations.  \label{list-end}
  \item Cleanup of the lookup cache.
 \end{zlist}
 
-The steps (\ref{list-start}) - (\ref{list-end}) include one or more filters which consist mostly of a trained BDT as the one described for the background hit finder. 
+The steps (\ref{list-start}) - (\ref{list-end}) include one or more filters which consist mostly of a trained BDT as the one described for the background hit finder. Some steps are described in the following in more detail.
 
+\paragraph{First Matching (step \ref{list-start}}
+
+\paragraph{(step \ref{list-second})}
+
+\paragraph{Filtering of the tracks (step \ref{list-end})}
+To reduce the fake rate further before giving the tracks to the track fitter and the physics analysis packages, a trained BDT can filter out tracks that are most likely to be fakes. The BDT is trained using the fake output of the MC matching routine as the background flag. To decide whether a track is a fake it uses several input variables compiled from the tracks trajectory and hit content as $p_T$ and $\tan \lambda$ or the first two moments of the drift length or ADC count distributions among the hits. It also calculates a value to measure how ``empty'' the track is, i.e.\ how many hits are probably missing as a track with more missing hits is typically a fake. Figure~\ref{fig-track-filter-roc} shows the ROC curve of the trained BDT. As it can be seen, the performance of the filter is rather bad compared to the other trained filters in this thesis. Figure~\ref{fig-track-filter-result} shows the figures of merit as a function of the BDT cut value on this filter only and confirms this conclusion as it has a high inpact on the finding efficiency. However, in situation where a very low fake rate is necessary, this filter can be used.
 
 \subsection{Results}
 
