@@ -69,7 +69,7 @@ As seen in table~\ref{tab-old-implementation-results}, the local track finder wi
   \includegraphics[width=0.48\linewidth]{figures/workflow/segments_pt.png}
   \includegraphics[width=0.48\linewidth]{figures/workflow/segments_d0.png}
   \caption{Finding over $p_T$ and $d_0$ for the segments from the automaton track finder and trasan. The local track finder has more or less no dependency on momentum or distance to the interaction point.}
-  \label{fig-legendre-finding-efficiency}
+  \label{fig-segments-efficiency}
 \end{figure}
 
 \section{The \texttt{TrackFindingCDC} Package}
@@ -107,7 +107,7 @@ Figure~\ref{fig-workflow2} shows the same workflow as presented im figure~\ref{f
 \begin{description}
   \item[Wire\-Hit\-Topology\-Preparer] This module receives the simulated or measured hit information from the CDC detector and connects it with the geometrical information from a database. All hits with configurable flags are saved in the wire hit topology object which is stored as a persistent \texttt{StoreObj} in the data store.
   \item[Segment\-Finder\-CDC\-Facet\-Automaton\-Dev] The module is the first part of the local track finder as described in chapter~\ref{chapter-theory}. As the clusterizer is one part in the cellular automaton used in this algorithm it is -- apart from creating segments -- also used for separating signal and background hits. This filter is described in section~\ref{section-background}. The rest of the module was not developed in this thesis and can be found elsewhere~\cite{oliver}. As all CDC tracking modules communicate over the wire hit topology object, the background flag is propagated to all other modules.
-  \item[CDC\-Legendre\-Tracking] Running the axial Legendre track finder with the quad tree search is done in this part as described also in chapter~\ref{chapter}. It uses the full wire hit set (except the background hits). It has also some post-processing steps included directly after the search, which were analyzed and improved in this thesis. \todo{describe?}
+  \item[CDC\-Legendre\-Tracking] Running the axial Legendre track finder with the quad tree search is done in this part as described also in chapter~\ref{chapter-theory}. It uses the full wire hit set (except the background hits). It has also some post-processing steps included directly after the search, which were analyzed and improved in this thesis. \todo{describe?}
   \item[Track\-Quality\-Asserter\-CDC] Although all track finding algorithms are highly optimized there is a need for quality improvement tools for the resulting track candidates. To make this step configurable for later adjustment and to share the code basis between the algorithms, tools for track corrections were developed in this thesis (see section~\ref{section-quality}). They can be used in the other modules directly or via this module which is used in two positions in the path with different configurations.
   \item[Stereo\-Hit\-Finder\-CDC\-Legendre\-Histogramming] After the axial track finder created tracks, they get used in this module to add stereo hits with a quad tree search also. This module was rewritten from scratch in this thesis and is described in section~\ref{section-stereo}.
   \item[Segment\-Track\-Combiner\-Dev] The final step (except for quality improvements) is the combination of the results of the global and local track finder which is handled by this module. It was created in this thesis also and is presented in section~\ref{section-combiner}.
@@ -179,14 +179,14 @@ As an example for the mentioned VarSet, the variables for distinguishing the bac
     \centering
     \includegraphics[scale=0.8]{figures/workflow/cluster_display_signal.pdf}
   \end{minipage}
-  \caption{Detailed view of a full event display (cf. figure \ref{fig-} in chapter~\ref{chapter-theory}) with found clusters colored differently for better visualization. The left subfigure shows background clusters, whereas the right one shows clusters with hits from simulated signal particles. The differences in the described variables like shape, number or distance can be seen.}
+  \caption{Detailed view of a full event display (cf. figure \ref{fig-clusters} in chapter~\ref{chapter-theory}) with found clusters colored differently for better visualization. The left subfigure shows background clusters, whereas the right one shows clusters with hits from simulated signal particles. The differences in the described variables like shape, number or distance can be seen.}
   \label{fig-cluster-versus}
 \end{figure}
 
 
 \begin{table}
   \centering
-  \begin{tabular}{p{0.35\linewidth}p{0.6\linewidth}} \toprule
+  \begin{tabular}{p{0.35\linewidth}p{0.60\linewidth}} \toprule
    Variable Name & Description \\ \midrule
    \verb+is_stereo+ & Boolean variable if the cluster is in a stereo superlayer or not. Has no separating force by itself but only in combination with other variables. \\ \midrule 
    \verb+superlayer_id+ & The index of the superlayer counted from the most inner superlayer outwards. As the \verb+is_stereo+ variable, is should is used in combination with other variables.\\ \midrule 
