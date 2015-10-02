@@ -78,8 +78,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.3982011"
-     inkscape:cx="377.8369"
-     inkscape:cy="859.10929"
+     inkscape:cx="477.14411"
+     inkscape:cy="913.29776"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -87,9 +87,9 @@
      inkscape:snap-center="false"
      inkscape:snap-object-midpoints="false"
      inkscape:object-nodes="true"
-     inkscape:window-width="1280"
-     inkscape:window-height="1005"
-     inkscape:window-x="1280"
+     inkscape:window-width="1680"
+     inkscape:window-height="1031"
+     inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:object-paths="true"
@@ -106,7 +106,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -760,7 +760,7 @@
            x="234.77075"
            y="125.2601"
            style="font-size:14px;text-align:center;text-anchor:middle"
-           id="tspan5349">VXD Momentum </tspan><tspan
+           id="tspan5349">VXD Position </tspan><tspan
            id="tspan5351"
            sodipodi:role="line"
            x="232.54224"
@@ -777,7 +777,7 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path5355"
-       d="m 397.08489,302.44922 93.20995,-20.38996"
+       d="m 397.08489,302.44922 105.68265,4.89507"
        style="fill:none;stroke:#000000;stroke-width:2.43390107;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)" />
     <text
        sodipodi:linespacing="125%"
