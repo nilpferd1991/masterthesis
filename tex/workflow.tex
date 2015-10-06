@@ -450,9 +450,9 @@ In addition, there are methods to remove tracks with a small number of hits or w
 
 \section{Further Approaches} \label{section-outlook}
 
-Besides the presented workflow shown in figure~\ref{fig-workflow2}, there are of course other ways to combine the outputs of the two track finders and prepare the tracks for the fitting procedure and the physics analyses. The most promising, the axial quad tree search with segments instead of hits analogous to the stereo finder with segments is presented first. Then the problem of connecting the results of both the CDC and the two VXD detectors is discussed. Both methods were not implemented fully in this thesis and can be optimized further.
+Besides the presented workflow shown in figure~\ref{fig-workflow2}, there are of course other ways to combine the outputs of the two track finders and prepare the tracks for the fitting procedure and the physics analyses. The most promising, the axial quad tree search with segments instead of hits analogous to the stereo finder with segments, is presented first. Then the problem of connecting the results of both the CDC and the two VXD detectors is discussed. Both methods were not implemented fully in this thesis and can be optimized further.
 
-\todo{more ideas?}
+Besides implementing new algorithms with different approaches, also the already discussed workflow can be further refined and optimized. Possible optimization steps include the addition of other coordinate axes to the quad tree search algorithms (to cope for example with large energy loss of the particles or to combine the axial and the stereo finder in one search), cross-detector uses of the algorithms (by applying the quad tree search for CDC and VXD hits in parallel \cite{markus}) or further boost of the computational performance (e.g.\ be using parallelization or GPUs).
 
 \subsection{Quad tree search with segments}
 
@@ -537,10 +537,35 @@ All resulting tracks from the module can be classified unambiguously into one of
   \label{tab-vxd-cdc-cases}
 \end{table}
 
-For tracks which are marked as fakes by the MC matcher, these subclasses are undefined, as they need the matching information to a related MC particle. It is however possible to count the number of tracks, which were fakes before the combiner module and could be ``recovered'' by adding a CDC or VXD track. The numbers are shown in table~\ref{tab-vxd-cdc-fakes}.
+For tracks which are marked as fakes by the MC matcher, these subclasses are undefined, as they need the matching information to a related MC particle. It is however possible to count the number of tracks, which were fakes before the combiner module and could be ``recovered'' by adding a CDC or VXD track. The ratio of these tracks to the full number of fakes (either CDC or VXD) are shown in figure~\ref{fig-vxd-cdc-recovered}. It can be seen that adding a VXD (or CDC) track to a fake track can turn it into a signal track because the number of correct hits is increased if the combination is correct. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/workflow/vxd_cdc_merger_recovered.png}
+  \caption{Ratio of the resulting combinations that are no longer counted as fake to the full number of combinations, with one or both tracks marked as fake by the MC track matching algorithm.}
+  \label{fig-vxd-cdc-recovered}
+\end{figure}
+
+Besides the already mentioned figures of merit for this particular algorithm, also the efficiencies and rates as for normal track finder algorithm can be calculated -- however analyzing them is difficult. Table~\ref{tab-vxd-cdc-fom} shows the track finding figures of merit after the combiner module and for the track finders in the two detectors separately. For calculating the hit efficiencies, only the subdetectors are used where the tracks are defined -- so the figures of merit for the CDC track finders only use the CDC hits. A cut value of 0.8 is used.
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{cccc} \toprule
+    & VXD Track Finder & CDC Track Finder & Both combined \\ \midrule
+    Finding Efficiency   & 74.60 & 81.76 &  \\
+    \quad on primaries   & 94.20 & 85.30 &  \\ 
+    Hit Efficiency       & 85.69 & 84.87 &  \\
+    \quad on primaries   & 86.72 & 90.77 &  \\ 
+    Clone Rate           & 1.26 & 16.01 &  \\
+    \quad on primaries   & 1.32 & 7.41 &  \\ 
+    Fake Rate            & 3.55 & 14.19 &  \\ 
+    Wrong Hits per Track & 0.00 & 2.31 &  \\ \bottomrule
+  \end{tabular}
+\end{table}
 
 
 % To define the purity of the algorithm, only the subset of tracks is considered, that have neither a fake as a CDC nor a VXD track. As for this condition a CDC as well as a VXD track must be present, all cases where the algorithm did not combine two tracks, are not taken into account here. Figure~\ref{fig-vxd-cdc-purity} shows the rate of correct matches and the purity. For defining these numbers, all made combinations by the module with a VXD and CDC track are used. A combination is tagged ``correct'' if the CDC and VXD track are both related to the same MC particle (as fakes are discarded in the initial condition, they both must be connected to a MC particle). The rate of correct matches shown in the figure is the number of correct combinations to the number of total combinations made by the module (so disregarding any efficiencies here). The purity is the number of non-fake tracks as tagged by the MC matching algorithm to the whole number of resulting tracks. The figure therefore leads to the conclusion, that for higher cut values over 97 \% of the tracks coming out of the module are correctly combined tracks. To deduce the efficiency of the algorithm
 
-\todo{Fitting?}
+Further development to increase the separation power of the filter even more and to put the module into the full path of track finding and fitting has to be done, but these very preliminary results already show the great power of such an algorithm to increase the efficiency and also the computing performance. The reason for the latter is, that the combiner module after the track fit (as it is implemented in the moment) has to extrapolate the fitted CDC and VXD tracks through material to evaluate their tracking parameters on the same plane leading to a large number of material lookups needed before making the decision thus resulting in a large computing time.
 
