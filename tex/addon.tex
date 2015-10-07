@@ -119,7 +119,7 @@ print calculation.get_log()
 
 \section{Docker and the basf2 software}
 
-Docker is an open-source-project \cite{docker} which allows to package and ship arbitrary applications with all of its dependencies. It uses a standardized image format and runs its processes in specific cgroups and namespaces isolating the docker applications from the rest of the operation system. Running docker containers can share libraries and the kernel with the rest of the system decreasing the memory footprint of starting the same application more than once in parallel. The isolation and the smaller memory consumption compared to normal virtualization solutions (like VirtualBox) make the program suitable for batch systems or server applications.
+Docker is an open-source-project~\cite{docker} which allows to package and ship arbitrary applications with all of its dependencies. It uses a standardized image format and runs its processes in specific cgroups and namespaces isolating the docker applications from the rest of the operation system. Running docker containers can share libraries and the kernel with the rest of the system decreasing the memory footprint of starting the same application more than once in parallel. The isolation and the smaller memory consumption compared to normal virtualization solutions (like VirtualBox) make the program suitable for batch systems or server applications.
 
 A typical docker workflow consists of three steps:
 \begin{description}
@@ -136,7 +136,7 @@ The benefits of using docker like the easier distribution of software among hete
  \item providing server applications as the isolation of processes makes it even possible to give full access to remote users for example by exposing the access to a python interpreter.
 \end{itemize}
 
-Because of the numerous benefits, a docker image holding the full basf2 software components with all the needed dependencies was created in this thesis. It is built using the orchestration software ansible \cite{ansible} to make the scripts reusable for other purposes like creating VirtualBox images or provisioning a server system. The ansible scripts download and compile the basf2 tools, externals and the software into a docker image which can then be started on a machine without the need for configuration or long-lasting compilations.
+Because of the numerous benefits, a docker image holding the full basf2 software components with all the needed dependencies was created in this thesis. It is built using the orchestration software ansible~\cite{ansible} to make the scripts reusable for other purposes like creating VirtualBox images or provisioning a server system. The ansible scripts download and compile the basf2 tools, externals and the software into a docker image which can then be started on a machine without the need for configuration or long-lasting compilations.
 
 The docker software can be combined with the IPython concept presented before. Users can be given access to a docker container with a running IPython server instance. The users can then perform their calculations using the data and computing power provided by the host system without the need for installations on their local machine. Various concepts like the jupyterhub~\cite{jupyterhub} or the tmpnb-project~\cite{tmpnb} can be easily incorporated. 
 
