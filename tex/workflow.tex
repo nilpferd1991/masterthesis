@@ -1,5 +1,7 @@
 \chapter{Track Finding in basf2} \label{chapter-workflow}
 
+\todo{Use the same numbers!}
+
 After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis are discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their advantages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the stereo Legendre track finder are shown. Then the newly written \texttt{SegmentTrackCombinerModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and an outlook.
 
 All the plots showing recent results are done with the svn revision 21586. If the implementation before this thesis is compared to the recent results, svn revision number 18262 is used.
@@ -105,9 +107,9 @@ For better interconnectivity between the track finders, they share a large code 
 Figure~\ref{fig-workflow2} shows the same workflow as presented im figure~\ref{fig-workflow} (except the simulation and the track fit), but now with the correct module names and the relevant data flow. The \texttt{CDCWireHitTopology} singleton is not part of the modules but gets used by all modules to check the usage flag and the geometrical information of the wire hits. The modules in the path are described in the following in more detail.
 
 \begin{description}
-  \item[Wire\-Hit\-Topology\-Preparer] This module receives the simulated or measured hit information from the CDC detector and connects it with the geometrical information from a database. All hits with configurable flags are saved in the wire hit topology object which is stored as a persistent \texttt{StoreObj} in the data store.
+  \item[Wire\-Hit\-Topology\-Preparer] This module receives the simulated or measured hit information from the CDC detector and connects it with the geometrical information from a database. All hits with configurable flags are saved in the wire hit topology object which is stored as a persistent object in the data store.
   \item[Segment\-Finder\-CDC\-Facet\-Automaton\-Dev] The module is the first part of the local track finder as described in chapter~\ref{chapter-theory}. As the clusterizer is one part in the cellular automaton used in this algorithm it is -- apart from creating segments -- also used for separating signal and background hits. This filter is described in section~\ref{section-background}. The rest of the module was not developed in this thesis and is described elsewhere~\cite{oliver}. As all CDC tracking modules communicate over the wire hit topology object, the background flag is propagated to all other modules.
-  \item[CDC\-Legendre\-Tracking] Running the axial Legendre track finder with the quad tree search is done in this part as described also in chapter~\ref{chapter-theory}. It uses the full wire hit set (except the background hits). It has also some post-processing steps included directly after the search, which were analyzed and improved in this thesis. \todo{describe?}
+  \item[CDC\-Legendre\-Tracking] Running the axial Legendre track finder with the quad tree search is done in this part as described also in chapter~\ref{chapter-theory}. It uses the full wire hit set (except the background hits). It has also some post-processing steps included directly after the search, which were analyzed and improved in this thesis.
   \item[Track\-Quality\-Asserter\-CDC] Although all track finding algorithms are highly optimized, there is a need for quality improvement tools for the resulting track candidates. To make this step configurable for later adjustment and to share the code basis between the algorithms, tools for track corrections were developed in this thesis (see section~\ref{section-quality}). They can be used in the other modules directly or via this module which is used in two positions in the path with different configurations.
   \item[Stereo\-Hit\-Finder\-CDC\-Legendre\-Histogramming] After the axial track finder created tracks, they get used in this module to add stereo hits with a quad tree search also. This module was rewritten from scratch in this thesis and is described in section~\ref{section-stereo}.
   \item[Segment\-Track\-Combiner\-Dev] The final step (except for quality improvements) is the combination of the results of the global and local track finder which is handled by this module. It was created in this thesis also and is presented in section~\ref{section-combiner}.
@@ -244,12 +246,11 @@ By applying a cut on the BDT output the background hits can be marked and do net
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\linewidth]{figures/workflow/background_hit_finder_performance.png}
+  \includegraphics[width=0.7\linewidth]{figures/workflow/background_hit_finder_performance.png}
   \caption{Averaged computing time per event of the two track finder algorithms (local and global) in sum with the already implemented changes as described in the following sections for different cut values on the BDT output. Except for statistical fluctuations, the computing time decreases with harder cut, as the number of hits gets smaller.}
   \label{fig-performance-clusters}
 \end{figure}
 
-\todo{describe axial or not?}
 % \section{Improvements on the Axial Legendre Track Finder}
 % Is already very good and advanced. 
 
@@ -345,8 +346,8 @@ This filter is probably the easiest and best one in the combiner module. It comb
 \end{figure}
 
 
-\paragraph{More complex matching (step \ref{list-fakes} and \ref{list-second})}
-The still remaining segment could either not be matched by the first matching procedure or do not share a hit with one of the tracks coming from the Legendre track finder. For these segments, an advanced matching routine is applied which starts by filtering out fake segments with a BDT using similar variables as the background hit finder. In the next step, the remaining segments are combined with the tracks. Beforehand, another filtering algorithm tries to combine the segments in one superlayer to larger segments, as the segment finder algorithm has problems with large segment especially in stereo layers. Both filters use typical segment properties like $p_T$ or the number of hits as well as high-level variables like the p-Value of a circular fit or distances between the segments or to the tracks. The filters however show a very bad performance and can not increase the hit efficiency without reducing the finding efficiency because a high number of fakes is produced. Therefore, these filters are not used in the following. \todo{???}
+% \paragraph{More complex matching (step \ref{list-fakes} and \ref{list-second})}
+% The still remaining segment could either not be matched by the first matching procedure or do not share a hit with one of the tracks coming from the Legendre track finder. For these segments, an advanced matching routine is applied which starts by filtering out fake segments with a BDT using similar variables as the background hit finder. In the next step, the remaining segments are combined with the tracks. Beforehand, another filtering algorithm tries to combine the segments in one superlayer to larger segments, as the segment finder algorithm has problems with large segment especially in stereo layers. Both filters use typical segment properties like $p_T$ or the number of hits as well as high-level variables like the p-Value of a circular fit or distances between the segments or to the tracks. The filters however show a very bad performance and can not increase the hit efficiency without reducing the finding efficiency because a high number of fakes is produced. Therefore, these filters are not used in the following. \todo{???}
 
 \paragraph{Filtering of the tracks (step \ref{list-end})}
 To reduce the fake rate further before giving the tracks to the track fitter and the physics analysis packages, a trained BDT can filter out tracks that are most likely to be fakes. The BDT is trained using the fake output of the MC matching routine as the background flag. To decide whether a track is a fake, it uses several input variables compiled from the tracks trajectory and hit content as $p_T$ and $\tan \lambda$ or the first two moments of the drift length or ADC count distributions among the hits. It also calculates a value to measure how ``empty'' the track is, i.e.\ how many hits are probably missing as a track with more missing hits is typically a fake. Figure~\ref{fig-track-filter-count} shows the output of the trained BDT. As it can be seen, the performance of the filter looks comparable to the other trained filters in this thesis. In this case however, every wrongly classified and deleted signal track reduces the finding efficiency. Figure~\ref{fig-track-filter-results} shows the figures of merit as a function of the BDT cut value on this filter only and confirms this conclusion as it has a high impact on the finding efficiency which makes it unusable for the normal track finding path. However, in situation where a very low fake rate and a high purity is necessary, this filter can be used.
@@ -367,10 +368,25 @@ To reduce the fake rate further before giving the tracks to the track fitter and
   \label{fig-track-filter-results}
 \end{figure}
 
-
 \subsection{Results}
 
-\todo{machen}
+Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Legendre track finder (axial and stereo) also and after the combination with the segments from the local track finder. In the combination module, only the simple matching routine (step \ref{list-start}) is used. It can be seen that the finding efficiency stays on the same level whereas the hit efficiency could be increased slightly. The other figures stay on the same level as before. \todo{Remaining segments}
+
+\begin{table}
+  \caption{Table showing the figures of merit before and after the combination of Legendre track candidates with segments from the local track finder.}
+  \centering
+  \begin{tabular}{lcccc} \toprule
+    & Legendre & Combination & Trasan \\ \midrule
+    Finding Efficiency   & 86.00 & 86.28 & 85.47 \\
+    \quad on primaries   & 91.59 & 92.11 & 91.39 \\ 
+    Hit Efficiency       & 84.62 & 85.91 & 82.19 \\
+    \quad on primaries   & 90.20 & 91.56 & 87.40 \\ 
+    Clone Rate           & 15.42 & 14.83 & 19.72 \\
+    \quad on primaries   & 7.29  & 7.68  & 17.27 \\ 
+    Fake Rate            & 17.76 & 18.27 & 15.72 \\ 
+    Wrong Hits per Track & 2.10  & 2.28  & 1.09 \\ \bottomrule
+  \end{tabular}
+\end{table}
 
 \section{The \texttt{Track\-Quality\-Asserter\-CDC\-Module} and the \texttt{Track\-Quality\-Tools}}  \label{section-quality}
 
@@ -403,8 +419,9 @@ After running the \texttt{Track\-Quality\-Asserter\-CDC} module before fitting t
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\linewidth]{figures/}
- \label{fig-efficiency-after-fitting}}
+  \includegraphics[width=0.7\linewidth]{figures/workflow/efficiency_after_fit.png}
+  \caption{Finding efficiency over $p_T$ for the full path without and with the quality corrections applied after removing all not-fitted tracks. For comparison, also the efficiency before the fit and the quality tools is shown in blue.}
+  \label{fig-efficiency-after-fitting}
 \end{figure}
 
 
@@ -415,11 +432,11 @@ Some of the methods implemented in the \texttt{TrackQualityTools} are described 
  \item[\texttt{removeHitsOnTheWrongSide}] The Legendre track finding algorithm has some issues with non-curling back-to-back tracks or at least hits. The problem is described in figure~\ref{fig-b2btrack}. For non-curling tracks these added hits can easily be spotted by looking onto the arc length values which is negative for these hits.
  \item[\texttt{splitSecondHalfOfTrack}] As the reference implementation trasan, which was used successfully in combination with the fitting algorithms currently implemented, splits every curling track on the apogee point, this feature is also implemented in the track quality tools.
 \end{description}
-In addition, there are methods to remove tracks with a small number of hits or which are localized to a single super layer and other methods which are not described here. Picture~\ref{fig-quality} shows a event display before and after some of the quality corrections in the module. As can be seen in the figure, most of the wrong hits of the tracks are deleted after the quality improvements. \todo{What is used?}
+In addition, there are methods to remove tracks with a small number of hits or which are localized to a single super layer and other methods which are not described here. Picture~\ref{fig-quality} shows a event display before and after some of the quality corrections in the module. As can be seen in the figure, most of the wrong hits of the tracks are deleted after the quality improvements. In the full path presented in this thesis, the quality tools to remove hits on the wrong side, to remove tracks on only one superlayer or with a small number of hits and to reduce the number of large breaks in a track are used.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.4\linewidth]{figures/workflow/B2B.pdf}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/B2B.pdf}
   \caption{Picture showing the problem with hits on the wrong side of the track. The red hit gets added to the left track incorrectly, as the extrapolation (dashed line) through the interaction point leads to an intersection with the hit although it should belong to the right track. This problem is rather easy to solve by looking onto the arc length of the hits.}
   \label{fig-b2btrack}
 \end{figure}
@@ -449,9 +466,6 @@ In addition, there are methods to remove tracks with a small number of hits or w
   \caption{Event display before (top) and after (below, cut-offs) the quality corrections. The cut-offs show the locations where the quality improvements have deleted wrong hits (first and second picture) or whole tracks (last picture).}
   \label{fig-quality}
 \end{figure}
-
-\todo{fitting-rate over pt?}
-
 
 \section{Further Approaches} \label{section-outlook}
 
@@ -506,17 +520,30 @@ The last possibility presented here can be see in figure~\ref{fig-quad-tree-piec
 Table~\ref{tab-quad-tree-segments} shows the figures of merit for the presented quad trees with segments and the full path as described in the sections before. It can be seen, that the figures for the new segment quad trees are clearly worse than the ones for the full path, but in view of all the post-processing and merging procedures implemented in this full path that are missing in the quad tree, the results are promising.
 
 \begin{table}
-  \todo{table}
-  \caption{Figures of merit of the two quad tree implementations with segments (for axial hits only) with added stereo hits by the stereo hit finder algorithm presented in section~\ref{section-stereo} in comparison to the full path. As expected, the quad trees with segments perform worse.}
+  \caption{Figures of merit of the two quad tree implementations with segments (for axial hits only) in comparison to the axial Legendre track finder. As expected, the quad trees with segments perform worse.}
+  \begin{tabular}{lcccc} \toprule
+    & Full Path & Parameters & Averaged Position & Region Check \\ \midrule
+    Finding Efficiency   & 88.33 & 48.47 & 35.49 & 60.12 \\
+    \quad on primaries   & 93.83 & 52.45 & 39.34 & 65.98 \\ 
+    Hit Efficiency       & 49.56 & 25.24 & 37.60 & 40.13 \\
+    \quad on primaries   & 52.79 & 25.47 & 38.54 & 41.21 \\ 
+    Clone Rate           & 14.46 & 15.43 & 9.06  & 11.32 \\
+    \quad on primaries   & 7.43  & 17.24 & 15.50 & 11.11 \\ 
+    Fake Rate            & 16.68 & 14.43 & 52.10 & 26.03 \\ 
+    Wrong Hits per Track & 1.24  & 1.17  & 8.23  & 3.97 \\ 
+    Time per Event in ms & 32.34 & 16.68 & 20.94 & 42.64\footnotemark \\ \bottomrule
+  \end{tabular}
   \label{tab-quad-tree-segments}
 \end{table}
+
+\footnotetext{As the other approaches, especially this implementation uses a non-optimal algorithm to add the hits of the segments to a quad tree bin and the computation time can be increased further.}
 
 \subsection{VXD-CDC-Merger before fitting}
 In the steps following the track fit with the genfit package, the found and fitted CDC tracks are combined with the found and fitted tracks from the VXD detector and the matching tracks are refitted together. This procedure has the advantage, that the matching algorithm can work with very precise information as the genfit algorithms include energy loss and multiple scattering. The disadvantage is however, that if a track found by one of the track finders could not be fitted, e.g.\ because it had to little hits, it can note be used in the matching procedure reducing the overall efficiency. As the implemented track finders in the CDC have the benefit of finding more low-momentum-tracks than the reference implementation trasan, this has become an important point as the fitting rate drops for low-momentum tracks. Another disadvantage is the increased fitting time because parts of the tracks have to be fitted twice.
 
 Another possibility is to combine most of the tracks before the track fit by using only the information provided from the track finders without the correct handling of energy loss or multiple scattering. Most probably, the matching algorithm will not work as good as the one which has the full information of the tracks, but already a few correct combinations made before the fit can increase the performance and the efficiency of the algorithm. The chance to add VXD tracks to the CDC tracks makes it also possible to fit axial-only tracks as the VXD hits add enough z-information. 
 
-To get a first impression of the possible result of such a combiner before the fit, a filter analogous to the one implemented in the \texttt{SegmentTrackCombinerModule} is used. In contains a trained BDT which uses variables describing the similarity of the two tracks, e.g.\ the difference in the trajectory parameters or the distance between the two circles describing the VXD and CDC track. The most important variable is the difference between the tracks in their $\phi$-direction at the origin, so a pre-cut on this variable is used, which already reduced the number of wrong combinations by a large number. The number of correct and wrong combinations after the filter is shown in figure~\ref{fig-vxd-cdc-count}. The filter has a quite good separation power and is able to retain a high number of correct combinations even with a low background level. Additionally, the number of incorrect combinations is further reduced, as the module using this trained filter only makes combinations between the VXD and CDC tracks with the highest filter output (i.e.\ the highest probability to be a correct match). VXD or CDC tracks without a matching partner (or a matching partner with too small BDT output value), are also added to the result list. Figure~\ref{fig-vxd-cdc-count} shows the number of correct and wrong combinations for different BDT cut values. The number of wrong combinations can be reduced quite well. A wrong combination is a VXD--CDC-pair with either one or both tracks classified as a fake track by the matching algorithm or both tracks not belonging to the same MC particle.
+To get a first impression of the possible result of such a combiner before the fit, a filter analogous to the one implemented in the \texttt{SegmentTrackCombinerModule} is used and tested on generic events without background. In contains a trained BDT which uses variables describing the similarity of the two tracks, e.g.\ the difference in the trajectory parameters or the distance between the two circles describing the VXD and CDC track. The most important variable is the difference between the tracks in their $\phi$-direction at the origin, so a pre-cut on this variable is used, which already reduced the number of wrong combinations by a large number. The number of correct and wrong combinations after the filter is shown in figure~\ref{fig-vxd-cdc-count}. The filter has a quite good separation power and is able to retain a high number of correct combinations even with a low background level. Additionally, the number of incorrect combinations is further reduced, as the module using this trained filter only makes combinations between the VXD and CDC tracks with the highest filter output (i.e.\ the highest probability to be a correct match). VXD or CDC tracks without a matching partner (or a matching partner with too small BDT output value), are also added to the result list. Figure~\ref{fig-vxd-cdc-count} shows the number of correct and wrong combinations for different BDT cut values. The number of wrong combinations can be reduced quite well. A wrong combination is a VXD--CDC-pair with either one or both tracks classified as a fake track by the matching algorithm or both tracks not belonging to the same MC particle.
 
 \begin{figure}
   \centering
@@ -567,23 +594,22 @@ For tracks which are marked as fakes by the MC matcher, these subclasses are und
   \label{fig-vxd-cdc-recovered}
 \end{figure}
 
-Besides the already mentioned figures of merit for this particular algorithm, also the efficiencies and rates as for normal track finder algorithm can be calculated -- however analyzing them is difficult. Table~\ref{tab-vxd-cdc-fom} shows the track finding figures of merit after the combiner module and for the track finders in the two detectors separately. For calculating the hit efficiencies, only the subdetectors are used where the tracks are defined -- so the figures of merit for the CDC track finders only use the CDC hits. A cut value of 0.8 is used.
-
+Besides the already mentioned figures of merit for this particular algorithm, also the efficiencies and rates as for normal track finder algorithm can be calculated -- however analyzing them is difficult. Table~\ref{tab-vxd-cdc-fom} shows the track finding figures of merit after the combiner module and for the track finders in the two detectors separately. For calculating the hit efficiencies, only the subdetectors are used where the tracks are defined -- so the figures of merit for the CDC track finders only use the CDC hits. A cut value of 0.8 is used. It can be seen, that the finding efficiency is much better than in the single subalgorithms, but one has to note that if a CDC track could not be matched to a VXD track, the track is still added to the result list and if it can be related to a MC particle, this particle still counts as found. As the same procedure is applied to the VXD tracks, the finding efficiencies of the CDC and VXD track finders ``add up''. This can be seen in the clone rate, which is higher in the combination than on the single tracking algorithms as some of the correct combinations were not made (cf.\ case 5 above). This however can be fixed by the subsequent combiner module after the track fit which is already implemented in the path. The hit efficiency drops when combining the detectors as it is now counted taken into account all hits (not only CDC or VXD separately) and the not-combined tracks decrease the efficiency as they have only hits in one detector. The fake rate and the number of wrong hits could also be reduced compared to the CDC track finder which indicates, that combining tracks can lead to recovering tracks as already discussed in figure~\ref{fig-vxd-cdc-recovered}.
 
 \begin{table}
   \centering
   \caption{Track finders in the subdetectors and their combination in comparison.}
   \label{tab-vxd-cdc-fom}
-  \begin{tabular}{cccc} \toprule
-    & VXD Track Finder & CDC Track Finder & Both combined \\ \midrule
-    Finding Efficiency   & 74.60 & 81.76 &  \\
-    \quad on primaries   & 94.20 & 85.30 &  \\ 
-    Hit Efficiency       & 85.69 & 84.87 &  \\
-    \quad on primaries   & 86.72 & 90.77 &  \\ 
-    Clone Rate           & 1.26 & 16.01 &  \\
-    \quad on primaries   & 1.32 & 7.41 &  \\ 
-    Fake Rate            & 3.55 & 14.19 &  \\ 
-    Wrong Hits per Track & 0.00 & 2.31 &  \\ \bottomrule
+  \begin{tabular}{lccc} \toprule
+    & VXD & CDC & Both combined \\ \midrule
+    Finding Efficiency   & 74.60 & 81.76 & 89.12 \\
+    \quad on primaries   & 94.20 & 85.30 & 95.33 \\ 
+    Hit Efficiency       & 85.69 & 84.87 & 80.86 \\
+    \quad on primaries   & 86.72 & 90.77 & 86.95 \\ 
+    Clone Rate           & 1.26 & 16.01 & 18.00 \\
+    \quad on primaries   & 1.32 & 7.41 & 12.07 \\ 
+    Fake Rate            & 3.55 & 14.19 & 13.64 \\ 
+    Wrong Hits per Track & 0.00 & 2.31 & 2.08 \\ \bottomrule
   \end{tabular}
 \end{table}
 
