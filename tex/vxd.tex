@@ -1,7 +1,7 @@
 \newcommand{\dedx}{$\mathrm d E / \mathrm d x$ }
 \chapter{Momentum estimation of slow pions with the deposited energy in the VXD} \label{chapter-vxd}
 
-When looking onto the typical momentum distribution of particles flying through the tracking detectors as show in figure~\ref{fig-particles-momentum}, it is clear that there is a significant amount of pions with momenta in the order of $\unit[100]{MeV}$, so-called slop pions. Slow pions play an important role for the physics analysis planned for the Belle~II experiment as they are extensively used for flavor tagging decays (e.g. $\PDstar^\pm \to \PDzero \Ppipm$). Measuring the momentum of these particles leads to a better resolution in the momenta of the parent particle $\PDstar$ which is used in separating continuous background from signal events. These slow pions get produced near the interaction point and because of their small momentum and therefore high curvature and their huge energy losses they can not be detected in the CDC tracking detector. This means they can only be measured in the VXD. Because of the small radius of the VXD and the resulting small number of independent measurement points, the momentum resolution is very poor as it can be seen for the transversal momentum in the Glückstern formula
+When looking onto the typical momentum distribution of particles flying through the tracking detectors as show in figure~\ref{fig-particles-momentum}, it is clear that there is a significant amount of pions with momenta in the order of $\unit[100]{MeV}$, so-called slow pions. Slow pions play an important role for the physics analysis planned for the Belle~II experiment as they are extensively used for reconstructing relevant analysis channels (e.g. $\PDstar^\pm \to \PDzero \Ppipm$). Measuring the momentum of these particles leads to a better resolution in the momenta of the parent particle $\PDstar$ which is used in separating combinatoric background from signal events. These slow pions get produced near the interaction point and because of their small momenta and therefore high curvatures and their huge energy losses they can not be reach into the CDC tracking detector. This means they can only be measured in the VXD. Because of the small radius of the VXD and the resulting small number of independent measurement points, the momentum resolution is very poor as it can be seen for the transversal momentum in the Glückstern formula
 \begin{align*}
  \frac{\sigma_{p_T}}{p_T} = \sqrt{\frac{720}{N + 4}} \sigma_x \frac{p_T \text{[GeV]}}{0.3 q B \text{[T]} L^2}
 \end{align*}
@@ -39,7 +39,7 @@ For the following studies an event sample of 35000 events with slow pions in the
  \includegraphics[width=0.48\linewidth]{figures/vxd/finding_efficiency.png}
  \includegraphics[width=0.48\linewidth]{figures/vxd/finding_efficiency_mc.png}
  \todo{why is there a drop?}
- \caption[Momentum distribution of the found and simulated pions.]{Momentum distribution of the simulated pions as found by the VXD track finder (left) and the MC track finder (right), hich has the simulated truth information. The finding efficiency decreases with lower momenta as the number of hits in the VXD is lower for slow pions and the energy loss is larger. The MC track finder does not have a flat distribution of momenta either, because it requires tracks which have at least 3 hits in the VXD detector.}
+ \caption[Momentum distribution of the found and simulated pions.]{Momentum distribution of the simulated pions as found by the VXD track finder (left) and the MC track finder (right), which has the simulated truth information. The finding efficiency decreases with lower momenta as the number of hits in the VXD is lower for slow pions and the energy loss is larger. The MC track finder does not have a flat distribution of momenta either, because it requires tracks which have at least 3 hits in the VXD detector.}
  \label{fig-vxd-finding-efficiency}
 \end{figure}
 
@@ -54,8 +54,8 @@ For calculating the path length used in \dedx the correct position of the hit an
  \label{fig-cluster-position}
 \end{figure}
 
-Instead of using the deposited energy in every sensor directly, the ADC count value, which is the digitized value of the deposited charge of every sensor, is used. The ADC count is proportional to the deposited energy, but this calibration coefficient has to be determined. %%%
-Picture~\ref{fig-adc-count} shows the \dedx value calculated with this ADC count for the SVD and PXD. As it can be seen, the calibration coefficients for the correct deposited energy are different for the two detectors and therefore the two distributions are not superimposable. To cope with this fact the ADC counts coming from the PXD sensors get multiplied by a factor of 0.565868 which was calculated on data from the simulation. The resulting distribution is shown in the right subplot of figure~\ref{fig-adc-count}. This calibration is mainly done to be able to treat both hit types in the same manner later. 
+Instead of using the deposited energy in every sensor directly, the ADC count value, which is the digitized value of the deposited charge of every sensor, is used. The ADC count is proportional to the deposited energy, but this calibration coefficient has to be determined which is normally done using cosmic myons. %%%
+Figure~\ref{fig-adc-count} shows the \dedx value calculated with this ADC count for the SVD and PXD. As it can be seen, the calibration coefficients for the correct deposited energy are different for the two detectors and therefore the two distributions are not superimposable. To cope with this fact the ADC counts coming from the PXD sensors get multiplied by a factor of 0.565868 which was calculated on data from the simulation. The resulting distribution is shown in the right subplot of figure~\ref{fig-adc-count}. This calibration is mainly done to be able to treat both hit types in the same manner later. 
 
 \begin{figure}
   \centering
@@ -80,7 +80,7 @@ The different possibilities are ordered by their anticipated correctness. The tw
 Besides the last possibility, all modes rely on calculating the path length of a trajectory using their helix parameters. As the path lengths are very small, this is done without taking into account energy loss or material effects. The procedure is as follows:
 \begin{zlist}
  \item Take the position of the cluster hit (the point where the trajectory enters the VXD sensor) and calculate the distance to the beam line. This is called the inner radius of the cluster.
- \item Add the sensor thickness to this radius to gain an estimation of the outer radius of the sensor.
+ \item Add the sensor thickness to this radius to obtain an estimation of the outer radius of the sensor.\footote{This could also be done using a lookup to the database with the sensor specifications. But as all sensors in one detector have the same thickness, this would just lead to an increased performance time and not to more precise results.}
  \item Calculate the arc length between these two radii and from this arc length the distance between the two penetration points of the helix through the sensor using trigonometrical relations.
 \end{zlist}
 
@@ -97,7 +97,7 @@ This procedure is correct for most of the time but fails in some rare cases. Som
   \label{fig-errors-in-path-length}
 \end{figure}
 
-In figure~\ref{fig-pathlengths} the distribution of the path lengths from the simulated MC truth values is shown. As most of the particles go pass the sensors nearly straightly, there are two peaks in the distribution -- one for each hit type as the two types PXD and SVD have a different thickness. Deviations from the thickness come from curling particles.
+In figure~\ref{fig-pathlengths} the distribution of the path lengths from the simulated MC truth values is shown. As most of the particles go pass the sensors nearly straightly, there are two peaks in the distribution -- one for each hit type as the two types PXD and SVD have a different thickness.
 
 The second subplot shows the distribution of the residuum of the other three path length calculation methods to these reference values as a box plot. As it can be seen, the deviation to the MC hit information is below a few percent. As expected, the MC information of the track at the origin not taking into account any energy loss performs worse than the current state in the fit. As this MC information only describes the first part of the trajectory well, it gives bad results for the hits that are further away from the interaction point and are therefore not that good described by the helix parameters at the origin. As the track finder takes this into account better, using the track parameters at the origin leads to a smaller deviation from the truth information. What is surprising, is that the track information at the origin seems to describe the path better than the current fit state. However, when using these values for a momentum estimation (see figure~\ref{fig-results-fit2}), this difference is gone.
 

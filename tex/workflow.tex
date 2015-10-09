@@ -151,8 +151,6 @@ Figure~\ref{fig-workflow2} shows the same workflow as presented in figure~\ref{f
  \label{fig-workflow2}
 \end{figure}
 
-% FINAL UP TO HERE
-
 \section{The Background Hit Finder} \label{section-background}
 The beforementioned track finders are tuned to not pick up background hits into a found track candidate or even form a candidate with background hits only. Nevertheless, the algorithms are not perfect and even a single background hit per track can lead to a reduced momentum resolution or can even cause the fit to fail completely. Together with the reduced combinatorics and therefore reduced computing time when throwing away unusable hits, there is the need to distinguish between signal and background hits even before the tracking starts. This is the purpose of the background hit finder described in this section. The background hit finder is part of the \texttt{SegmentFinderCDCFacetAutomatonDev} module but is described here as a standalone part.
 
@@ -251,6 +249,8 @@ By applying a cut on the BDT output the background hits can be marked and do net
   \includegraphics[width=0.48\linewidth]{figures/workflow/background_hit_finder_rate.png}
   \caption{Figures of merit of the Legendre track finder (without combination with the automaton track finder and without final track quality corrections) for different cut values on the BDT in the background hit finder. The rate of fakes could be reduced drastically. The finding efficiency and the clone rate stay almost the same. When the cut on the BDT output is to tight, the hit efficiency is decreased.}
   \label{fig-result-background-hit-finder2}
+  % Calcuated with InputData 2
+  % Final
 \end{figure}
 
 \begin{figure}
@@ -279,6 +279,8 @@ By applying a cut on the BDT output the background hits can be marked and do net
 % \subsection{Postprocessing after the track finding}
 % \subsection{Results}
 % Timing
+
+% FINAL UP TO HERE
 
 \section{Improvements on the Stereo Legendre Hit Finder} \label{section-stereo}
 
