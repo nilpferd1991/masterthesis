@@ -18,16 +18,19 @@ As expected because of the high degree of optimization of trasan, both the Legen
   \begin{tabular}{lccc} \toprule
     & Legendre & Automaton & Trasan \\ 
     & \multicolumn{2}{c}{Track Finder} & \\ \midrule
-    Finding Efficiency & 83.17 & 12.84 & 85.47 \\
-    \quad on Primaries & 89.94 & 14.20 & 91.39 \\ 
-    Hit Efficiency     & 74.03 & 58.29 & 82.19 \\
-    \quad on Primaries & 78.22 & 59.76 & 87.40 \\ 
-    Clone Rate         & 7.69  & 14.02 & 19.72 \\
-    \quad on Primaries & 4.71  & 26.54 & 17.27 \\ 
-    Fake Rate          & 26.82 & 48.17 & 15.72 \\ 
-    Time per Event in ms & 635.05 & 32.34 & 441.68 \\ \bottomrule
+    Finding Efficiency & 83.17 & 12.84 & 85.53 \\
+    \quad on Primaries & 89.94 & 14.20 & 91.49 \\ 
+    Hit Efficiency     & 74.03 & 58.29 & 81.93 \\
+    \quad on Primaries & 78.22 & 59.76 & 87.25 \\ 
+    Clone Rate         & 7.69  & 14.02 & 19.50 \\
+    \quad on Primaries & 4.71  & 26.54 & 17.17 \\ 
+    Fake Rate          & 26.82 & 48.17 & 15.95 \\ 
+    Time per Event in ms & 635.05 & 31.92 & 419.50 \\ \bottomrule
   \end{tabular}
   \label{tab-old-implementation-results}
+  % Using InputData 2
+  % Trasan should show the same numbers. Legendre should be the same as in Stereo. Automaton is irrelevant, as never used like this.
+  % Final
 \end{table}
 
 \paragraph{Legendre Track Finder}
@@ -39,6 +42,8 @@ The finding and hit efficiency over $p_T$ of the MC track candidates for the tra
   \includegraphics[width=0.48\linewidth]{figures/workflow/legendre_hit.png}
   \caption{Finding and hit efficiency over $p_T$ for the Legendre track finder and trasan. In both categories, the legendre track finder performs worse than the reference implementation.}
   \label{fig-legendre-finding-efficiency}
+  % Using InputData 2
+  % Final
 \end{figure}
 
 As described in chapter~\ref{chapter-theory}, the Legendre tracking algorithm is adversely affected by large distances of the tracks to the origin (typical for secondaries), which is shown in figure~\ref{fig-legendre-d0}.
@@ -48,6 +53,8 @@ As described in chapter~\ref{chapter-theory}, the Legendre tracking algorithm is
   \includegraphics[width=0.7\linewidth]{figures/workflow/legendre_d0.png}
   \caption{Finding efficiency over $d_0$ for the Legendre track finder and trasan. The distance $d_0$ is the one of the helix parameters and describes the minimal distance from the track to the interaction point in the $r$--$\phi$-projection.}
   \label{fig-legendre-d0}
+  % Using InputData 2
+  % Final
 \end{figure}
 
 In addition to the hit efficiency, also the hit purity plays an important role for the later physics analyses as wrong hits in a track can reduce the resolution. As can be seen, the hit purity is on a rather high level (above 94 \%) and drops as expected for low momentum particles. In comparison to trasan however, the hit purity should be increased further.
@@ -57,6 +64,8 @@ In addition to the hit efficiency, also the hit purity plays an important role f
   \includegraphics[width=0.7\linewidth]{figures/workflow/segment_purity.png}
   \caption{Hit purity over $p_T$ of the related MC track for the Legendre track finder, the segments from the local track finder and trasan. The hit purity is calculated as the number of correct hits in a track divided by the full number of hits.}
   \label{fig-legendre-purity}
+  % Using InputData 2
+  % Final
 \end{figure}
 
 
@@ -70,6 +79,8 @@ As seen in table~\ref{tab-old-implementation-results}, the local track finder do
   \includegraphics[width=0.48\linewidth]{figures/workflow/segments_d0.png}
   \caption{Finding over $p_T$ and $d_0$ for the segments from the automaton track finder and trasan. The local track finder has more or less no dependency on momentum or distance to the interaction point.}
   \label{fig-segments-efficiency}
+  % Using InputData 2
+  % Final
 \end{figure}
 
 \section{The \texttt{TrackFindingCDC} Package}
@@ -139,6 +150,8 @@ Figure~\ref{fig-workflow2} shows the same workflow as presented in figure~\ref{f
  \caption[Detailed workflow in the CDC tracking]{The detailed workflow for the track finding procedure for the CDC detector with the correct names of the modules as in the software. The green boxes refer to one module. The red ellipse is an object on the data store. Some dependencies between the modules are shown as arrows.}
  \label{fig-workflow2}
 \end{figure}
+
+% FINAL UP TO HERE
 
 \section{The Background Hit Finder} \label{section-background}
 The beforementioned track finders are tuned to not pick up background hits into a found track candidate or even form a candidate with background hits only. Nevertheless, the algorithms are not perfect and even a single background hit per track can lead to a reduced momentum resolution or can even cause the fit to fail completely. Together with the reduced combinatorics and therefore reduced computing time when throwing away unusable hits, there is the need to distinguish between signal and background hits even before the tracking starts. This is the purpose of the background hit finder described in this section. The background hit finder is part of the \texttt{SegmentFinderCDCFacetAutomatonDev} module but is described here as a standalone part.
@@ -224,7 +237,7 @@ After the recording and the training procedure (which is handled by Python scrip
   \label{fig-result-background-hit-finder}
 \end{figure}
 
-By applying a cut on the BDT output the background hits can be marked and do net get used in the following tracking routines. How this cut is chosen depends on the desired optimization. A lower cut can include many background hits but does not throw away signal hits keeping the fake rate as well as the hit efficiency high. A harsher cut however can increase the finding efficiency as the combinatorics are reduced and the probability to collect background hits is lower. Figure~\ref{fig-result-background-hit-finder2} shows the figures of merit of the axial Legendre track finder with different cuts on the BDT output. Especially the fake rate can be reduced by using the background hit finder. Figure~\ref{fig-hits-numbers} shows the number of signal/background hits and clusters for different cut values. As the number of background clusters/hits is reduced with higher cut values, the combinatorics are reduced as well. This can be seen in figure~\ref{fig-performance-clusters}, where the computation time of the both track finder algorithms is shown.
+By applying a cut on the BDT output the background hits can be marked and do net get used in the following tracking routines. How this cut is chosen depends on the desired optimization. A lower cut can include many background hits but does not throw away signal hits keeping the fake rate as well as the hit efficiency high. A harsher cut however can increase the finding efficiency as the combinatorics are reduced and the probability to collect background hits is lower. Figure~\ref{fig-result-background-hit-finder2} shows the figures of merit of the axial Legendre track finder with different cuts on the BDT output. Especially the fake rate can be reduced by using the background hit finder. Figure~\ref{fig-hits-numbers} shows the number of signal/background hits and clusters for different cut values. As the number of background clusters/hits is reduced with higher cut values, the combinatorics are reduced as well. This can be seen in figure~\ref{fig-performance-clusters}, where the computation time of the both track finder algorithms is shown. In the following, a cut value of 0.1 is used.
 
 \begin{figure}
   \centering
@@ -281,17 +294,20 @@ The two operation modes in the new stereo hit finder module (with bare wire hits
   \centering
   \begin{tabular}{lcccc} \toprule
     & Hits & Segments & Old Implementation & Trasan \\ \midrule
-    Finding Efficiency & 86.00 & 87.38 & 83.17 & 85.47 \\
-    \quad on Primaries & 91.59 & 92.55 & 89.94 & 91.39 \\ 
-    Hit Efficiency     & 84.62 & 80.05 & 74.03 & 82.19 \\
-    \quad on Primaries & 90.20 & 85.50 & 78.22 & 87.40 \\ 
-    Clone Rate         & 15.42 & 15.79 & 7.69  & 19.72 \\
-    \quad on Primaries & 7.29  & 7.63  & 4.71  & 17.27 \\ 
-    Fake Rate          & 17.76 & 16.28 & 26.82 & 15.72 \\ 
-    Time per Event in ms & 65.20 & 66.67 & 635.05 & 441.68 \\ 
+    Finding Efficiency & 86.00 & 87.38 & 83.17 & 85.53 \\
+    \quad on Primaries & 91.59 & 92.55 & 89.94 & 91.49 \\ 
+    Hit Efficiency     & 84.62 (83.3435899518) & 80.05 & 74.03 & 81.93 \\
+    \quad on Primaries & 90.20 & 85.50 & 78.22 & 87.25 \\ 
+    Clone Rate         & 15.42 & 15.79 & 7.69  & 19.50 \\
+    \quad on Primaries & 7.29  & 7.63  & 4.71  & 17.17 \\ 
+    Fake Rate          & 17.76 & 16.28 & 26.82 & 15.95 \\ 
+    Time per Event in ms & 65.20 & 66.67 & 635.05 & 419.50 \\ 
     \quad only Stereo Finder & 2.94 & 4.18 & 578.76 & - \\ \bottomrule
   \end{tabular}
   \label{tab-stereo-results}
+  % Trasan should be the same as in first table. Old should be the same as in first table (Legendre).
+  % Hits should be the same as in combination table before.
+  % Trasan final
 \end{table}
 
 \begin{figure}
@@ -375,15 +391,17 @@ Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Leg
   \centering
   \begin{tabular}{lcccc} \toprule
     & Legendre & Combination & Trasan \\ \midrule
-    Finding Efficiency   & 86.00 & 86.28 & 85.47 \\
-    \quad on Primaries   & 91.59 & 92.11 & 91.39 \\ 
-    Hit Efficiency       & 84.62 & 85.91 & 82.19 \\
-    \quad on Primaries   & 90.20 & 91.56 & 87.40 \\ 
-    Clone Rate           & 15.42 & 14.83 & 19.72 \\
-    \quad on Primaries   & 7.29  & 7.68  & 17.27 \\ 
-    Fake Rate            & 17.76 & 18.27 & 15.72 \\ 
+    Finding Efficiency   & 85.98 & 86.28 & 85.53 \\
+    \quad on Primaries   & 92.14 & 92.11 & 91.49 \\ 
+    Hit Efficiency       & 83.41 & 85.91 & 81.93 \\
+    \quad on Primaries   & 90.20 & 91.56 & 87.25 \\ 
+    Clone Rate           & 15.42 & 14.83 & 19.50 \\
+    \quad on Primaries   & 7.29  & 7.68  & 17.17 \\ 
+    Fake Rate            & 17.76 & 18.27 & 15.95 \\ 
     Wrong Hits per Track & 2.10  & 2.28  & 1.09 \\ \bottomrule
   \end{tabular}
+  % On InputData 2
+  % Trasan Final
 \end{table}
 
 \section{The \texttt{Track\-Quality\-Asserter\-CDC\-Module} and the \texttt{Track\-Quality\-Tools}}  \label{section-quality}
@@ -408,11 +426,13 @@ When only taking into account fitted tracks, the finding efficiency could be inc
     \quad on Primaries   & 91.07 & 89.31 & 87.25 & 90.54  & 89.48 & 87.30 \\ 
     Clone Rate           & 19.50 & 14.06 & 19.50 & 3.92   & 4.30  & 14.56 \\
     \quad on Primaries   & 17.17 & 5.85  & 17.17 & 2.59   & 2.68  & 12.75 \\ 
-    Fake Rate            & 17.22 & 9.22  & 15.96 & 3.57   & 2.96  & 3.44 \\ 
+    Fake Rate            & 17.22 & 9.22  & 15.95 & 3.57   & 2.96  & 3.44 \\ 
     Wrong Hits per Track & 2.25  & 1.83  & 1.09  & 1.91   & 1.62  & 0.91 \\
-    Time per Event in ms & 52.91 & 53.34 & 501.22& 1656.41& 722.30& 844.14 \\ \bottomrule
+    Time per Event in ms & 52.91 & 53.34 & 419.50& 1656.41& 722.30& 844.14 \\ \bottomrule
   \end{tabular}  
   \label{tab-results-after-fitting}
+  % On InputData 2
+  % Trasan before fit Final
 \end{table}
 
 \begin{figure}
@@ -437,6 +457,7 @@ In addition, there are methods to remove tracks with a small number of hits or w
   \includegraphics[width=0.48\linewidth]{figures/workflow/B2B.pdf}
   \caption{Picture showing the problem with hits on the wrong side of the track. The red hit gets added to the left track incorrectly, as the extrapolation (dashed line) through the interaction point leads to an intersection with the hit although it should belong to the right track. This problem is rather easy to solve by looking onto the arc length of the hits.}
   \label{fig-b2btrack}
+  % Final
 \end{figure}
 
 \begin{figure}
@@ -464,6 +485,8 @@ In addition, there are methods to remove tracks with a small number of hits or w
   \end{tikzpicture}
   \caption{Event display before (top) and after (below, cut-offs) the quality corrections. The orange fine circles indicate hits that are not attached to a track. The cut-offs show the locations where the quality improvements have deleted whole tracks (the blue one in the first picture) or wrong hits (second and last picture).}
   \label{fig-quality}
+  % Calculated using InputData2 and not comparable to the rest! (but can also not compared)
+  % Final
 \end{figure}
 
 \section{Further Approaches} \label{section-outlook}
@@ -484,9 +507,11 @@ The last possibility presented here can be seen in figure~\ref{fig-quad-tree-pie
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\linewidth]{figures/workflow/quad_tree_segments_event.png}
-  \caption{Simplified event for testing the segment quad tree with the used segments colored with MC information. Note that not all segments are used in the picture to increase readability in the Legendre space plots (but are used for calculating the figures of merit).}
+  \includegraphics[width=0.9\linewidth]{figures/workflow/quad_tree_segments_event.pdf}
+  \caption{Simplified event for visualizing the segment quad tree with the used segments colored with MC information. Note that not all segments are used in the picture to increase readability in the Legendre space plots.}
   \label{fig-quad-tree-event}
+  % Calculated using simpliefied events and not comparable to the rest! (but can also not compared)
+  % Final
 \end{figure}
 
 \begin{figure}
@@ -516,25 +541,29 @@ The last possibility presented here can be seen in figure~\ref{fig-quad-tree-pie
   \end{subfigure}
   
   \caption{Legendre space for some of the different possibilities to include the segment information in building the sinograms of the hits as described in the text. The color code is the same as shown in figure~\ref{fig-quad-tree-event}.}
+  % Calculated using simpliefied events and not comparable to the rest! (but can also not compared)
+  % Final
 \end{figure}
 
 Table~\ref{tab-quad-tree-segments} shows the figures of merit for the presented quad trees with segments and the axial Legendre track finder as described in the sections before. It can be seen, that the figures for the new segment quad trees are clearly worse than the ones for the Legendre track finder, but in view of all the post-processing and merging procedures implemented in this module that are still missing in the new quad trees with segments, the results are promising.
 
 \begin{table}
-  \caption{Figures of merit on simplified events of the quad tree implementations with segments (for axial hits only) in comparison to the axial Legendre track finder. As expected, the quad trees with segments perform worse.}
+  \caption{Figures of merit of the quad tree implementations with segments (for axial hits only) in comparison to the axial Legendre track finder. As expected, the quad trees with segments perform worse.}
   \begin{tabular}{lcccc} \toprule
     & Axial Legendre & Parameters & Averaged Position & Region Check \\ \midrule
-    Finding Efficiency   & 88.33 & 48.47 & 35.49 & 60.12 \\
-    \quad on Primaries   & 93.83 & 52.45 & 39.34 & 65.98 \\ 
-    Hit Efficiency       & 49.56 & 25.24 & 37.60 & 40.13 \\
-    \quad on Primaries   & 52.79 & 25.47 & 38.54 & 41.21 \\ 
-    Clone Rate           & 14.46 & 15.43 & 9.06  & 11.32 \\
-    \quad on Primaries   & 7.43  & 17.24 & 15.50 & 11.11 \\ 
-    Fake Rate            & 16.68 & 14.43 & 52.10 & 26.03 \\ 
-    Wrong Hits per Track & 1.24  & 1.17  & 8.23  & 3.97 \\ 
-    Time per Event in ms & 32.34 & 16.68 & 20.94 & 42.64\footnotemark \\ \bottomrule
+    Finding Efficiency   & 86.84 & 48.47 & 35.49 & 60.12 \\
+    \quad on Primaries   & 93.20 & 52.45 & 39.34 & 65.98 \\ 
+    Hit Efficiency       & 48.52 & 25.24 & 37.60 & 40.13 \\
+    \quad on Primaries   & 51.48 & 25.47 & 38.54 & 41.21 \\ 
+    Clone Rate           & 13.33 & 15.43 & 9.06  & 11.32 \\
+    \quad on Primaries   & 7.67  & 17.24 & 15.50 & 11.11 \\ 
+    Fake Rate            & 19.09 & 14.43 & 52.10 & 26.03 \\ 
+    Wrong Hits per Track & 1.08  & 1.17  & 8.23  & 3.97 \\ 
+    Time per Event in ms & 36.07 & 16.68 & 20.94 & 42.64\footnotemark \\ \bottomrule
   \end{tabular}
   \label{tab-quad-tree-segments}
+  % Calculated using InputData 7 and not comparable to the rest! (but can also not compared)
+  % Final
 \end{table}
 
 \footnotetext{As the other approaches, especially this implementation uses a non-optimal algorithm to add the hits of the segments to a quad tree bin and the computation time can be increased further.}
@@ -550,7 +579,9 @@ To get a first impression of the possible result of such a combiner before the f
   \centering
   \includegraphics[width=0.7\linewidth]{figures/workflow/vxd_cdc_merger_count.png}
   \caption{Number of correct and wrong combinations passing the VXD--CDC-filter for different cut values. The number of wrong combinations can be reduced quite well with the filter.}
-  \label{fig-vxd-cdc-count}
+  \label{fig-vxd-cdc-count}  
+  % Not comparable.
+  % Final
 \end{figure}
 
 Presenting the results of the whole algorithm is complex, as there are many different subcases. First, only input tracks which are not classified as fakes by the MC track matcher algorithm are considered, because only then the decision if both the VXD and the CDC track belongs to the same MC particle can be made. The tracks are classified according to five subclasses:
@@ -585,6 +616,8 @@ All resulting tracks from the module can be classified unambiguously into one of
     \bottomrule
   \end{tabular}
   \label{tab-vxd-cdc-cases}
+  % Not comparable.
+  % Final
 \end{table}
 
 For tracks which are marked as fakes by the MC matcher, these subclasses are undefined, as they need the matching information to a related MC particle. It is however possible to count the number of tracks, which were fakes before the combiner module and could be ``recovered'' by adding a CDC or VXD track. The ratio of these tracks to the full number of fakes (either CDC or VXD) are shown in figure~\ref{fig-vxd-cdc-recovered}. It can be seen that adding a VXD (or CDC) track to a fake track can turn it into a signal track because the number of correct hits is increased if the combination is correct. 
@@ -594,6 +627,8 @@ For tracks which are marked as fakes by the MC matcher, these subclasses are und
   \includegraphics[width=0.7\linewidth]{figures/workflow/vxd_cdc_merger_recovered.png}
   \caption{Ratio of the resulting combinations that are no longer counted as fake to the full number of combinations, with one or both tracks marked as fake by the MC track matching algorithm.}
   \label{fig-vxd-cdc-recovered}
+  % Not comparable.
+  % Final
 \end{figure}
 
 Besides the already mentioned figures of merit for this particular algorithm, also the efficiencies and rates as for normal track finder algorithm can be calculated -- however, analyzing them is difficult. Table~\ref{tab-vxd-cdc-fom} shows the track finding figures of merit after the combiner module and for the track finders in the two detectors separately. For calculating the hit efficiencies, only the subdetectors are used where the tracks are defined -- so the figures of merit for the CDC track finders only use the CDC hits. A cut value of 0.8 is used. It can be seen, that the finding efficiency is much better than in the single subalgorithms, but one has to note that if a CDC track could not be matched to a VXD track, the track is still added to the result list and if it can be related to a MC particle, this particle still counts as found. As the same procedure is applied to the VXD tracks, the finding efficiencies of the CDC and VXD track finders ``add up''. This can be seen in the clone rate, which is higher in the combination than on the single tracking algorithms as some of the correct combinations were not made (cf.\ case 5 above). This however can be fixed by the subsequent combiner module after the track fit which is already implemented in the path. The hit efficiency drops when combining the detectors as it is now counted taken into account all hits (not only CDC or VXD separately) and the not-combined tracks decrease the efficiency as they have only hits in one detector. The fake rate and the number of wrong hits could also be reduced compared to the CDC track finder which indicates, that combining tracks can lead to recovering tracks as already discussed in figure~\ref{fig-vxd-cdc-recovered}.
@@ -613,6 +648,8 @@ Besides the already mentioned figures of merit for this particular algorithm, al
     Fake Rate            & 3.55 & 14.19 & 13.64 \\ 
     Wrong Hits per Track & 0.00 & 2.31 & 2.08 \\ \bottomrule
   \end{tabular}
+  % Not comparable.
+  % Final
 \end{table}
 
 
