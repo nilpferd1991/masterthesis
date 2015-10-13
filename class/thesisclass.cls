@@ -38,7 +38,7 @@
 \usepackage[absolute,overlay]{textpos}
 \usepackage{tikz}
 \usetikzlibrary{arrows, decorations.markings, shapes, positioning, backgrounds, calc, fit}
-\usepackage[english]{babel}
+\usepackage[ngerman, english]{babel}
 \usepackage{listing}
 \usepackage{listings}
 \usepackage{amsmath}
