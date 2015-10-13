@@ -43,20 +43,19 @@ Together with the already described convenience-functions to add and receive raw
 Together with the \RecoTrack dataobject, four modules where written which altogether have the same functionalities as the \texttt{GenfitterModule} but split up to improve the configurability. These modules are
 \begin{description}
  \item[RecoTrackCreatorModule] Although the \RecoTrack should replace the \texttt{genfit::Track\-Cand} in the future, it is easily possible to include the \RecoTrack workflow into the module path without rewriting all the track finder modules with the \texttt{Reco\-Track\-Creator\-Module}. The module transforms an ingoing StoreArray of \texttt{genfit::\ Track\-Cand} objects into \RecoTrack instances and creates the needed relations between the track candidates and the tracks.
- \item[MeasurementCreatorModule] As described before, this module is responsible for transforming the added raw hits of the \RecoTrack into track points. It uses highly configurable \texttt{MeasurementCreatorFactory} objects which can add arbitrary track points (which is used for adding the momentum estimations in the VXD).
+ \item[MeasurementCreatorModule] This module is responsible for transforming the added raw hits of the \RecoTrack into track points. It uses highly configurable \texttt{MeasurementCreatorFactory} objects which can add arbitrary track points (which is used for adding the momentum estimations in the VXD) out of the raw hits added by the track finding algorithms. A sketch of the working principle of the module can be found in figure~\ref{fig-measurement-creator}.
  \item[BaseFitterModule] This module and its derived modules \texttt{KalmanRecoFitter} and \texttt{DAF\-Reco\-Fitter} are responsible for creating an object of the genfit fitting algorithm and passing this to every \RecoTrack to use it for fitting. When doing this, also the preparation functions for the fit are called.
  \item[TrackBuilderFromRecoTracksModule] In the end, not the whole track but only the perigee parameters are important for the physics analysis. Therefore this module extrapolates the tracks to the perigee with the extrapolation methods provided by genfit. It saves its results in \texttt{Belle2::Track} objects which are used in the analysis later.
 \end{description}
 
 The named modules together with the \texttt{SetupGenfitExtrapolationModule} in front of them should run in the given order in the usual use case.
 
-% \begin{figure}
-%   \centering
-%   \todo{picture}
-%   %\includegraphics[width=\linewidth]{figures/addon/recoFitterModules.pdf}
-%   \caption[Modules for fitting \RecoTrack objects.]{The described modules for fitting the \RecoTrack objects in the typical order and with the typical input and output parameters. See figure~\ref{fig-viz-datastore} for a description of the colors and labels.}
-%   \label{fig-reco-fitter-modules}
-% \end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/vxd/measurementCreator.pdf}
+  \caption[Diagram showing the creation of measurements.]{Diagram showing the creation of measurements in the \texttt{MeasurementCreatorModule} as described in the text. Each \texttt{RecoTrack} includes PXD, SVD and CDC hits (blue) added by the track finder algorithms which must be transformed into \texttt{AbsMeasurement} objects (orange) to be handled by the track fitting routine later. These measurements can include positional, directional and/or $q/p$ coordinate values with their errors.}
+  \label{fig-measurement-creator}
+\end{figure}
 
 
 \section{IPython interface for basf2}
