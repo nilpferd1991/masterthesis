@@ -1,15 +1,24 @@
 \chapter{Introduction}
-\section{Belle II and the High Luminosity Frontier}
-Standard Model, Belle discovery, CKM, how Belle II will help, new Physics
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\linewidth]{figures/general/luminosity.pdf}
-  \caption{\cite{tdr}}
-\end{figure}
+\todo{CITE!!!}
 
-\section{Track Finder for Particle Physics Experiments}
-The purpose of track finding and why it is that important to be as good as possible
-Possible inefficiencies (Background)
+The Standard Model of particle physics (SM) is one of the most successful and precise theories developed in physics as it can describe observed phenomena over a large energy range (\cite{omg}, \cite{hydrogen}) with unrivaled precision~\cite{mu}. The theoretical foundations could only be developed and tested by the accurate measurements performed in the particle physics experiments all over the world. One of these experiments was the former Belle experiment in Tsukuba, Japan, which was used to measure important parts of the SM with high precision. 
 
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.6\linewidth]{figures/general/luminosity.pdf}
+%   \caption{\cite{tdr}}
+% \end{figure}
+
+One of the key elements for measuring the decay products of the $\Pep\Pem$-collisions in the Belle~II experiment are the tracking detectors~\cite{tdr}. Their function is to detect the produced particles as well as to quantify their trajectory parameters (e.g.\ their momentum) to draw conclusions on the primary, high energetic process. To serve this purpose, space-resolved measuring devices in a homogeneous magnetic field are used to detect the locations of points on the curled trace of the charged particles through the detector, so-called hits. As there is no way to obtain information on which particle has produced which hit, this decision has to be made by algorithms implemented in software. These algorithms are called track finders and work with procedures comparable to pattern recognition tasks as they use the typical shape of the tracks in the detector to partition the hits. They output exclusive sets of hits which were possibly created by the same particle to the next step -- the track fitter~\cite{genfit}. 
+
+As the tracking detectors are the only detector part with the task to find and measure all decay products, it is very important to be find as many tracks as possible. High energy losses of the particles or multiple scattering with the detector elements can lead to deviations from the typical circular-shaped trajectory which can decrease the finding efficiency. Imperfections in the software and hits produced by beam-induced background (e.g.\ via secondary photon showers produced by scattered electrons or positrons) can lead to wrongly added hits or tracks and can deteriorate the resolution of the trajectory parameters calculated while fitting. Both figures of merit -- the finding efficiency and the number of incorrectly added hits and tracks -- can be improved by better approaches and refined algorithms in the tracking software.
+
+Studies of rare decays use typically after the cuts only a small number of events~\cite{lutz} to perform their measurements, so loosing events because of a reduced finding efficiency can lead to crucial problems in these channels or could make it even impossible to analyze these decays. Also high-statistic studies performed with millions of events can be improved by a better tracking software, as the trajectory parameters go directly into the variables needed in the analyses and smaller errors on these parameters can improve the overall systematic uncertainty. As some analyses depend on the fact, that the whole event with all its measurements can be described consistently by a given model (by using variables as the measured energy still left in the detector after subtracting all reconstructed and classified particles~\cite{christian_phd}), the finding efficiency of the tracks together with a high purity plays a crucial part.
+
+After an introduction into relevant parts of the Belle~II detector in chapter~\ref{chapter-ex}, the algorithms behind the track finders for the planned experiment as well as the calculated figures of merit will be described (chapter~\ref{chapter-theory}). The main part of this thesis will be dedicated to the improvements on the tracking software for the central drift chamber (CDC) -- the largest tracking detector of Belle~II. In chapter~\ref{chapter-workflow}, the newly developed algorithms together with their implementation will be described and evaluated. Among these algorithms is the hit finder for stereo hits, which are hits originating from sense wires with a small tilting angle that make it possible to determine the the trajectory along the beam direction. Compared to the old implementation, the results could be improved significantly by lowering the computing time drastically.
+
+This thesis was the first to combine the two track finding algorithms, so a description of their characteristics and the algorithms for their combination will also be discussed in this chapter. The implemented changes could increase the number of correctly found tracks and hits significantly. Additionally, the number of wrong tracks and also the computing time of the whole algorithm could be decreased. During this thesis, the track finders could be enhanced to outperform the reference implementation copied from the Belle experiment for the first time in figures of merit as well as computing performance and the transition from this reference implementation to the newly developed track finders was made.
+
+Pions with low momenta in the region of $\unit[50]{MeV} - \unit[100]{MeV}$ play an important role of many planned physics analyses. Because of their low momentum, they can not reach the CDC and can only be detected in the most inner detectors -- the vertex detectors (VXD). This however decreases their momentum resolution because of a smaller lever arm. To increase this resolution -- which is very important for the physics analyses -- again, another piece of information apart of the location of hits in the vertex detector is used: the energy loss per travel length. This value is connected to the momentum by the Bethe equation and can be used as input to the fitting routine~\cite{robert}. The newly developed procedure to use the momentum estimation of every hit separately, which could increase the number of successful fits as well as the momentum resolution drastically in the region $\unit[50]{MeV} - \unit[80]{MeV}$, will be described in chapter~\ref{chapter-vxd}.
 
