@@ -2,7 +2,7 @@
 
 After having described the principle of the track finders implemented in basf2 in the previous chapters, the actual changes to the software implementation during this thesis are discussed in this chapter. Before going into detail, the figures of merit of the two track finders showing their advantages and drawbacks are presented in the first section. After a short introduction in the general structure, the newly implemented background hit finder and the performed improvements on the stereo Legendre track finder are shown. Then the newly written \texttt{SegmentTrackCombinerDevModule} is described. The chapter ends with a section on general tools how to improve the found track candidates and an outlook.
 
-All the plots showing recent results are done with the svn revision 21586. If the implementation before this thesis is compared to the recent results, svn revision number 18262 is used.
+All the plots showing recent results are done with the svn revision 21844. If the implementation before this thesis is compared to the recent results, svn revision number 18262 is used.
 
 \section{FOM of the two track finders} \label{section-fom}
 
@@ -241,7 +241,7 @@ After the recording and the training procedure (which is handled by Python scrip
   % Final
 \end{figure}
 
-By applying a cut on the BDT output the background hits can be marked and do net get used in the following tracking routines. How this cut is chosen depends on the desired optimization. A lower cut can include many background hits but does not throw away signal hits keeping the fake rate as well as the hit efficiency high. A harsher cut however can increase the finding efficiency as the combinatorics are reduced and the probability to collect background hits is lower. Figure~\ref{fig-result-background-hit-finder2} shows the figures of merit of the axial Legendre track finder with different cuts on the BDT output. Especially the fake rate can be reduced by using the background hit finder. Figure~\ref{fig-hits-numbers} shows the number of signal/background hits and clusters for different cut values. As the number of background clusters/hits is reduced with higher cut values, the combinatorics are reduced as well. This can be seen in figure~\ref{fig-performance-clusters}, where the computation time of the both track finder algorithms is shown. In the following, a cut value of 0.1 is used.
+By applying a cut on the BDT output the background hits can be marked and do net get used in the following tracking routines. How this cut is chosen depends on the desired optimization. A lower cut can include many background hits but does not throw away signal hits keeping the fake rate as well as the hit efficiency high. A harsher cut however can increase the finding efficiency as the combinatorics are reduced and the probability to collect background hits is lower. Figure~\ref{fig-result-background-hit-finder2} shows the figures of merit of the axial Legendre track finder with different cuts on the BDT output. Especially the fake rate can be reduced by using the background hit finder. Figure~\ref{fig-hits-numbers} shows the number of signal/background hits and clusters for different cut values. As the number of background clusters/hits is reduced with higher cut values, the combinatorics are reduced as well. This can be seen in figure~\ref{fig-performance-clusters}, where the computation time of the both track finder algorithms is shown. In the following, a cut value of 0.2 is used.
 
 \begin{figure}
   \centering
@@ -249,7 +249,7 @@ By applying a cut on the BDT output the background hits can be marked and do net
   \includegraphics[width=0.48\linewidth]{figures/workflow/background_hit_finder_rate.png}
   \caption{Figures of merit of the Legendre track finder (without combination with the automaton track finder and without final track quality corrections) for different cut values on the BDT in the background hit finder. The rate of fakes could be reduced drastically. The finding efficiency and the clone rate stay almost the same. When the cut on the BDT output is to tight, the hit efficiency is decreased.}
   \label{fig-result-background-hit-finder2}
-  % Calcuated with InputData 2
+  % Calculated with InputData 2
   % Final
 \end{figure}
 
@@ -280,8 +280,6 @@ By applying a cut on the BDT output the background hits can be marked and do net
 % \subsection{Results}
 % Timing
 
-% FINAL UP TO HERE
-
 \section{Improvements on the Stereo Legendre Hit Finder} \label{section-stereo}
 
 The previous implementation of the stereo hit finder yielded good finding and hit efficiencies with an acceptable fake and clone rate. However, the module was partly built with legacy code and had a very bad computing performance as the processing time of the stereo finder was about 20 times higher than the axial finder. Instead of refactoring the module, it was rebuilt from scratch during this thesis using the common code basis for all track finder algorithms in the CDC and the same quad tree structure as the axial hit finder. Additionally, a refined stereo position calculation was implemented using the already provided methods from the framework and a second coordinate axis was introduced in the quad tree. Before, the stereo hit finder used only the $\lambda$ angle for a histogramming method whereas in the new module the the slope in the $s$--$z$-plane (which is the tangent of $\lambda$) and $z_0$ are used as described in chapter~\ref{chapter-theory}. Because of an introduced caching method, the computation could be speed up by a factor of approximately 200. The algorithm is described in the next paragraph whereas the results in comparison to the old implementation are shown after that.
@@ -306,20 +304,24 @@ The two operation modes in the new stereo hit finder module (with bare wire hits
   \centering
   \begin{tabular}{lcccc} \toprule
     & Hits & Segments & Old Implementation & Trasan \\ \midrule
-    Finding Efficiency & 86.00 & 87.38 & 83.17 & 85.53 \\
-    \quad on Primaries & 91.59 & 92.55 & 89.94 & 91.49 \\ 
-    Hit Efficiency     & 84.62 (83.3435899518) & 80.05 & 74.03 & 81.93 \\
-    \quad on Primaries & 90.20 & 85.50 & 78.22 & 87.25 \\ 
-    Clone Rate         & 15.42 & 15.79 & 7.69  & 19.50 \\
-    \quad on Primaries & 7.29  & 7.63  & 4.71  & 17.17 \\ 
-    Fake Rate          & 17.76 & 16.28 & 26.82 & 15.95 \\ 
-    Time per Event in ms & 65.20 & 66.67 & 635.05 & 419.50 \\ 
-    \quad only Stereo Finder & 2.94 & 4.18 & 578.76 & - \\ \bottomrule
+    Finding Efficiency & 86.28 & 85.19 & 83.17 & 85.53 \\
+    \quad on Primaries & 92.32 & 91.26 & 89.94 & 91.49 \\ 
+    Hit Efficiency     & 83.23 & 78.23 & 74.03 & 81.93 \\
+    \quad on Primaries & 88.96 & 83.26 & 78.22 & 87.25 \\ 
+    Clone Rate         & 14.33 & 15.30 & 7.69  & 19.50 \\
+    \quad on Primaries & 7.63  & 8.14  & 4.71  & 17.17 \\ 
+    Fake Rate          & 18.60 & 18.44 & 26.82 & 15.95 \\ 
+    Wrong hits per Track & 2.10 & 2.46 & 2.69  & 1.09  \\
+    Time per Event in ms & 36.54 & 34.65 & 635.05 & 419.50 \\ 
+    \quad only Stereo Finder & 2.79 & 1.27 & 578.76 & - \\ \bottomrule
   \end{tabular}
   \label{tab-stereo-results}
+  % On Input Data 2
   % Trasan should be the same as in first table. Old should be the same as in first table (Legendre).
-  % Hits should be the same as in combination table before.
-  % Trasan final
+  % Hits should be the same as in combination table below.
+  % Trasan final, Old Implementation final
+  % with track quality asserter after Axial!
+  % Final
 \end{table}
 
 \begin{figure}
@@ -327,11 +329,24 @@ The two operation modes in the new stereo hit finder module (with bare wire hits
   \includegraphics[width=0.48\linewidth]{figures/workflow/stereo_hit_efficiency.png}
   \caption{Finding (left) and hit (right) efficiency of the four tracking algorithms with axial and stereo finding. Although the two new implementation look worse than the reference implementation trasan, it must be noticed that in the lower $p_T$ region there are much more particles present leading to a higher weight on these tracks.}
   \label{fig-stereo-results}
+  % On Input Data 2
+  % Final
 \end{figure}
 
 As can be seen, the figures of merit are enhanced by the newly written module and are now comparable or better than the reference implementation trasan. This is mainly because of the additional coordinate in the quad tree which handles track not coming from the interaction point. The computing time is much smaller which is mainly because of caching and optimized calculation procedures, e.g.\ by changing the coordinates in the Legendre space from $\lambda$ which needed heavy trigonometrical calculations to the much easier to calculate $s$--$z$-slope. Please keep in mind, that also some implementation details of the axial Legendre track finder have changed between the old and the new implementation.
 
-The both implementations - using bare hits or segments in the quad tree - share most of their properties like a small execution time and a high finding efficiency with rather low clone rate. As described in the previous paragraph, the approach with using segments leads to a lower fake rate (because the probability of adding single wrong hits is rather low), but also to a lower hit efficiency as when using bare wire hits in the quad tree. The execution time per event is surprisingly higher when using segments although the depth of the quad tree is reduced. One reason could be that the algorithm to check whether a hit belongs to a quad tree bin or not is more complicated than in the hit approach. Because of the high number of iterations in the quad tree search, this can slow down the whole track finder. Further analysis is needed to optimize this operation mode in the module. In the following, the stereo hit finder using reconstructed hits in the quad tree is used because of its higher hit efficiency.
+The both implementations - using bare hits or segments in the quad tree - share most of their properties like a small execution time and a high finding efficiency with rather low clone rate. As described in the previous paragraph, the approach with using segments leads to a lower fake rate (because the probability of adding single wrong hits is rather low), but also to a lower hit efficiency as when using bare wire hits in the quad tree. The execution time per event is higher when using hits as expected, because the maximum level of the quad tree could be reduced when using segments because of the reduced combinatorics. 
+
+The hit efficiency of the approach using segments can possibly be increased by using a more advanced method to make the decision if a segment belongs to a quad tree bin or not. Possibilities include 
+\begin{zlist}
+ \item non-quadratic or overlapping bins to include also segments where one or two wrongly reconstructed hits shift the overall segment position in the Legendre space,
+ \item a smoothened cut by including also segments in a quad tree bin with less then 70 \% of the hits belonging into this bin, but with a much lower weight,
+ \item different methods to make the decision, e.g.\ to use the information provided by the facets in each segment or to make a fit on the $s$--$z$ coordinates of all hits in a segment and use the results.
+\end{zlist}
+
+In the following, the stereo hit finder using reconstructed hits in the quad tree is used because of its higher hit and finding efficiency.
+
+% FINAL UP TO HERE
 
 \section{The \texttt{SegmentTrackCombinerDevModule}} \label{section-combiner}
 
@@ -360,6 +375,8 @@ This filter is probably the simplest but best one in the combiner module. It com
   \includegraphics[width=0.7\linewidth]{figures/workflow/first_filter_count.png}
   \caption{Number of correct and wrong segment--track-combinations passing the BDT filter. As the pre-cut of at least one shared hit throws away much of the wrong combinations, the number of correct ones is larger from the start on.}
   \label{fig-first-filter-count}
+  % Not comparable
+  % TODO
 \end{figure}
 
 \begin{figure}
@@ -369,6 +386,7 @@ This filter is probably the simplest but best one in the combiner module. It com
   \includegraphics[width=0.48\linewidth]{figures/workflow/first_filter_wrong_hits.png}
   \caption{Figures if merit for different cut values on the BDT output of the first filter in the \texttt{SegmentTrackCombinerDevModule} with all other filters deactivated.}
   \label{fig-first-filter-fom}
+  % TODO
 \end{figure}
 
 
@@ -383,6 +401,8 @@ To reduce the fake rate further before giving the tracks to the track fitter and
   \includegraphics[width=0.7\linewidth]{figures/workflow/track_filter_count.png}
   \caption{Output of the track filter in the \texttt{SegmentTrackCombinerDevModule} in the last step which should separate fakes and signal tracks. The number of wrong tracks can be reduced with the BDT, however also the number of correct tracks is affected strongly.}
   \label{fig-track-filter-count}
+  % Not comparable
+  % TODO
 \end{figure}
 
 \begin{figure}
@@ -392,6 +412,7 @@ To reduce the fake rate further before giving the tracks to the track fitter and
   \includegraphics[width=0.48\linewidth]{figures/workflow/track_filter_wrong_hits.png}
   \caption{Results after the track filter in the \texttt{SegmentTrackCombinerDevModule}. As discussed in the text, the filter has a huge impact on the finding efficiency as well as the fake rate and is therefore not used in production. However, special demands for high-purity tracks may need such a filter in the future.}
   \label{fig-track-filter-results}
+  % TODO
 \end{figure}
 
 \subsection{Results}
@@ -412,7 +433,9 @@ Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Leg
     Fake Rate            & 17.76 & 18.27 & 15.95 \\ 
     Wrong Hits per Track & 2.10  & 2.28  & 1.09 \\ \bottomrule
   \end{tabular}
+  \label{tab-segment-track-combiner-fom}
   % On InputData 2
+  % TODO
   % Trasan Final
 \end{table}
 
@@ -445,6 +468,7 @@ When only taking into account fitted tracks, the finding efficiency could be inc
   \label{tab-results-after-fitting}
   % On InputData 2
   % Trasan before fit Final
+  % TODO
 \end{table}
 
 \begin{figure}
@@ -455,6 +479,7 @@ When only taking into account fitted tracks, the finding efficiency could be inc
 \end{figure}
 
 
+% FINAL FROM HERE ON
 Some of the methods implemented in the \texttt{TrackQualityTools} are described with more details in the following:
 \begin{description}
  \item[\texttt{normalizeHitsAndResetTrajectory}] To have a defined starting point in each of the modules and especially for the fitting routines, the trajectory is shifted to start near the first track hit. This hit is determined to be the most inner hit of the track and has an arc length\footnote{The arc length is calculated by assuming a circular shape of the trajectory} of zero by definition. All other hits have positive arc lengths and are sorted according to these values. The trajectory for curling tracks is reversed for that the number of hits on the ingoing arm is greater than on the outgoing one.
@@ -501,7 +526,6 @@ In addition, there are methods to remove tracks with a small number of hits or w
   % Final
 \end{figure}
 
-% FINAL FROM HERE ON
 \section{Further Approaches} \label{section-outlook}
 
 Besides the presented workflow shown in figure~\ref{fig-workflow2}, there are of course other ways to combine the outputs of the two track finders and prepare the tracks for the fitting procedure and the physics analyses. The most promising, the axial quad tree search with segments instead of hits analogous to the stereo finder with segments, is presented first. Then, the problem of connecting the results of both the CDC and the two VXD detectors is discussed. Both methods were not implemented fully during this thesis and can be optimized further.
