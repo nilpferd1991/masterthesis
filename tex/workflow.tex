@@ -348,7 +348,7 @@ In the following, the stereo hit finder using reconstructed hits in the quad tre
 
 \section{The \texttt{SegmentTrackCombinerDevModule}} \label{section-combiner}
 
-To increase the hit efficiency, the segments found by the local track finder and the tracks from the global track finder can be combined. This unifies the benefits of both track finder as the local track finder itself can not handle the combination of whole tracks well whereas the global track finder easily looses some hits of a track -- especially for secondary particles. Merging the two track finders has also another benefit: if all possible segments and tracks combinations are made, the remaining segments can be used to form new tracks and can help to fill the phasespace gaps of the Legendre track finder. Lastly, tracks without any matching segments are most likely fake tracks and can be deleted. \todo{do the last point!}
+To increase the hit efficiency, the segments found by the local track finder and the tracks from the global track finder can be combined. This unifies the benefits of both track finder as the local track finder itself can not handle the combination of whole tracks well whereas the global track finder easily looses some hits of a track -- especially for secondary particles. Merging the two track finders has also another benefit: if all possible segments and tracks combinations are made, the remaining segments can be used to form new tracks and can help to fill the phasespace gaps of the Legendre track finder. Lastly, tracks without any matching segments are most likely fake tracks and can be deleted.
 
 \subsection{Principle of the Segment Track Combiner}
 
@@ -358,7 +358,7 @@ The matching procedure between tracks and segments is a multi-step process inclu
  \item First matching of segment and tracks that share one or more hits. \label{list-start}
  \item Deletion of fake segments. \label{list-fakes}
  \item Flagging of segments belonging to particles that probably can not be found by the global track finder (and can therefore not be matched).
- \item Matching of the remaining segments with the tracks or among themselves and then with the tracks. \label{list-second}
+ \item Matching of the remaining segments with the tracks or among themselves and then with the tracks (not used in the following). \label{list-second}
  \item Filtering of fake tracks in the made combinations.  \label{list-end}
  \item Cleanup of the lookup cache.
 \end{zlist}
@@ -419,7 +419,7 @@ Higher cut values are unusable for the normal track finding path as the finding 
 
 \subsection{Results}
 
-Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Legendre track finder (axial and stereo) also and after the combination with the segments from the local track finder. In the combination module, only the simple matching routine (step \ref{list-start}) is used. It can be seen that the finding efficiency stays on the same level whereas the hit efficiency could be increased slightly. The other figures stay on the same level as before. \todo{Remaining segments}
+Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Legendre track finder (axial and stereo) also and after the combination with the segments from the local track finder. In the combination module, only the simple matching routine (step \ref{list-start}) is used. It can be seen that the finding efficiency stays on the same level whereas the hit efficiency could be increased. The fake rate is also reduced because of the implemented track filter (step \ref{list-end}). The other figures stay on the same level as before. The combination of the track finders is now superior over the reference implementation in nearly all aspects, except the number of wrong hits which can be reduced by applying certain quality tools described in the next section.
 
 \begin{table}
   \caption{Table showing the figures of merit before and after the combination of Legendre track candidates with segments from the local track finder.}
@@ -440,6 +440,28 @@ Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Leg
   % On InputData 2
   % Final
 \end{table}
+
+The still remaining segments of the local track finder can be classified uniquely into one of the four categories:
+\begin{description}
+  \item[Background] segments consist mainly of background hits,
+  \item[Ghost] segments include more than one MC track candidate and it is not possible to relate them unambiguously to one MC particle\footnote{In contrast to the matching routine described in chapter~\ref{chapter-theory}, the both categories ``background'' and ``ghost'' are split up here, that were summarized in the ``fake'' category earlier.},
+  \item[Segments with matching track] are neither fake nor background and share hits with a track from the Legendre algorithm and
+  \item[Segments with no matching track] are also neither fake nor background and the related MC particle was not found by the Legendre track finder (or it is found but the Legendre track is tagged as a fake track).
+\end{description}
+
+The first two categories can be summarized into a ``Unmatchable'' category. Figure~\ref{fig-remaining-segments-full} shows the number of classified segments (left) and a detailed view with the ``Unmatchable'' category dissolved and without the segments with a matching track for better visibility (right). The numbers are shown before the combination with the Legendre tracks, after deleting all segments that share all hits with an unique Legendre track, after the first matching step (step~\ref{list-start}), and after deleting probably ghost or background segments (step~\label{list-fakes}). Before the combiner, most of the segments can be matched to a Legendre track, because the local track finder uses the same (full) hit set as the Legendre track finder and finds most of the times the same tracks and hits. Deletion of all segments that share all hits with a Legendre track and can therefore not improve any figure of merit as they do not add any new information leads to a strong reduction of the total number of segments mainly because the number of segments with a matching track was decreased. Theoretically, there is no need to find those segments again by the local track finder after the Legendre track finder, but it is not inherently clear which hits of the whole event after the Legendre track finder should not be used by the automaton track finder and which of them are needed to add additional information to the tracks.\footnote{The problem is, that because of the principle of operation of the local track finder, it can only find segments if the hits of the full neighborhood -- even better the whole segment -- are used as input to the algorithm. So not using all hits that are already used by the Legendre track finder would lead to no found segments at all. Not even the ones belonging to new tracks because the Legendre track finder has probably used parts of those hits in fake tracks.} The number of ghost and background segments is not changed due to this deletion. However, the number of segments with no matching track is reduced as well due to the fact, that some of those segments were classified in this category because they only share hits with a fake Legendre track and are now as well deleted. The first matching step (step~\ref{list-start}) reduces the number of segments with a matching track again by more than a factor of two while not changing the other numbers (except the tracks with no matching tracks slightly for the same reason as before), which shows that the implemented algorithm works well. As can also be seen, the following filter to delete background segments, which is not described here, does effectively reduce the number of background segments while keeping all other numbers steady. In the end, the remaining segments consist approximately of 50 \% segments with matching track, 17 \% describing new tracks, 10.3 \% background segments and 22.7 \% ghost segments. The total number of segments however was reduced to about 16 \% of their initial size. Still, there is further development needed to reduce the number of segments with a matching track to use the remaining segments to find new tracks.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.48\linewidth]{figures/workflow/remaining_segments_full.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/remaining_segments_detail.png}
+  \caption{Number of segments in the four categories in a stack plot after various steps in the combiner module as described in the text. In the left figure the background and ghost category are merged into ``Unmatchable'', whereas in the right plot the segments with matching Legendre tracks are not shown. The effect of the filter steps can be seen clearly.}
+  \label{fig-remaining-segments-full}
+  % On Input Data 2
+  % Not comparable
+  % Final
+\end{figure}
+
 
 \section{The \texttt{Track\-Quality\-Asserter\-CDC\-Module} and the \texttt{Track\-Quality\-Tools}}  \label{section-quality}
 
@@ -481,8 +503,6 @@ When only taking into account fitted tracks, the finding efficiency could be inc
   % Final
 \end{figure}
 
-
-% FINAL FROM HERE ON
 Some of the methods implemented in the \texttt{TrackQualityTools} are described with more details in the following:
 \begin{description}
  \item[\texttt{normalizeHitsAndResetTrajectory}] To have a defined starting point in each of the modules and especially for the fitting routines, the trajectory is shifted to start near the first track hit. This hit is determined to be the most inner hit of the track and has an arc length\footnote{The arc length is calculated by assuming a circular shape of the trajectory} of zero by definition. All other hits have positive arc lengths and are sorted according to these values. The trajectory for curling tracks is reversed for that the number of hits on the ingoing arm is greater than on the outgoing one.
