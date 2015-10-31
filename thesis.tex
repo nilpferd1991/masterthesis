@@ -6,28 +6,33 @@
 \begin{document}
 
   %Titelseite und Inhaltsverzeichnis
-%   \pagenumbering{alph}
-%   \frontmatter
-%   \pagenumbering{Roman}
-%   \input{class/titlepage}
-%   \input{class/declaration}
+  \pagenumbering{alph}
+  \frontmatter
+  \pagenumbering{Roman}
+  \input{class/titlepage}
+  \input{class/declaration}
 
-%   \tableofcontents
+  \tableofcontents
 
   % Hauptteil
   \mainmatter
 
-   \input{tex/introduction} % DONE, Pablo, Markus
-%   \input{tex/experimental_setup} % DONE, Markus, Christian, Martin -> fertig, (Thomas H.)
-%   \input{tex/track_finding} % DONE, Markus, Christian, Martin -> fertig, (Thomas H.)
-%   \input{tex/workflow} % DONE, (Martin), (Thomas H.)
-%   \input{tex/vxd} % DONE, Markus, Thomas, (Martin)
-%   \input{tex/summary} % DONE, Thomas, (Thomas H.)
+  \input{tex/introduction} % DONE, Pablo, Markus, Eltern
+  \input{tex/experimental_setup} % DONE, Markus, Christian, Martin, Thomas H. -> fertig
+  \input{tex/track_finding} % DONE, Markus, Christian, Martin, Thomas H. -> fertig
+  \input{tex/workflow} % DONE, Martin -> fertig
+  \input{tex/vxd} % DONE, Markus, Thomas, Martin -> fertig
+  \input{tex/summary} % DONE, Thomas, Eltern
+
+  % TODO: Event Displays for not found tracks, 
+  % TODO: Stereo Finder mit MC als Axial Finder wäre eigentlich das Beste!
+  % TODO: Stereo: macht das Sortieren der Tracks einen Unterschied?
+  % TODO: Dev rauswerfen aus Code!
 
   % Anhang
   \appendix
-%   \input{tex/addon} % DONE, Jochen, Thomas ???
-%   \input{tex/thanks}
+% % % % %   \input{tex/addon} % DONE, Jochen, Thomas ???
+  \input{tex/thanks}
   \bibliographystyle{class/utphys}
   \bgroup\let\addcontentsline=\nocontentsline\bibliography{class/bibliography}\egroup
 
