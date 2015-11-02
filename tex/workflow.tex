@@ -465,6 +465,19 @@ The first two categories can be summarized into a ``Unmatchable'' category. Figu
   % Final
 \end{figure}
 
+To give a better impression on the shown results and the still missing tracks, figure~\ref{fig-event-displays-final} shows two event displays with the colored result of the full CDC track finder algorithm and the MC tracks. The not found tracks in the events have either a small number of hits or differ from a circular trajectory shape because of large energy loss and multiple scatter, which makes them harder to find.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_finder.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_mc.png}
+
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_finder_2.png}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_mc_2.png}
+  \caption{Two selected event displays with the colored result of the full CDC track finder algorithm (left side) and the MC tracks (right side). A small number of tracks is missing after the track finder algorithm, e.g.\ the two red tracks in the top left event or the dark green heavy-curling track in the bottom right event. These particles produced either a very small number of hits, curled often or scattered multiple times producing a large energy loss. A very special case are the magenta and turquoise tracks in the bottom right event, which have their production vertex far away from the origin and are therefore not found in the current setup.}
+  \label{fig-event-displays-final}
+\end{figure}
+
 
 \section{The \texttt{Track\-Quality\-Asserter\-CDC\-Module} and the \texttt{Track\-Quality\-Tools}}  \label{section-quality}
 
