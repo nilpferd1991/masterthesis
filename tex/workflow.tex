@@ -201,6 +201,8 @@ As an example for the mentioned \texttt{VarSet}, the variables for distinguishin
 
 \begin{table}
   \centering
+  \caption{The variables used for the classifier to separate background from signal clusters (and hits). Additional information on some of the variables can be found in the text.}
+  
   \begin{tabular}{p{0.35\linewidth}p{0.60\linewidth}} \toprule
    Variable Name & Description \\ \midrule
    \verb+is_stereo+ & Boolean variable if the cluster is in a stereo superlayer or not. Has no separating force by itself but only in combination with other variables. \\ \midrule 
@@ -225,7 +227,6 @@ As an example for the mentioned \texttt{VarSet}, the variables for distinguishin
    \verb+truth+ & A cluster is counted as signal if more than 80 \% of the contained hits belong to a simulated MC particle (and not to background). As the number of hits in one cluster is mostly very small, this implies that all hits must be from a signal track for most of the cases. \\ \bottomrule
   \end{tabular}
 
-  \caption{The variables used for the classifier to separate background from signal clusters (and hits). Additional information on some of the variables can be found in the text.}
   \label{tab-varset-cluster}
 \end{table}
 
@@ -469,12 +470,13 @@ To give a better impression on the shown results and the still missing tracks, f
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_finder.png}
-  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_mc.png}
-
-  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_finder_2.png}
-  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_mc_2.png}
-  \caption{Two selected event displays with the colored result of the full CDC track finder algorithm (left side) and the MC tracks (right side). A small number of tracks is missing after the track finder algorithm, e.g.\ the two red tracks in the top left event or the dark green heavy-curling track in the bottom right event. These particles produced either a very small number of hits, curled often or scattered multiple times producing a large energy loss. A very special case are the magenta and turquoise tracks in the bottom right event, which have their production vertex far away from the origin and are therefore not found in the current setup.}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_finder.pdf}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_mc.pdf}
+  \vspace*{0.5cm}
+  
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_finder_2.pdf}
+  \includegraphics[width=0.48\linewidth]{figures/workflow/event_display_mc_2.pdf}
+  \caption{Two selected events with the colored result of the full CDC track finder algorithm (left side) and the MC track finder (right side). A small number of tracks is missing after the track finder algorithm, e.g.\ the two red tracks in the top left event or the dark green heavy-curling track in the bottom right event. These particles produced either a very small number of hits, curled often or scattered multiple times producing a large energy loss. A very special case are the magenta and turquoise tracks in the bottom right event, which have their production vertex far away from the origin and are therefore not found in the current setup.}
   \label{fig-event-displays-final}
 \end{figure}
 
