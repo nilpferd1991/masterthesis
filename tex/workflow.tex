@@ -169,7 +169,7 @@ Figure~\ref{fig-clusters} in chapter~\ref{chapter-theory} shows an event display
 
 In every event, each formed cluster is passed to the filter with the chosen parameters to decide whether to use the hits in this clusters for track finding or not. This filter can return every number as a result or a flag for indicating that the cluster should not be used further for track finding as it is marked as background by the filter. The number can be used to describe additional information, e.g.\ the probability of the cluster to be signal.
 
-The filter design is very general and leaves the possibility open to compare many different filters. For the background filter as well as for many other used filters in the CDC tracking, five filters are implemented which can be selected by using module parameters. These filters are:
+The filter design is very general and leaves the possibility open to compare many different filters. For the background filter as well as for many other used filters in the CDC tracking, five filters are implemented which can be selected by using module parameters. These are:
 
 \begin{description}
   \item[BaseFilter] is a filter that rejects every item. It is the base object for every other filter and is rarely used in production.
