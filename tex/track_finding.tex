@@ -25,7 +25,7 @@ Because many modules require the data produced by other modules as input, there 
   # Add an input module to read from the file data.root
   path.add_module("RootInput", inputFileName="data.root")
   
-  # Connect the gearbox, which is needed for loading the detector parameters
+  # Add the gearbox, which is needed for loading the detector parameters
   path.add_module("Gearbox")
 
   # Add the Legendre track finder
