@@ -4,7 +4,7 @@ After having described the principle of the track finders implemented in basf2 i
 
 All the plots showing recent results are done with the svn revision 21844. If the implementation before this thesis is compared to the recent results, svn revision number 18262 is used.
 
-\section{FOM of the two track finders} \label{section-fom}
+\section{FOM of the two Track Finders} \label{section-fom}
 
 In the following, the figures of merit of the both track finders -- the local and the global one -- are shown as they were before the works during this thesis. For comparison, the reference implementation trasan is shown. Trasan is the old track finder algorithm developed for the former Belle detector and was adopted to the new Belle~II geometry. It was highly optimized in the run of the experiment but will not be used for the Belle~II experiment, as it is neither build on modern programming principles nor easy to extend by other algorithms and most of the time also poorly documented. However, the figures of merit of trasan are the leveling staff every new track finder has to be compared with as also done in the following.
 
@@ -273,19 +273,11 @@ By applying a cut on the BDT output the background hits can be marked and do net
   % Final
 \end{figure}
 
-% \section{Improvements on the Axial Legendre Track Finder}
-% Is already very good and advanced. 
-
-% \subsection{The class \texttt{QuadTreeProcessorTemplate}}
-% \subsection{Postprocessing after the track finding}
-% \subsection{Results}
-% Timing
-
 \section{Improvements on the Stereo Legendre Hit Finder} \label{section-stereo}
 
 The previous implementation of the stereo hit finder yielded good finding and hit efficiencies with an acceptable fake and clone rate. However, the module was partly built with legacy code and had a very bad computing performance as the processing time of the stereo finder was about 20 times higher than the axial finder. Instead of refactoring the module, it was rebuilt from scratch during this thesis using the common code basis for all track finder algorithms in the CDC and the same quad tree structure as the axial hit finder. Additionally, a refined stereo position calculation was implemented using the already provided methods from the framework and a second coordinate axis was introduced in the quad tree. Before, the stereo hit finder used only the $\lambda$ angle for a histogramming method whereas in the new module the the slope in the $s$--$z$-plane (which is the tangent of $\lambda$) and $z_0$ are used as described in chapter~\ref{chapter-theory}. Because of an introduced caching method, the computation could be speed up by a factor of approximately 200. The algorithm is described in the next paragraph whereas the results in comparison to the old implementation are shown after that.
 
-\subsection{Implemented algorithm}
+\subsection{Implemented Algorithm}
 
 The stereo hit finding algorithm consists of three stages, which are repeated for every found axial track. In between the iterations for every track, the found hits are marked to not use them twice. The steps are in detail:
 \begin{zlist}
@@ -573,7 +565,7 @@ Besides the presented workflow shown in figure~\ref{fig-workflow2}, there are of
 
 Besides implementing new algorithms with different approaches, also the already discussed workflow can be further refined and optimized. Possible optimization steps include the addition of other coordinate axes to the quad tree search algorithms (to cope for example with large energy loss of the particles or to combine the axial and the stereo finder in one search), cross-detector uses of the algorithms (by applying the quad tree search for CDC and VXD hits in parallel \cite{markus}) or further boost of the computational performance (e.g.\ by using parallelization or GPUs).
 
-\subsection{Quad tree search with segments}
+\subsection{Quad Tree Search with Segments}
 
 As seen in section~\ref{section-fom}, the huge benefit of segments is their high purity. Using segments instead of hits in the Legendre quad tree search has various advantages like the reduced combinatorics making more coordinate axis in the Legendre space possible\footnote{Possible candidates for this new coordinate axis are $\tan \lambda$ to combine axial and stereo segments at the same time or a coordinate to include energy loss.} or the reduced needs for post-processing after the track finding as a hit-reassignment is often unneeded. Also, the segments from the automaton track finder already include a left--right-information which reduces the number of sinograms in the Legendre space by a factor of two. However, one has to think about the way the decision is made whether a segment belongs to a quad tree bin or not. There are several possibilities, e.g.\ using the averaged position of the included hits with the same algorithm as with single hits, checking all hits independently and use the segment only of more than a certain percentage lay in the quad tree bin, use facets instead of single hits, include the direction information of the segments, etc. Some of them are shown in the following.
 
@@ -646,7 +638,7 @@ Table~\ref{tab-quad-tree-segments} shows the figures of merit for the presented 
 
 \footnotetext{As the other approaches, especially this implementation uses a non-optimal algorithm to add the hits of the segments to a quad tree bin and the computation time can be increased further.}
 
-\subsection{VXD-CDC-Merger before fitting}
+\subsection{VXD-CDC-Merger before Fitting}
 In the steps following the track fit with the genfit package, the found and fitted CDC tracks are combined with the found and fitted tracks from the VXD detector and the matching tracks are refitted together. This procedure has the advantage, that the matching algorithm can work with very precise information as the genfit algorithms include energy loss and multiple scattering. The disadvantage is however, that if a track found by one of the track finders could not be fitted, e.g.\ because it had to little hits, it can not be used in the matching procedure reducing the overall efficiency. As the implemented track finders in the CDC have the benefit of finding more low-momentum-tracks than the reference implementation trasan, this has become an important point as the fitting rate drops for low-momentum tracks. Another disadvantage is the increased fitting time because parts of the tracks have to be fitted twice.
 
 Another possibility is to combine most of the tracks before the track fit by using only the information provided from the track finders without the correct handling of energy loss or multiple scattering. Most probably, the matching algorithm will not work as good as the one which has the full information of the tracks, but already a few correct combinations made before the fit can increase the performance and the efficiency of the algorithm. The chance to add VXD tracks to the CDC tracks makes it also possible to fit axial-only tracks as the VXD hits add enough z-information. 

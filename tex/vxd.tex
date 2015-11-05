@@ -30,7 +30,7 @@ for small particle energies. The equation can be used to calculate the momentum 
 \end{figure}
 
 
-\section{Prestudies on the distribution of dE/dx in the VXD}
+\section{Prestudies on the Distribution of dE/dx in the VXD}
 
 For the following studies an event sample of 35000 events with slow pions in the momentum range between $\unit[50]{MeV}$ and $\unit[120]{MeV}$ is used. It is simulated using the particle gun with 10 particles per event evenly distributed among the momentum range and between the two charge modes. The sample is split into different event samples for testing and training. The standalone VXD track finder or the MC track finder for reference is used to create tracks out of the simulated VXD hits. As the finding efficiency of the standalone VXD track finder depends heavily on the momenta of the particles, the distribution of found tracks is not flat as it can be seen in figure~\ref{fig-vxd-finding-efficiency}. 
 
@@ -64,7 +64,7 @@ Figure~\ref{fig-adc-count} shows the \dedx value calculated with this ADC count 
  \label{fig-adc-count}
 \end{figure}
 
-\subsection{Calculation of the path length in the clusters} \label{subsection-calc}
+\subsection{Calculation of the Path Length in the Clusters} \label{subsection-calc}
 The \dedx value in every cluster can be calculated using the calibrated charge deposit as described above and the length of the path the particle travels in the sensor region. There are five ways to calculate this path length. All of them are implemented in the code basis. The possibilities are using
 \begin{zlist}
  \item the correct (simulated) MC trajectory information of the tracks at the position of the clusters, \label{list-mc}
@@ -108,7 +108,7 @@ The second subplot shows the distribution of the residuum of the other three pat
  \label{fig-pathlengths}
 \end{figure}
 
-\subsection{Transformation function from dE/dx to momentum} \label{subsection-transform}
+\subsection{Transformation Function from dE/dx to Momentum} \label{subsection-transform}
 
 For calculating a momentum estimation from the \dedx value the inverted function of equation~\ref{form-bethe-simpl} is needed which can not be calculated analytically. Therefore a much easier model function was developed:
 \begin{align}
@@ -150,7 +150,7 @@ In the two subplots of figure~\ref{fig-divp-residuum} the median and the interqu
 
 Besides the here presented two methods to obtain the estimator function $p(\mathrm dE/\mathrm dx)$, also other fit models instead of equation (\ref{form-model}), other fit functions instead of Landau and normal distribution and totally different methods like a boosted decision tree for regressions were tested. As all of these methods show worse results, they are not presented here. They can be easily compared to the mentioned results by using the IPython notebooks in the basf2 repository.
 
-\section{Incorporation in the track fit}
+\section{Incorporation in the Track Fit}
 
 Before describing the results of the momentum resolution with and without the new momentum estimation, the incorporation of this new measurement type is described shortly. For this, the measurement model used in genfit is summarized here briefly. More information can be found elsewhere~\cite{genfit}.
 
@@ -158,7 +158,7 @@ The idea of the genfit package as a generalized track fitting package is not to 
 
 To include the momentum estimation based on the \dedx value into the fit, one has therefore to include another \texttt{AbsMeasurement} into the tracks for each VXD hit which is only filled with the $q/p$-coordinate and has the same plane as the positional measurement for this VXD hit. Another possibility would be to include this coordinate in the already created positional measurements (by filling the two local positions $u$ and $v$ and the $q/p$ coordinate). The downside of this approach is that the DAF described in chapter~\ref{chapter-theory} is then only able to downweight the whole measurement with the positional and the momentum coordinates and not the single measurement types only as it is only able to give weights to the whole \texttt{AbsMeasurement}. Until the correct covariances of the momentum estimation is implemented, the fitting algorithm needs to be able to dismiss the newly created measurement if it is too far off. In the following however, only the Kalman will be used for fitting the tracks.
 
-\subsection{Code basis for the fitting procedure}
+\subsection{Code Basis for the Fitting Procedure}
 
 While adding the momentum estimation to the VXD hits, the whole fitting framework in basf2 was rewritten to make it more flexible and general. The former \texttt{genfit::Track} and the \texttt{genfit::TrackCand} where merged into the \texttt{RecoTrack} based on the \texttt{genfit::Track} which suits the StoreArray-scheme of the framework better. Together with the new \texttt{RecoTrack} also other modules for fitting had to be written. The former \texttt{GenFitter} module was split up into smaller modules, each handling a single task. 
 % Well, should I stay or should I go?
@@ -166,7 +166,7 @@ While adding the momentum estimation to the VXD hits, the whole fitting framewor
 
 The momentum estimation of the VXD hits is included into the fit as another measurement. The measurements are created before the track fit but get called for their parameters in every fitting iteration right before the fit uses the coordinates in the measurement. This fact can be used to calculate the plane (as used in the CDC hits) or the coordinates just before using them. Therefore it is possible to use the fitted state right in front of the hit to calculate the path length as described in subsection~\ref{subsection-calc}. Together with the estimation for $q/p$, also the error on this coordinate has to be included into the \texttt{AbsMeasurement}. This error can be calculated using the MC momentum used for calculating the estimator function and comparing it to the estimator function result. The relative error is fixed to 0.3 in the moment, which was calculated using the $q/p$ distribution shown before, but can in principle be also calculated for every measurement independently.
 
-\subsection{Resolution after track fitting}
+\subsection{Resolution after Track Fitting}
 
 The above described estimation is included as a \texttt{MeasurementCreator} for SVD and PXD hits. With this, the pion tracks in the momentum range of 50 -- 100 MeV are fitted using the Kalman filter. Then the momentum calculated in the fit is compared to the one used in the MC simulation. To show the resolution in an easier way, the median and the interquartile range for the residuum is calculated. They can be seen in figure~\ref{fig-results-fit} for both fit functions Landau and Gauß (with their median-corrected estimators also) and for the different path length calculations in figure~\ref{fig-results-fit2} together with the distribution for the Landau fit function for a particular value of the momentum.
 
@@ -227,7 +227,7 @@ The next analysis is concerning the errors included into the momentum measuremen
   \label{fig-p-values}
 \end{figure}
 
-\section{Further possibilities}
+\section{Further Possibilities}
 
 A different approach was used in other experiments~\cite{sergey}: the fitting algorithm calculates the energy loss in every sensor when handling the material effects in every fit step. This energy loss can be compared to the one measured by the sensors and the fit parameters can be corrected. This method has the benefit of not needing a momentum estimator function for transforming the \dedx value to a momentum estimation as it uses the raw \dedx information. It also does not need to calculate the path length by using a helix parametrization but uses the step length in every fit step. The downside of this approach is, that it relies on a correctly calibrated measured energy loss in the sensor with which it can compare. Another disadvantage is that the energy loss measurement can not be handled in the same way as the other measurements and there is no possibility to downweight it in the DAF algorithm or include the correlation to the coordinate measurements, which is in principle possible with the implemented algorithm (although not used yet). When it comes to the underestimated error because of the Landau tail and the condition when to include this momentum estimation, this approach shares the same problems as the here presented.
 
