@@ -1,5 +1,5 @@
 \newcommand{\dedx}{$\mathrm d E / \mathrm d x$ }
-\chapter[Momentum Estimation of Slow Pions with the Deposited Energy\\in the VXD]{Momentum Estimation of Slow Pions with the Deposited Energy in the VXD} \label{chapter-vxd}
+\chapter{Momentum Estimation of Slow Pions with the Deposited Energy in the VXD} \label{chapter-vxd}
 
 When looking onto the typical momentum distribution of particles flying through the tracking detectors as shown in figure~\ref{fig-particles-momentum}, it is clear that there is a significant amount of pions with momenta in the order of $\unit[100]{MeV}$, so-called slow pions. Slow pions play an important role for the physics analysis planned for the Belle~II experiment as they are extensively used for reconstructing relevant analysis channels (e.g. $\PDstar^\pm \to \PDzero \Ppipm$). Measuring the momentum of these particles leads to a better resolution in the mass of the parent particle $\PDstar$, which is used in separating combinatoric background from signal events. These slow pions get produced near the interaction point and because of their small momenta and therefore high curvatures and their huge energy losses they can not reach into the CDC tracking detector. This means they can only be measured in the VXD. Because of the small radius of the VXD and the resulting small number of independent measurement points, the momentum resolution is very poor as it can be seen for the transversal momentum in the Glückstern formula
 \begin{align*}
@@ -91,7 +91,7 @@ This procedure is correct for most of the time but fails in some rare cases. Som
   \hspace*{1.5cm}
   \raisebox{-0.65\height}{\includegraphics[scale=0.3]{figures/vxd/pathlength3.pdf}}
   \hspace*{0.5cm}
-  \raisebox{-0.5\height}{\includegraphics[scale=0.3]{figures/vxd/pathlength4b.pdf}}
+  \raisebox{-0.5\height}{\includegraphics[scale=0.3]{figures/vxd/pathlength4b.pdf}}  
   \caption[Exemplary cases of path length calculations.]{Exemplary cases of path length calculations. The algorithm fails in the second and last case. In the second case it returns the width or the length of the sensor instead. In the last case it wrongly adds the orange part of the path length to the correct one. This could corrected by using a lookup in the geometry database, but because of the geometrical dimensions of the sensors these two cases are very rare.}
   \label{fig-errors-in-path-length}
 \end{figure}
@@ -102,15 +102,19 @@ The second subplot shows the distribution of the residuum of the other three pat
 
 \begin{figure}
  \centering
+ 
+ \vspace*{0.4cm}
  \includegraphics[width=0.48\linewidth]{figures/vxd/pathLengths.png}
  \includegraphics[width=0.48\linewidth]{figures/vxd/box_plot.png}
+ \vspace*{0.4cm}
+ 
  \caption[Path length distribution for the two sensor types.]{The plot shows the path length distribution for the two sensor types as a result of the simulation. This distribution is used as reference in the right plot which shows the residuum distribution of the other path length calculation modes as a box plot\footnotemark. The path length from the thickness of the cluster are not shown here as they are too far off.}
  \label{fig-pathlengths}
 \end{figure}
 
 \subsection{Transformation Function from dE/dx to Momentum} \label{subsection-transform}
 
-For calculating a momentum estimation from the \dedx value the inverted function of equation~\ref{form-bethe-simpl} is needed which can not be calculated analytically. Therefore a much easier model function was developed:
+For calculating a momentum estimation from the \dedx value the inverted function of equation~\ref{form-bethe-simpl} is needed, which can not be calculated analytically. Therefore a much easier model function was developed and is used in the following:
 \begin{align}
  p(\mathrm{d}E/\mathrm{d} x) = \frac{a}{(\mathrm{d}E/\mathrm{d} x - b)^2} + c \cdot \mathrm{d}E/\mathrm{d} x + d \label{form-model}
 \end{align}
@@ -134,7 +138,7 @@ The free parameters can not be determined by fitting the model function to the w
   \caption[The process of obtaining the estimator function $p(\mathrm d E/\mathrm d x)$.]{The process of obtaining the estimator function $p(\mathrm d E/\mathrm d x)$. The left picture shows the p-distributions for 15 \dedx bins. Each of the distributions get fitted by a Landau distribution. The right plot shows the location parameter of these fitted Landau distributions. These values are then used to fit the model in equation (\ref{form-model}).}
   \label{fig-fit-bins}
 \end{figure}
-
+\clearpage
 For the incorporation of the gained momentum estimation into the track fit of genfit, not the momentum value directly but $q/p$ is needed. This is why in the following the residuum of $p^{-1}$ instead of $p$ is presented.
 
 In the two subplots of figure~\ref{fig-divp-residuum} the median and the interquartile range of the residuum of the estimated to the MC momentum is shown. The median and the interquartile range (distance between the 25th percentile and the 75th percentile) are used here, as they are more robust compared to the mean and the standard deviation. As both fit functions (normal and Landau) lead to quite large shifts in the median, indicating a biased momentum estimation, a correction procedure is introduced: a cubic polynomial is fitted to the median values which is later subtracted from the momentum estimation. These corrected estimators are also shown in the figure. They do unbias the residuum but increase the interquartile range as a trade-off.
