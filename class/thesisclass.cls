@@ -54,12 +54,13 @@
 \usepackage{sidecap}
 \usepackage[maybess]{hepnames}
 \usepackage{units}
+\usepackage{siunitx}
 \usepackage[fixlanguage]{babelbib}	% sets german style for literature entries
 \usepackage{xcolor}
 
 \usepackage{multirow}
 
-\usepackage{microtype}
+%\usepackage{microtype}
 
 \usepackage[many]{tcolorbox}
 \tcbuselibrary{listings}
