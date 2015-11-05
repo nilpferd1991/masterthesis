@@ -15,9 +15,10 @@ As expected because of the high degree of optimization of trasan, both the Legen
 \begin{table}
   \caption{Table showing the figures of merit for the two track finder implementations (global and local) and trasan.}
   \centering
-  \begin{tabular}{lccc} \toprule
-    & Legendre & Automaton & Trasan \\ 
-    & \multicolumn{2}{c}{Track Finder} & \\ \midrule
+  \begin{tabular}{lSSS} \toprule
+    & {Legendre} & {Automaton} & {Trasan} \\ 
+    & \multicolumn{2}{c}{Track Finder} & \\ 
+    \midrule
     Finding Efficiency & 83.17 & 12.84 & 85.53 \\
     \quad on Primaries & 89.94 & 14.20 & 91.49 \\ 
     Hit Efficiency     & 74.03 & 58.29 & 81.93 \\
@@ -298,8 +299,8 @@ The two operation modes in the new stereo hit finder module (with bare wire hits
 \begin{table}
   \caption{Table showing the figures of merit for the two new implementations (using hits or segments), the old implementation and trasan. As trasan is responsible for adding axial and stereo hits, the computing time for stereo only can not be deduced.}
   \centering
-  \begin{tabular}{lcccc} \toprule
-    & Hits & Segments & Old Implementation & Trasan \\ \midrule
+  \begin{tabular}{lSSSS} \toprule
+    & {Hits} & {Segments} & {Old Implementation} & {Trasan} \\ \midrule
     Finding Efficiency & 86.28 & 85.19 & 83.17 & 85.53 \\
     \quad on Primaries & 92.32 & 91.26 & 89.94 & 91.49 \\ 
     Hit Efficiency     & 83.23 & 78.23 & 74.03 & 81.93 \\
@@ -309,7 +310,7 @@ The two operation modes in the new stereo hit finder module (with bare wire hits
     Fake Rate          & 18.60 & 18.44 & 26.82 & 15.95 \\ 
     Wrong hits per Track & 2.10 & 2.46 & 2.69  & 1.09  \\
     Time per Event in ms & 36.54 & 34.65 & 635.05 & 419.50 \\ 
-    \quad only Stereo Finder & 2.79 & 1.27 & 578.76 & - \\ \bottomrule
+    \quad only Stereo Finder & 2.79 & 1.27 & 578.76 & {-} \\ \bottomrule
   \end{tabular}
   \label{tab-stereo-results}
   % On Input Data 2
@@ -420,8 +421,8 @@ Table~\ref{tab-segment-track-combiner-fom} shows the figures of merit of the Leg
 \begin{table}
   \caption{Table showing the figures of merit before and after the combination of Legendre track candidates with segments from the local track finder.}
   \centering
-  \begin{tabular}{lccccc} \toprule
-    & Legendre & Combination & Trasan & Old Implementation \\ \midrule
+  \begin{tabular}{lSSSSS} \toprule
+    & {Legendre} & {Combination} & {Trasan} & {Old Implementation} \\ \midrule
     Finding Efficiency   & 86.28 & 86.17 & 85.53 & 83.17 \\
     \quad on Primaries   & 92.32 & 92.19 & 91.49 & 89.94 \\ 
     Hit Efficiency       & 83.23 & 84.81 & 81.93 & 74.03 \\
@@ -486,9 +487,9 @@ When only taking into account fitted tracks, the finding efficiency could be inc
 \begin{table}
   \caption{Figures of merit with and without the track quality asserter module in the end of the path before the fit and with the not-fitted tracks removed. For comparison, the reference implementation trasan is also shown.}
   \centering
-  \begin{tabular}{lcccccc} \toprule
+  \begin{tabular}{lSSSSSS} \toprule
     & \multicolumn{3}{c}{Before Fitting} & \multicolumn{3}{c}{After Fitting} \\ 
-    & No Quality & Quality & Trasan & No Quality & Quality & Trasan \\ \midrule
+    & {No Quality} & {Quality} & {Trasan} & {No Quality} & {Quality} & {Trasan} \\ \midrule
     Finding Efficiency   & 86.17 & 85.16 & 85.53 & 73.75 & 77.69 & 82.30 \\
     \quad on Primaries   & 92.19 & 91.24 & 91.49 & 82.40 & 86.44 & 89.83 \\ 
     Hit Efficiency       & 84.81 & 83.30 & 81.93 & 85.57 & 84.69 & 82.71 \\
@@ -619,8 +620,8 @@ Table~\ref{tab-quad-tree-segments} shows the figures of merit for the presented 
 
 \begin{table}
   \caption{Figures of merit of the quad tree implementations with segments (for axial hits only) in comparison to the axial Legendre track finder. As expected, the quad trees with segments perform worse.}
-  \begin{tabular}{lcccc} \toprule
-    & Axial Legendre & Parameters & Averaged Position & Region Check \\ \midrule
+  \begin{tabular}{lSSSS} \toprule
+    & {Axial Legendre} & {Parameters} & {Averaged Position} & {Region Check} \\ \midrule
     Finding Efficiency   & 86.84 & 48.47 & 35.49 & 60.12 \\
     \quad on Primaries   & 93.20 & 52.45 & 39.34 & 65.98 \\ 
     Hit Efficiency       & 48.52 & 25.24 & 37.60 & 40.13 \\
@@ -669,11 +670,11 @@ All resulting tracks from the module can be classified unambiguously into one of
   \centering
   \caption{Number of tracks resulting from the VXD--CDC merger classified by the five categories as described in the text.}
   \hspace*{-0.55cm}
-  \begin{tabular}{crlllll}
+  \begin{tabular}{crccccc}
     \toprule
     BDT cut &  Total &         Case 1 &       Case 2 &       Case 3 &       Case 4 &         Case 5 \\
     \midrule
-	0.0 &   9345 &  7361 (78.8 \%) &  643 (6.9 \%) &  215 (2.3 \%) &  327 (3.5 \%) &    799 (8.6 \%) \\
+	0.0 &   9345 &  7361 (78.8 \%) &  643 (6.9 \%) &  215 (2.3 \%) &  327 (3.5 \%) &    \, 799 (\, 8.6 \%) \\
 % 	0.1 &  10698 &  7712 (72.1 \%) &  298 (2.8 \%) &  612 (5.7 \%) &  390 (3.6 \%) &  1686 (15.8 \%) \\
 % 	0.2 &  10855 &  7725 (71.2 \%) &  251 (2.3 \%) &  654 (6.0 \%) &  406 (3.7 \%) &  1819 (16.8 \%) \\
 	0.3 &  10961 &  7723 (70.5 \%) &  227 (2.1 \%) &  698 (6.4 \%) &  417 (3.8 \%) &  1896 (17.3 \%) \\
@@ -682,7 +683,7 @@ All resulting tracks from the module can be classified unambiguously into one of
 	0.6 &  11211 &  7696 (68.6 \%) &  157 (1.4 \%) &  775 (6.9 \%) &  431 (3.8 \%) &  2152 (19.2 \%) \\
 % 	0.7 &  11304 &  7672 (67.9 \%) &  143 (1.3 \%) &  797 (7.1 \%) &  436 (3.9 \%) &  2256 (20.0 \%) \\
 % 	0.8 &  11452 &  7617 (66.5 \%) &  109 (1.0 \%) &  848 (7.4 \%) &  449 (3.9 \%) &  2429 (21.2 \%) \\
-	0.9 &  11721 &  7490 (63.9 \%) &   68 (0.6 \%) &  921 (7.9 \%) &  460 (3.9 \%) &  2782 (23.7 \%) \\
+	0.9 &  11721 &  7490 (63.9 \%) &  \,  68 (0.6 \%) &  921 (7.9 \%) &  460 (3.9 \%) &  2782 (23.7 \%) \\
     \bottomrule
   \end{tabular}
   \label{tab-vxd-cdc-cases}
@@ -707,8 +708,8 @@ Besides the already mentioned figures of merit for this particular algorithm, al
   \centering
   \caption{Track finders in the subdetectors on generic events without background and their combination in comparison.}
   \label{tab-vxd-cdc-fom}
-  \begin{tabular}{lccc} \toprule
-    & VXD & CDC & Both combined \\ \midrule
+  \begin{tabular}{lSSS} \toprule
+    & {VXD} & {CDC} & {Both combined} \\ \midrule
     Finding Efficiency   & 74.60 & 81.76 & 89.12 \\
     \quad on Primaries   & 94.20 & 85.30 & 95.33 \\ 
     Hit Efficiency       & 85.69 & 84.87 & 80.86 \\
